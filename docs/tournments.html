@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Starz Up - Torneios Disponíveis">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="tournaments.css">
+    <title>Torneios - Starz Up</title>
+    <link href="imagens/logoempresa.png" rel="icon" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>STARZ UP</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="tournaments.html" class="active">Campeonatos</a></li>
+                <li><a href="streams.html">Streams</a></li>
+                <li><a href="apostas.html">Apostas</a></li>
+                <li><a href="suporte.html">Suporte</a></li>
+            </ul>
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-bar" placeholder="Buscar jogos, torneios...">
+            </div>
+            <div class="nav-login">
+                <button class="btn-secondary">Entrar</button>
+                <button class="btn-primary">Cadastrar</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="tournaments-hero">
+            <div class="container">
+                <h1 class="page-title">TORNEIOS <span class="highlight">DISPONÍVEIS</span></h1>
+                <p class="page-subtitle">Escolha seu desafio e mostre suas habilidades</p>
+            </div>
+        </section>
+
+        <section class="filters-section">
+            <div class="container">
+                <div class="filters-container">
+                    <div class="filter-group">
+                        <label for="game-filter">Jogo:</label>
+                        <select id="game-filter" class="filter-select">
+                            <option value="all">Todos os Jogos</option>
+                            <option value="cs2">Counter-Strike 2</option>
+                            <option value="valorant">VALORANT</option>
+                            <option value="rocket">Rocket League</option>
+                            <option value="fortnite">Fortnite</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="status-filter">Status:</label>
+                        <select id="status-filter" class="filter-select">
+                            <option value="all">Todos</option>
+                            <option value="open">Inscrições Abertas</option>
+                            <option value="soon">Em Breve</option>
+                            <option value="live">Ao Vivo</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="prize-filter">Prêmio:</label>
+                        <select id="prize-filter" class="filter-select">
+                            <option value="all">Todos</option>
+                            <option value="low">Até R$ 500</option>
+                            <option value="medium">R$ 500 - R$ 2000</option>
+                            <option value="high">Acima de R$ 2000</option>
+                        </select>
+                    </div>
+
+                    <button class="btn-primary filter-btn" onclick="applyFilters()">Filtrar</button>
+                    <button class="btn-secondary filter-btn" onclick="clearFilters()">Limpar</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="tournaments-section">
+            <div class="container">
+                <div id="tournaments-grid" class="tournaments-grid">
+                    <!-- CS2 Tournaments -->
+                    <div class="tournament-card" data-game="cs2" data-status="open" data-prize="high">
+                        <div class="tournament-badge status-open">INSCRIÇÕES ABERTAS</div>
+                        <div class="tournament-header cs2-bg">
+                            <img src="imagens/logocs.png" alt="CS2" class="tournament-game-icon">
+                            <h3>CS2 MASTERS CUP</h3>
+                        </div>
+                        <div class="tournament-body">
+                            <div class="tournament-info">
+                                <div class="info-item">
+                                    <span class="info-label">Prêmio:</span>
+                                    <span class="info-value prize">R$ 5.000</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Data:</span>
+                                    <span class="info-value">25/10/2025</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Taxa:</span>
+                                    <span class="info-value">R$ 20</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Vagas:</span>
+                                    <span class="info-value">32/64</span>
+                                </div>
+                            </div>
+                            <div class="tournament-details">
+                                <p>Formato: 5v5 Eliminação Simples</p>
+                                <p>Mapa: Best of 3</p>
+                            </div>
+                            <button class="btn-primary tournament-btn">Inscrever-se Agora</button>
+                        </div>
+                    </div>
+
+                    <div class="tournament-card" data-game="cs2" data-status="soon" data-prize="medium">
+                        <div class="tournament-badge status-soon">EM BREVE</div>
+                        <div class="tournament-header cs2-bg">
+                            <img src="imagens/logocs.png" alt="CS2" class="tournament-game-icon">
+                            <h3>CS2 ROOKIE LEAGUE</h3>
+                        </div>
+                        <div class="tournament-body">
+                            <div class="tournament-info">
+                                <div class="info-item">
+                                    <span class="info-label">Prêmio:</span>
+                                    <span class="info-value prize">R$ 1.500</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Data:</span>
+                                    <span class="info-value">30/10/2025</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Taxa:</span>
+                                    <span class="info-value">R$ 10</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Vagas:</span>
+                                    <span class="info-value">0/32</span>
+                                </div>
+                            </div>
+                            <div class="tournament-details">
+                                <p>Formato: 5v5 Swiss System</p>
+                                <p>Exclusivo para iniciantes</p>
+                            </div>
+                            <button class="btn-secondary tournament-btn">Notificar-me</button>
+                        </div>
+                    </div>
+
+                    <!-- VALORANT Tournaments -->
+                    <div class="tournament-card" data-game="valorant" data-status="open" data-prize="high">
+                        <div class="tournament-badge status-open">INSCRIÇÕES ABERTAS</div>
+                        <div class="tournament-header valorant-bg">
+                            <img src="imagens/logovalorant.png" alt="VALORANT" class="tournament-game-icon">
+                            <h3>VALORANT CHAMPIONS</h3>
+                        </div>
+                        <div class="tournament-body">
+                            <div class="tournament-info">
+                                <div class="info-item">
+                                    <span class="info-label">Prêmio:</span>
+                                    <span class="info-value prize">R$ 8.000</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Data:</span>
+                                    <span class="info-value">27/10/2025</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Taxa:</span>
+                                    <span class="info-value">R$ 25</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Vagas:</span>
+                                    <span class="info-value">48/64</span>
+                                </div>
+                            </div>
+                            <div class="tournament-details">
+                                <p>Formato: 5v5 Dupla Eliminação</p>
+                                <p>Rank mínimo: Platinum</p>
+                            </div>
+                            <button class="btn-primary tournament-btn">Inscrever-se Agora</button>
+                        </div>
+                    </div>
+
+                    <div class="tournament-card" data-game="valorant" data-status="live" data-prize="low">
+                        <div class="tournament-badge status-live">AO VIVO</div>
+                        <div class="tournament-header valorant-bg">
+                            <img src="imagens/logovalorant.png" alt="VALORANT" class="tournament-game-icon">
+                            <h3>VALORANT BLITZ</h3>
+                        </div>
+                        <div class="tournament-body">
+                            <div class="tournament-info">
+                                <div class="info-item">
+                                    <span class="info-label">Prêmio:</span>
+                                    <span class="info-value prize">R$ 500</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Data:</span>
+                                    <span class="info-value">Hoje</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Taxa:</span>
+                                    <span class="info-value">R$ 5</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Vagas:</span>
+                                    <span class="info-value">16/16</span>
+                                </div>
+                            </div>
+                            <div class="tournament-details">
+                                <p>Formato: Rápido - Best of 1</p>
+                                <p>Quartas de final em andamento</p>
+                            </div>
+                            <button class="btn-secondary tournament-btn">Assistir Ao Vivo</button>
+                        </div>
+                    </div>
+
+                    <!-- Rocket League Tournaments -->
+                    <div class="tournament-card" data-game="rocket" data-status="open" data-prize="medium">
+                        <div class="tournament-badge status-open">INSCRIÇÕES ABERTAS</div>
+                        <div class="tournament-header rocket-bg">
+                            <img src="imagens/logorocketleague.png" alt="Rocket League" class="tournament-game-icon" style="width: 140px;">
+                            <h3>ROCKET LEAGUE PRO SERIES</h3>
+                        </div>
+                        <div class="tournament-body">
+                            <div class="tournament-info">
+                                <div class="info-item">
+                                    <span class="info-label">Prêmio:</span>
+                                    <span class="info-value prize">R$ 2.000</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Data:</span>
+                                    <span class="info-value">28/10/2025</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Taxa:</span>
+                                    <span class="info-value">R$ 15</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Vagas:</span>
+                                    <span class="info-value">20/48</span>
+                                </div>
+                            </div>
+                            <div class="tournament-details">
+                                <p>Formato: 3v3 Round Robin</p>
+                                <p>Rank: Diamond+</p>
+                            </div>
+                            <button class="btn-primary tournament-btn">Inscrever-se Agora</button>
+                        </div>
+                    </div>
+
+                    <div class="tournament-card" data-game="rocket" data-status="open" data-prize="low">
+                        <div class="tournament-badge status-open">INSCRIÇÕES ABERTAS</div>
+                        <div class="tournament-header rocket-bg">
+                            <img src="imagens/logorocketleague.png" alt="Rocket League" class="tournament-game-icon" style="width: 140px;">
+                            <h3>ROCKET CASUAL CUP</h3>
+                        </div>
+                        <div class="tournament-body">
+                            <div class="tournament-info">
+                                <div class="info-item">
+                                    <span class="info-label">Prêmio:</span>
+                                    <span class="info-value prize">R$ 300</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Data:</span>
+                                    <span class="info-value">26/10/2025</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Taxa:</span>
+                                    <span class="info-value">Grátis</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Vagas:</span>
+                                    <span class="info-value">12/24</span>
+                                </div>
+                            </div>
+                            <div class="tournament-details">
+                                <p>Formato: 3v3 Eliminação Simples</p>
+                                <p>Todos os ranks bem-vindos</p>
+                            </div>
+                            <button class="btn-primary tournament-btn">Inscrever-se Agora</button>
+                        </div>
+                    </div>
+
+                    <!-- Fortnite Tournaments -->
+                    <div class="tournament-card" data-game="fortnite" data-status="open" data-prize="high">
+                        <div class="tournament-badge status-open">INSCRIÇÕES ABERTAS</div>
+                        <div class="tournament-header fortnite-bg">
+                            <img src="imagens/logofortnite.png" alt="Fortnite" class="tournament-game-icon" style="border-radius: 10px;">
+                            <h3>FORTNITE BATTLE ROYALE</h3>
+                        </div>
+                        <div class="tournament-body">
+                            <div class="tournament-info">
+                                <div class="info-item">
+                                    <span class="info-label">Prêmio:</span>
+                                    <span class="info-value prize">R$ 10.000</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Data:</span>
+                                    <span class="info-value">01/11/2025</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Taxa:</span>
+                                    <span class="info-value">R$ 30</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Vagas:</span>
+                                    <span class="info-value">85/100</span>
+                                </div>
+                            </div>
+                            <div class="tournament-details">
+                                <p>Formato: Solo - 3 Partidas</p>
+                                <p>Sistema de pontos por eliminação</p>
+                            </div>
+                            <button class="btn-primary tournament-btn">Inscrever-se Agora</button>
+                        </div>
+                    </div>
+
+                    <div class="tournament-card" data-game="fortnite" data-status="soon" data-prize="medium">
+                        <div class="tournament-badge status-soon">EM BREVE</div>
+                        <div class="tournament-header fortnite-bg">
+                            <img src="imagens/logofortnite.png" alt="Fortnite" class="tournament-game-icon" style="border-radius: 10px;">
+                            <h3>FORTNITE DUO CHAMPIONSHIP</h3>
+                        </div>
+                        <div class="tournament-body">
+                            <div class="tournament-info">
+                                <div class="info-item">
+                                    <span class="info-label">Prêmio:</span>
+                                    <span class="info-value prize">R$ 3.000</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Data:</span>
+                                    <span class="info-value">05/11/2025</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Taxa:</span>
+                                    <span class="info-value">R$ 20</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Vagas:</span>
+                                    <span class="info-value">0/50</span>
+                                </div>
+                            </div>
+                            <div class="tournament-details">
+                                <p>Formato: Duplas - 4 Partidas</p>
+                                <p>Inscrições abrem em 3 dias</p>
+                            </div>
+                            <button class="btn-secondary tournament-btn">Notificar-me</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="no-results" class="no-results" style="display: none;">
+                    <h3>Nenhum torneio encontrado</h3>
+                    <p>Tente ajustar os filtros ou volte mais tarde para novos torneios!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>STARZ UP</h3>
+                    <p>A revolução dos torneios online</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Links Úteis</h4>
+                    <ul>
+                        <li><a href="#rules">Regulamento</a></li>
+                        <li><a href="#support">Suporte</a></li>
+                        <li><a href="#privacy">Privacidade</a></li>
+                        <li><a href="#terms">Termos de Uso</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Siga-nos</h4>
+                    <div class="social-links">
+                        <a href="#">Discord</a>
+                        <a href="#">Twitch</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">Twitter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Starz Up. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function applyFilters() {
+            const gameFilter = document.getElementById('game-filter').value;
+            const statusFilter = document.getElementById('status-filter').value;
+            const prizeFilter = document.getElementById('prize-filter').value;
+            
+            const cards = document.querySelectorAll('.tournament-card');
+            const grid = document.getElementById('tournaments-grid');
+            const noResults = document.getElementById('no-results');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const cardGame = card.getAttribute('data-game');
+                const cardStatus = card.getAttribute('data-status');
+                const cardPrize = card.getAttribute('data-prize');
+                
+                let showCard = true;
+                
+                if (gameFilter !== 'all' && cardGame !== gameFilter) {
+                    showCard = false;
+                }
+                
+                if (statusFilter !== 'all' && cardStatus !== statusFilter) {
+                    showCard = false;
+                }
+                
+                if (prizeFilter !== 'all' && cardPrize !== prizeFilter) {
+                    showCard = false;
+                }
+                
+                if (showCard) {
+                    card.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            if (visibleCount === 0) {
+                grid.style.display = 'none';
+                noResults.style.display = 'block';
+            } else {
+                grid.style.display = 'grid';
+                noResults.style.display = 'none';
+            }
+        }
+        
+        function clearFilters() {
+            document.getElementById('game-filter').value = 'all';
+            document.getElementById('status-filter').value = 'all';
+            document.getElementById('prize-filter').value = 'all';
+            applyFilters();
+        }
+    </script>
+</body>
+</html>
