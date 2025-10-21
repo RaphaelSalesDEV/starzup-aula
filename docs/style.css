@@ -112,7 +112,7 @@
 
         .search-icon {
             position: absolute;
-            left: 0.5rem;
+            left: 0.3rem;
             top: 50%;
             transform: translateY(-50%);
             color: var(--light-gray);
@@ -623,3 +623,4 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 25px rgba(139, 92, 246, 0.7);
         }
+
