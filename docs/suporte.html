@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Starz Up - Suporte ao Cliente">
+    <title>Starz Up - Suporte</title>
+    <link rel="stylesheet" href="suporte.css">
+    <script src="suporte.js"></script>
+    <link href="imagens/logoempresa.png" rel="icon" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <a href="index.html" class="btn-back">
+        <img class="back-arrow" src="imagens/seta.png" alt="Ícone de voltar" width="50" height="40"> 
+        <span class="back-text">Voltar ao Menu</span>
+    </a>
+
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="header-left">
+                <div class="bot-avatar">🤖</div>
+                <div class="header-info">
+                    <h2>Assistente Starz Up</h2>
+                    <span class="status">
+                        <span class="status-dot"></span>
+                        Online 24/7
+                    </span>
+                </div>
+            </div>
+            <button class="btn-minimize" onclick="toggleChat()">_</button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                    <p>Olá! Bem-vindo ao suporte da <strong>Starz Up</strong>! 👋</p>
+                    <p>Como posso ajudá-lo hoje?</p>
+                    <span class="message-time">Agora</span>
+                </div>
+            </div>
+
+            <div class="quick-replies">
+                <button class="quick-reply" onclick="sendQuickReply('Como me cadastrar?')">
+                    📝 Como me cadastrar?
+                </button>
+                <button class="quick-reply" onclick="sendQuickReply('Ver torneios disponíveis')">
+                    🎮 Ver torneios
+                </button>
+                <button class="quick-reply" onclick="sendQuickReply('Formas de pagamento')">
+                    💳 Pagamento
+                </button>
+                <button class="quick-reply" onclick="sendQuickReply('Regras dos torneios')">
+                    📋 Regras
+                </button>
+            </div>
+        </div>
+
+        <div class="chat-input-container">
+            <div class="chat-input-wrapper">
+                <input 
+                    type="text" 
+                    id="chatInput" 
+                    class="chat-input" 
+                    placeholder="Digite sua mensagem..."
+                    onkeypress="handleKeyPress(event)"
+                >
+                <button class="btn-send" onclick="sendMessage()">
+                    ➤
+                </button>
+            </div>
+            <p class="input-hint">Pressione Enter para enviar</p>
+        </div>
+    </div>
+</body>
+</html>
