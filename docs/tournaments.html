@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Starz Up - Torneios de Jogos Online">
     <link rel="stylesheet" href="style.css">
-     <link rel="stylesheet" href="tournaments.css">
+    <link rel="stylesheet" href="tournaments.css">
     <title>Starz Up - Torneios</title>
     <link href="imagens/logoempresa.png" rel="icon" type="image/x-icon">
 </head>
@@ -17,7 +17,7 @@
             </div>
             <ul class="nav-menu">
                 <li><a href="index.html">Início</a></li>
-                <li><a href="tournaments.html">Campeonatos</a></li>
+                <li><a href="tournaments.html" class="active">Campeonatos</a></li>
                 <li><a href="streams.html">Streams</a></li>
                 <li><a href="apostas.html">Apostas</a></li>
                 <li><a href="suporte.html">Suporte</a></li>
@@ -37,6 +37,66 @@
             <div class="container">
                 <h1 class="page-title">TORNEIOS <span class="highlight">DISPONÍVEIS</span></h1>
                 <p class="page-subtitle">Escolha seu desafio e mostre suas habilidades</p>
+                <button class="btn-create-tournament" onclick="openCreateModal()">
+                    + Criar Seu Torneio
+                </button>
+            </div>
+        </section>
+
+        <!-- Games Showcase Section -->
+        <section class="games-showcase">
+            <div class="container">
+                <h2 class="section-title">JOGOS <span class="highlight">SUPORTADOS</span></h2>
+                <div class="games-slider">
+                    <div class="game-item">
+                        <img src="imagens/logocs.png" alt="CS2">
+                        <span>Counter-Strike 2</span>
+                    </div>
+                    <div class="game-item">
+                        <img src="imagens/logovalorant.png" alt="VALORANT">
+                        <span>VALORANT</span>
+                    </div>
+                    <div class="game-item">
+                        <img src="imagens/logorocketleague.png" alt="Rocket League">
+                        <span>Rocket League</span>
+                    </div>
+                    <div class="game-item">
+                        <img src="imagens/logofortnite.png" alt="Fortnite" style="border-radius: 10px;">
+                        <span>Fortnite</span>
+                    </div>
+                    <div class="game-item">
+                        <img src="imagens/LOLlogo.png" alt="League of Legends">
+                        <span>League of Legends</span>
+                    </div>
+                    <div class="game-item">
+                        <img src="imagens/logoDota.png" alt="Dota 2">
+                        <span>Dota 2</span>
+                    </div>
+                    <div class="game-item">
+                        <img src="imagens/apexlogo.png" alt="Apex Legends">
+                        <span>Apex Legends</span>
+                    </div>
+                    <div class="game-item">
+                        <img src="imagens/codlogo.png" alt="Call of Duty">
+                        <span>Call of Duty</span>
+                    </div>
+                    <div class="game-item">
+                        <img src="imagens/fifalogo.png" alt="FIFA">
+                        <span>FIFA</span>
+                    </div>
+                    <div class="game-item">
+                        <img src="imagens/logoover.png" alt="Overwatch">
+                        <span>Overwatch</span>
+                    </div>
+                     <div class="game-item">
+                        <img src="imagens/logor6.png" alt="Rainbow Six Siege">
+                        <span>Rainbow Six Siege</span>
+                    </div>
+                     <div class="game-item">
+                        <img src="imagens/logosf.png" alt="Street Fighter">
+                        <span>Street Fighter</span>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -51,6 +111,14 @@
                             <option value="valorant">VALORANT</option>
                             <option value="rocket">Rocket League</option>
                             <option value="fortnite">Fortnite</option>
+                            <option value="lol">League of Legends</option>
+                            <option value="dota">Dota 2</option>
+                            <option value="apex">Apex Legends</option>
+                            <option value="cod">Call of Duty</option>
+                            <option value="fifa">FIFA</option>
+                            <option value="overwatch">Overwatch</option>
+                            <option value="r6">Rainbow Six Siege</option>
+                            <option value="sf">Street Fighter</option>
                         </select>
                     </div>
 
@@ -82,6 +150,21 @@
 
         <section class="tournaments-section">
             <div class="container">
+                <div class="tournaments-stats">
+                    <div class="stat-card">
+                        <span class="stat-number" id="totalTournaments">8</span>
+                        <span class="stat-label">Torneios Ativos</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">R$ 30.300</span>
+                        <span class="stat-label">Total em Prêmios</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">405</span>
+                        <span class="stat-label">Jogadores Inscritos</span>
+                    </div>
+                </div>
+
                 <div id="tournaments-grid" class="tournaments-grid">
                     <!-- CS2 Tournaments -->
                     <div class="tournament-card" data-game="cs2" data-status="open" data-prize="high">
@@ -350,6 +433,40 @@
                             <button class="btn-secondary tournament-btn">Notificar-me</button>
                         </div>
                     </div>
+
+                    <!-- League of Legends Tournament -->
+                    <div class="tournament-card" data-game="lol" data-status="open" data-prize="high">
+                        <div class="tournament-badge status-open">INSCRIÇÕES ABERTAS</div>
+                        <div class="tournament-header lol-bg">
+                            <img src="imagens/LOLlogo.png" alt="League of Legends" class="tournament-game-icon" style="width: 140px;">
+                            <h3>LOL SUMMONER'S CUP</h3>
+                        </div>
+                        <div class="tournament-body">
+                            <div class="tournament-info">
+                                <div class="info-item">
+                                    <span class="info-label">Prêmio:</span>
+                                    <span class="info-value prize">R$ 6.000</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Data:</span>
+                                    <span class="info-value">02/11/2025</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Taxa:</span>
+                                    <span class="info-value">R$ 25</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Vagas:</span>
+                                    <span class="info-value">28/40</span>
+                                </div>
+                            </div>
+                            <div class="tournament-details">
+                                <p>Formato: 5v5 Dupla Eliminação</p>
+                                <p>Rank: Gold+</p>
+                            </div>
+                            <button class="btn-primary tournament-btn">Inscrever-se Agora</button>
+                        </div>
+                    </div>
                 </div>
 
                 <div id="no-results" class="no-results" style="display: none;">
@@ -359,6 +476,90 @@
             </div>
         </section>
     </main>
+
+    <!-- Modal Criar Torneio -->
+    <div id="createTournamentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeCreateModal()">&times;</span>
+            <h2>CRIAR SEU <span class="highlight">TORNEIO</span></h2>
+            <p class="modal-subtitle">Organize sua própria competição personalizada</p>
+            
+            <form class="create-tournament-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tournament-name">Nome do Torneio</label>
+                        <input type="text" id="tournament-name" placeholder="Ex: Minha Copa 2025" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tournament-game">Jogo</label>
+                        <select id="tournament-game" required>
+                            <option value="">Selecione o jogo</option>
+                            <option value="cs2">Counter-Strike 2</option>
+                            <option value="valorant">VALORANT</option>
+                            <option value="rocket">Rocket League</option>
+                            <option value="fortnite">Fortnite</option>
+                            <option value="lol">League of Legends</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tournament-format">Formato</label>
+                        <select id="tournament-format" required>
+                            <option value="">Selecione o formato</option>
+                            <option value="single">Eliminação Simples</option>
+                            <option value="double">Dupla Eliminação</option>
+                            <option value="swiss">Swiss System</option>
+                            <option value="round">Round Robin</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tournament-date">Data do Torneio</label>
+                        <input type="date" id="tournament-date" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tournament-time">Horário</label>
+                        <input type="time" id="tournament-time" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tournament-slots">Número de Vagas</label>
+                        <input type="number" id="tournament-slots" placeholder="Ex: 32" min="4" max="128" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tournament-fee">Taxa de Inscrição (R$)</label>
+                        <input type="number" id="tournament-fee" placeholder="Ex: 10.00" min="0" step="0.01" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tournament-prize">Prêmio Total (R$)</label>
+                        <input type="number" id="tournament-prize" placeholder="Ex: 500.00" min="0" step="0.01" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tournament-description">Descrição / Regras</label>
+                    <textarea id="tournament-description" rows="4" placeholder="Descreva as regras e detalhes do torneio..." required></textarea>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="closeCreateModal()">Cancelar</button>
+                    <button type="submit" class="btn-primary">Criar Torneio</button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
@@ -430,6 +631,8 @@
                 }
             });
             
+            document.getElementById('totalTournaments').textContent = visibleCount;
+            
             if (visibleCount === 0) {
                 grid.style.display = 'none';
                 noResults.style.display = 'block';
@@ -444,6 +647,14 @@
             document.getElementById('status-filter').value = 'all';
             document.getElementById('prize-filter').value = 'all';
             applyFilters();
+        }
+
+        function openCreateModal() {
+            document.getElementById('createTournamentModal').style.display = 'flex';
+        }
+
+        function closeCreateModal() {
+            document.getElementById('createTournamentModal').style.display = 'none';
         }
     </script>
 </body>
