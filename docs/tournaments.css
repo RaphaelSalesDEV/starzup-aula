@@ -5,6 +5,7 @@
     background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
     text-align: center;
     border-bottom: 2px solid var(--primary);
+    position: relative;
 }
 
 .page-title {
@@ -16,6 +17,107 @@
 .page-subtitle {
     font-size: 1.3rem;
     color: var(--light-gray);
+    margin-bottom: 2rem;
+}
+
+/* Botão Criar Torneio */
+.btn-create-tournament {
+    background: linear-gradient(135deg, var(--secondary), var(--accent));
+    color: #fff;
+    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 5px 20px rgba(236, 72, 153, 0.4);
+    margin-top: 1rem;
+}
+
+.btn-create-tournament:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 35px rgba(236, 72, 153, 0.6);
+}
+
+/* Games Showcase Section */
+.games-showcase {
+    padding: 3rem 5%;
+    background: var(--dark);
+    border-bottom: 1px solid var(--gray);
+}
+
+.games-showcase .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: #fff;
+}
+
+.games-slider {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    padding: 1rem 0;
+    scroll-behavior: smooth;
+}
+
+.games-slider::-webkit-scrollbar {
+    height: 8px;
+}
+
+.games-slider::-webkit-scrollbar-track {
+    background: var(--gray);
+    border-radius: 10px;
+}
+
+.games-slider::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+}
+
+.game-item {
+    min-width: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem;
+    background: var(--gray);
+    border-radius: 15px;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.game-item:hover {
+    border-color: var(--primary);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.4);
+}
+
+.game-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.game-icon-placeholder {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.game-item span {
+    font-weight: 600;
+    color: #fff;
+    text-align: center;
+    font-size: 0.9rem;
 }
 
 /* Filters Section */
@@ -70,6 +172,46 @@
 .filter-btn {
     padding: 0.8rem 2rem;
     margin-top: 1.5rem;
+    width: 15%;
+}
+
+/* Tournaments Stats */
+.tournaments-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.stat-card {
+    background: var(--gray);
+    padding: 2rem;
+    border-radius: 15px;
+    text-align: center;
+    border: 2px solid transparent;
+    transition: all 0.3s;
+}
+
+.stat-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+}
+
+.stat-card .stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card .stat-label {
+    color: var(--light-gray);
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 /* Tournaments Grid */
@@ -175,6 +317,10 @@
     background: linear-gradient(135deg, #7b2cbf 0%, #5a189a 100%);
 }
 
+.lol-bg {
+    background: linear-gradient(135deg, #0a323c 0%, #041a1f 100%);
+}
+
 .tournament-game-icon {
     width: 80px;
     height: 80px;
@@ -264,6 +410,142 @@
     font-size: 1.1rem;
 }
 
+/* Modal Criar Torneio */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.modal-content {
+    background: var(--dark);
+    border-radius: 20px;
+    padding: 3rem;
+    max-width: 700px;
+    width: 100%;
+    position: relative;
+    border: 2px solid var(--primary);
+    box-shadow: 0 20px 60px rgba(139, 92, 246, 0.5);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+    background: var(--gray);
+    border-radius: 10px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+}
+
+.close-modal {
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--light-gray);
+    cursor: pointer;
+    transition: all 0.3s;
+    line-height: 1;
+}
+
+.close-modal:hover {
+    color: var(--secondary);
+    transform: rotate(90deg);
+}
+
+.modal-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.modal-subtitle {
+    text-align: center;
+    color: var(--light-gray);
+    margin-bottom: 2rem;
+}
+
+.create-tournament-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.create-tournament-form .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.create-tournament-form label {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.create-tournament-form input,
+.create-tournament-form select,
+.create-tournament-form textarea {
+    width: 100%;
+    padding: 1rem;
+    background: var(--gray);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s;
+}
+
+.create-tournament-form input:focus,
+.create-tournament-form select:focus,
+.create-tournament-form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--darker);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+}
+
+.create-tournament-form textarea {
+    resize: vertical;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.form-actions button {
+    flex: 1;
+    padding: 1rem;
+    font-size: 1rem;
+}
+
 /* Active Nav Link */
 .nav-menu a.active {
     color: var(--secondary);
@@ -289,6 +571,31 @@
         font-size: 1.1rem;
     }
 
+    .btn-create-tournament {
+        padding: 0.9rem 2rem;
+        font-size: 1rem;
+    }
+
+    .games-slider {
+        gap: 1rem;
+    }
+
+    .game-item {
+        min-width: 120px;
+        padding: 1rem;
+    }
+
+    .game-item img,
+    .game-icon-placeholder {
+        width: 60px;
+        height: 60px;
+    }
+
+    .tournaments-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
     .filters-container {
         flex-direction: column;
         align-items: stretch;
@@ -310,6 +617,34 @@
 
     .tournament-info {
         grid-template-columns: 1fr;
+    }
+
+    .modal {
+        padding: 1rem;
+    }
+
+    .modal-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .close-modal {
+        right: 1rem;
+        top: 1rem;
+        font-size: 2rem;
+    }
+
+    .modal-content h2 {
+        font-size: 2rem;
+        padding-right: 2rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
     }
 }
 
