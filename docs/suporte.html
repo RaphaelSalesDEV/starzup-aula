@@ -3,75 +3,1019 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Starz Up - Suporte ao Cliente">
+    <meta name="description" content="Starz Up - Central de Ajuda e Suporte">
     <title>Starz Up - Suporte</title>
-    <link rel="stylesheet" href="suporte.css">
-    <script src="suporte.js"></script>
+    <link rel="stylesheet" href="style.css">
     <link href="imagens/logoempresa.png" rel="icon" type="image/x-icon">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos específicos da página de suporte */
+        .support-hero {
+            padding: 4rem 5%;
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            text-align: center;
+        }
+
+        .support-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .support-hero p {
+            color: var(--light-gray);
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .search-support {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-support input {
+            width: 100%;
+            padding: 1.2rem 1.5rem 1.2rem 3.5rem;
+            background: var(--gray);
+            border: 2px solid transparent;
+            border-radius: 50px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .search-support input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .search-support::before {
+            content: '🔍';
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.3rem;
+        }
+
+        /* Quick Help Cards */
+        .quick-help {
+            padding: 3rem 5%;
+            background: var(--darker);
+        }
+
+        .quick-help h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .help-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .help-card {
+            background: var(--gray);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .help-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+        }
+
+        .help-card-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .help-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: #fff;
+        }
+
+        .help-card p {
+            color: var(--light-gray);
+            line-height: 1.6;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 4rem 5%;
+            background: var(--dark);
+        }
+
+        .faq-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-category {
+            margin-bottom: 3rem;
+        }
+
+        .faq-category h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .faq-item {
+            background: var(--gray);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--primary);
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            color: var(--primary);
+        }
+
+        .faq-icon {
+            font-size: 1.3rem;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 1.5rem;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .faq-answer p {
+            color: var(--light-gray);
+            line-height: 1.8;
+            margin-bottom: 0.8rem;
+        }
+
+        .faq-answer ul {
+            color: var(--light-gray);
+            margin-left: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .faq-answer li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 4rem 5%;
+            background: var(--darker);
+            text-align: center;
+        }
+
+        .contact-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-section p {
+            color: var(--light-gray);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-methods {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-method {
+            background: var(--gray);
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .contact-method:hover {
+            border-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+        }
+
+        .contact-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-info p {
+            color: var(--light-gray);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Floating Chatbot */
+        .chatbot-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.6);
+            transition: all 0.3s;
+            z-index: 1000;
+            border: none;
+        }
+
+        .chatbot-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 35px rgba(139, 92, 246, 0.8);
+        }
+
+        .chatbot-window {
+            position: fixed;
+            bottom: 100px;
+            right: 2rem;
+            width: 400px;
+            height: 550px;
+            background: var(--dark);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            z-index: 999;
+            border: 2px solid var(--primary);
+            overflow: hidden;
+        }
+
+        .chatbot-window.active {
+            display: flex;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chatbot-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-header-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .chatbot-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--darker);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .chatbot-header h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .chatbot-status {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .chatbot-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chatbot-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background: var(--darker);
+        }
+
+        .chatbot-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chatbot-messages::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        .chat-message {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .chat-message-content {
+            background: var(--gray);
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            max-width: 75%;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .chat-message.user {
+            flex-direction: row-reverse;
+        }
+
+        .chat-message.user .chat-message-content {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        }
+
+        .chat-quick-replies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .chat-quick-reply {
+            background: var(--gray);
+            border: 1px solid var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chat-quick-reply:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .chatbot-input {
+            padding: 1rem;
+            background: var(--dark);
+            display: flex;
+            gap: 0.5rem;
+            border-top: 1px solid var(--gray);
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            background: var(--gray);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 0.8rem 1.2rem;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .chatbot-input input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .chatbot-send {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chatbot-send:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .support-hero h1 {
+                font-size: 2rem;
+            }
+
+            .help-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .chatbot-window {
+                width: calc(100% - 2rem);
+                right: 1rem;
+                left: 1rem;
+                bottom: 90px;
+            }
+
+            .chatbot-toggle {
+                bottom: 1.5rem;
+                right: 1.5rem;
+            }
+
+            .contact-methods {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
 </head>
 <body>
     <a href="index.html" class="btn-back">
-        <img class="back-arrow" src="imagens/seta.png" alt="Ícone de voltar" width="50" height="40"> 
-        <span class="back-text">Voltar ao Menu</span>
+        <span class="back-arrow">←</span>
+        <span class="back-text">Voltar</span>
     </a>
 
-    <div class="chat-container">
-        <div class="chat-header">
-            <div class="header-left">
-                <div class="bot-avatar">🤖</div>
-                <div class="header-info">
-                    <h2>Assistente Starz Up</h2>
-                    <span class="status">
-                        <span class="status-dot"></span>
-                        Online 24/7
-                    </span>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>STARZ UP</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="comunidade.html">Comunidade</a></li>
+                <li><a href="tournaments.html">Campeonatos</a></li>
+                <li><a href="streams.html">Streams</a></li>
+                <li><a href="apostas.html">Apostas</a></li>
+                <li><a href="suporte.html">Suporte</a></li>
+            </ul>
+            <div class="search-container">
+                <span class="search-icon"><img class="search-icon" src="imagens/lupadepesquisa.png" alt="Ícone de busca" width="20" height="19"></span>
+                <input type="text" class="search-bar" placeholder="Buscar ajuda...">
+            </div>
+            <div class="nav-login">
+                <button class="btn-primary"><a href="cadastro.html">Cadastrar</a></button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="support-hero">
+            <h1>CENTRAL DE <span class="highlight">AJUDA</span></h1>
+            <p>Como podemos ajudá-lo hoje?</p>
+            <div class="search-support">
+                <input type="text" placeholder="Buscar por ajuda, tutoriais, FAQ...">
+            </div>
+        </section>
+
+        <!-- Quick Help Cards -->
+        <section class="quick-help">
+            <h2>ACESSO <span class="highlight">RÁPIDO</span></h2>
+            <div class="help-cards">
+                <div class="help-card">
+                    <div class="help-card-icon">📝</div>
+                    <h3>Primeiros Passos</h3>
+                    <p>Aprenda como criar sua conta, configurar seu perfil e participar do seu primeiro torneio</p>
+                </div>
+                <div class="help-card">
+                    <div class="help-card-icon">🎮</div>
+                    <h3>Torneios</h3>
+                    <p>Tudo sobre inscrições, formatos, regras e como competir nos nossos campeonatos</p>
+                </div>
+                <div class="help-card">
+                    <div class="help-card-icon">💰</div>
+                    <h3>Pagamentos</h3>
+                    <p>Informações sobre taxas de entrada, prêmios, saques e métodos de pagamento</p>
+                </div>
+                <div class="help-card">
+                    <div class="help-card-icon">🛡️</div>
+                    <h3>Segurança</h3>
+                    <p>Proteja sua conta, denuncie problemas e conheça nossas políticas de fair play</p>
                 </div>
             </div>
-            <button class="btn-minimize" onclick="toggleChat()">_</button>
-        </div>
+        </section>
 
-        <div class="chat-messages" id="chatMessages">
-            <div class="message bot-message">
-                <div class="message-avatar">🤖</div>
-                <div class="message-content">
-                    <p>Olá! Bem-vindo ao suporte da <strong>Starz Up</strong>! 👋</p>
-                    <p>Como posso ajudá-lo hoje?</p>
-                    <span class="message-time">Agora</span>
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2>PERGUNTAS <span class="highlight">FREQUENTES</span></h2>
+            <div class="faq-container">
+                <!-- Categoria: Conta e Cadastro -->
+                <div class="faq-category">
+                    <h3>👤 Conta e Cadastro</h3>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            Como criar uma conta na Starz Up?
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Para criar sua conta, siga estes passos:</p>
+                            <ul>
+                                <li>Clique em "Cadastrar" no menu superior</li>
+                                <li>Preencha o formulário com nome, email e senha</li>
+                                <li>Aceite os termos de uso</li>
+                                <li>Confirme seu email clicando no link enviado</li>
+                                <li>Pronto! Sua conta está ativa</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            Esqueci minha senha, como recupero?
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Para recuperar sua senha:</p>
+                            <ul>
+                                <li>Clique em "Esqueci minha senha" na tela de login</li>
+                                <li>Digite seu email cadastrado</li>
+                                <li>Verifique sua caixa de entrada</li>
+                                <li>Clique no link de recuperação</li>
+                                <li>Crie uma nova senha</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            Posso mudar meu nome de usuário?
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Sim! Você pode alterar seu nome de usuário uma vez a cada 30 dias. Acesse "Configurações" > "Perfil" > "Editar Nome de Usuário".</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categoria: Torneios -->
+                <div class="faq-category">
+                    <h3>🏆 Torneios</h3>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            Como me inscrever em um torneio?
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Para participar de um torneio:</p>
+                            <ul>
+                                <li>Acesse a página "Campeonatos"</li>
+                                <li>Escolha o jogo desejado</li>
+                                <li>Clique em "Entrar no Torneio"</li>
+                                <li>Pague a taxa de inscrição (R$ 10)</li>
+                                <li>Aguarde a confirmação</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            Qual o formato dos torneios?
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Nossos torneios seguem diferentes formatos:</p>
+                            <ul>
+                                <li><strong>Eliminação Simples:</strong> Perde e está fora</li>
+                                <li><strong>Dupla Eliminação:</strong> Duas chances de continuar</li>
+                                <li><strong>Round Robin:</strong> Todos jogam contra todos</li>
+                                <li><strong>Swiss System:</strong> Pareamento por desempenho</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            Posso cancelar minha inscrição?
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Sim, você pode cancelar até 24 horas antes do início do torneio e receber reembolso total. Após esse prazo, não há reembolso.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categoria: Pagamentos -->
+                <div class="faq-category">
+                    <h3>💳 Pagamentos e Prêmios</h3>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            Quais formas de pagamento são aceitas?
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Aceitamos:</p>
+                            <ul>
+                                <li>💳 Cartão de Crédito (Visa, Mastercard, Elo)</li>
+                                <li>💳 Cartão de Débito</li>
+                                <li>📱 PIX (aprovação instantânea)</li>
+                                <li>🏦 Boleto Bancário</li>
+                            </ul>
+                            <p>Todos os pagamentos são processados de forma segura e criptografada.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            Como recebo meus prêmios?
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Os prêmios são creditados automaticamente em sua carteira Starz Up em até 48 horas após o término do torneio. Você pode sacar via PIX ou transferência bancária.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            Qual o valor mínimo para saque?
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>O valor mínimo para saque é de R$ 20,00. Não cobramos taxas para saques via PIX.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Categoria: Regras -->
+                <div class="faq-category">
+                    <h3>📋 Regras e Fair Play</h3>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            Quais são as regras principais?
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Regras fundamentais:</p>
+                            <ul>
+                                <li>Respeito entre todos os jogadores</li>
+                                <li>Proibido uso de cheats, hacks ou exploits</li>
+                                <li>Pontualidade nos horários marcados</li>
+                                <li>Configurações oficiais do jogo</li>
+                                <li>Comunicação respeitosa no chat</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <div class="faq-question" onclick="toggleFaq(this)">
+                            O que acontece se eu usar trapaça?
+                            <span class="faq-icon">▼</span>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Uso de trapaças resulta em:</p>
+                            <ul>
+                                <li>Banimento permanente da plataforma</li>
+                                <li>Perda de todos os prêmios</li>
+                                <li>Impossibilidade de criar nova conta</li>
+                            </ul>
+                            <p>Levamos o fair play muito a sério!</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="quick-replies">
-                <button class="quick-reply" onclick="sendQuickReply('Como me cadastrar?')">
-                    📝 Como me cadastrar?
-                </button>
-                <button class="quick-reply" onclick="sendQuickReply('Ver torneios disponíveis')">
-                    🎮 Ver torneios
-                </button>
-                <button class="quick-reply" onclick="sendQuickReply('Formas de pagamento')">
-                    💳 Pagamento
-                </button>
-                <button class="quick-reply" onclick="sendQuickReply('Regras dos torneios')">
-                    📋 Regras
-                </button>
+        <!-- Contact Section -->
+        <section class="contact-section">
+            <h2>AINDA PRECISA DE <span class="highlight">AJUDA</span>?</h2>
+            <p>Entre em contato com nossa equipe de suporte</p>
+            <div class="contact-methods">
+                <div class="contact-method">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-info">
+                        <h4>Email</h4>
+                        <p>suporte@starzup.com</p>
+                    </div>
+                </div>
+                <div class="contact-method">
+                    <div class="contact-icon">💬</div>
+                    <div class="contact-info">
+                        <h4>Discord</h4>
+                        <p>discord.gg/starzup</p>
+                    </div>
+                </div>
+                <div class="contact-method">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-info">
+                        <h4>WhatsApp</h4>
+                        <p>(11) 98765-4321</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Floating Chatbot -->
+    <button class="chatbot-toggle" onclick="toggleChatbot()">❓</button>
+    
+    <div class="chatbot-window" id="chatbotWindow">
+        <div class="chatbot-header">
+            <div class="chatbot-header-info">
+                <div class="chatbot-avatar">🤖</div>
+                <div>
+                    <h3>Assistente Starz</h3>
+                    <div class="chatbot-status">
+                        <span style="width: 6px; height: 6px; background: #10B981; border-radius: 50%; display: inline-block;"></span>
+                        Online
+                    </div>
+                </div>
+            </div>
+            <button class="chatbot-close" onclick="toggleChatbot()">✕</button>
+        </div>
+        
+        <div class="chatbot-messages" id="chatbotMessages">
+            <div class="chat-message bot">
+                <div class="chat-message-avatar">🤖</div>
+                <div class="chat-message-content">
+                    Olá! Como posso ajudá-lo hoje? 😊
+                </div>
             </div>
         </div>
-
-        <div class="chat-input-container">
-            <div class="chat-input-wrapper">
-                <input 
-                    type="text" 
-                    id="chatInput" 
-                    class="chat-input" 
-                    placeholder="Digite sua mensagem..."
-                    onkeypress="handleKeyPress(event)"
-                >
-                <button class="btn-send" onclick="sendMessage()">
-                    ➤
-                </button>
-            </div>
-            <p class="input-hint">Pressione Enter para enviar</p>
+        
+        <div class="chat-quick-replies" id="quickReplies">
+            <button class="chat-quick-reply" onclick="sendQuickReply('Como me cadastrar?')">📝 Cadastro</button>
+            <button class="chat-quick-reply" onclick="sendQuickReply('Ver torneios')">🎮 Torneios</button>
+            <button class="chat-quick-reply" onclick="sendQuickReply('Formas de pagamento')">💳 Pagamento</button>
+            <button class="chat-quick-reply" onclick="sendQuickReply('Regras')">📋 Regras</button>
+        </div>
+        
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Digite sua mensagem..." onkeypress="handleChatKeyPress(event)">
+            <button class="chatbot-send" onclick="sendChatMessage()">➤</button>
         </div>
     </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>STARZ UP</h3>
+                    <p>A revolução dos torneios online</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Links Úteis</h4>
+                    <ul>
+                        <li><a href="#rules">Regulamento</a></li>
+                        <li><a href="#support">Suporte</a></li>
+                        <li><a href="#privacy">Privacidade</a></li>
+                        <li><a href="#terms">Termos de Uso</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Siga-nos</h4>
+                    <div class="social-links">
+                        <a href="#">Discord</a>
+                        <a href="#">Twitch</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">Twitter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Starz Up. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Fecha todos os outros FAQs
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Abre o FAQ clicado se não estava ativo
+            if (!isActive) {
+                faqItem.classList.add('active');
+            }
+        }
+
+        // Chatbot Functions
+        let chatbotOpen = false;
+
+        function toggleChatbot() {
+            const chatbot = document.getElementById('chatbotWindow');
+            chatbotOpen = !chatbotOpen;
+            
+            if (chatbotOpen) {
+                chatbot.classList.add('active');
+            } else {
+                chatbot.classList.remove('active');
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatbotInput');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+            
+            addUserMessage(message);
+            input.value = '';
+            
+            setTimeout(() => {
+                addBotResponse(message);
+            }, 800);
+        }
+
+        function sendQuickReply(message) {
+            const quickReplies = document.getElementById('quickReplies');
+            quickReplies.style.display = 'none';
+            
+            addUserMessage(message);
+            
+            setTimeout(() => {
+                addBotResponse(message);
+            }, 800);
+        }
+
+        function addUserMessage(text) {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message user';
+            messageDiv.innerHTML = `
+                <div class="chat-message-content">${text}</div>
+                <div class="chat-message-avatar">👤</div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            scrollChatToBottom();
+        }
+
+        function addBotResponse(userMessage) {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            const response = getBotResponse(userMessage);
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message bot';
+            messageDiv.innerHTML = `
+                <div class="chat-message-avatar">🤖</div>
+                <div class="chat-message-content">${response}</div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            scrollChatToBottom();
+        }
+
+        function getBotResponse(message) {
+            message = message.toLowerCase();
+            
+            if (message.includes('cadastr') || message.includes('conta') || message.includes('criar')) {
+                return 'Para criar sua conta:<br>1. Clique em "Cadastrar"<br>2. Preencha o formulário<br>3. Confirme seu email<br>Simples assim! 🎮';
+            }
+            
+            if (message.includes('torneio') || message.includes('campeonato') || message.includes('competição')) {
+                return 'Temos torneios de:<br>• CS2 - R$ 10<br>• VALORANT - R$ 10<br>• Rocket League - R$ 10<br>• Fortnite - R$ 10<br>Novos torneios toda semana! 🏆';
+            }
+            
+            if (message.includes('pagamento') || message.includes('pagar') || message.includes('pix')) {
+                return 'Aceitamos:<br>💳 Cartão de Crédito/Débito<br>📱 PIX (instantâneo)<br>🏦 Boleto<br>Pagamentos 100% seguros! 🔒';
+            }
+            
+            if (message.includes('regra') || message.includes('norma') || message.includes('fair play')) {
+                return 'Regras principais:<br>✅ Respeito entre jogadores<br>❌ Proibido trapaça<br>⏰ Pontualidade<br>🎮 Configurações oficiais<br>Fair play sempre! ⚖️';
+            }
+            
+            if (message.includes('prêmio') || message.includes('premio') || message.includes('ganhar')) {
+                return 'Os prêmios são creditados em até 48h na sua carteira Starz Up. Você pode sacar via PIX sem taxas! Valor mínimo: R$ 20 💰';
+            }
+            
+            if (message.includes('senha') || message.includes('esqueci')) {
+                return 'Para recuperar sua senha:<br>1. Clique em "Esqueci minha senha"<br>2. Digite seu email<br>3. Siga o link enviado<br>4. Crie nova senha 🔐';
+            }
+            
+            if (message.includes('cancelar') || message.includes('desistir')) {
+                return 'Você pode cancelar sua inscrição até 24h antes do torneio com reembolso total. Após isso, não há reembolso. ⏰';
+            }
+            
+            if (message.includes('suporte') || message.includes('ajuda') || message.includes('contato')) {
+                return 'Entre em contato:<br>📧 suporte@starzup.com<br>💬 discord.gg/starzup<br>📱 (11) 98765-4321<br>Estamos aqui para ajudar! 🤝';
+            }
+            
+            if (message.includes('olá') || message.includes('oi') || message.includes('ola')) {
+                return 'Olá! Como posso te ajudar hoje? 😊';
+            }
+            
+            if (message.includes('obrigad') || message.includes('valeu')) {
+                return 'Por nada! Qualquer dúvida, estou aqui! 🌟';
+            }
+            
+            return 'Desculpe, não entendi. 😅<br>Pergunte sobre:<br>• Cadastro<br>• Torneios<br>• Pagamentos<br>• Regras<br>• Suporte';
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function scrollChatToBottom() {
+            const messagesContainer = document.getElementById('chatbotMessages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+    </script>
 </body>
 </html>
