@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Starz Up - Apostas em eSports">
+    <title>Starz Up - Apostas</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="apostas.css">
+    <link href="imagens/logoempresa.png" rel="icon" type="image/x-icon">
+</head>
+<body>
+    <a href="index.html" class="btn-back">
+        <span class="back-arrow">←</span>
+        <span class="back-text">Voltar</span>
+    </a>
+
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h1>STARZ UP</h1>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="comunidade.html">Comunidade</a></li>
+                <li><a href="tournaments.html">Campeonatos</a></li>
+                <li><a href="apostas.html">Apostas</a></li>
+                <li><a href="suporte.html">Suporte</a></li>
+            </ul>
+            <div class="search-container">
+                <span class="search-icon"><img class="search-icon" src="imagens/lupadepesquisa.png" alt="Ícone de busca" width="20" height="19"></span>
+                <input type="text" class="search-bar" placeholder="Buscar partidas...">
+            </div>
+            <div class="nav-login">
+                <button class="btn-primary"><a href="cadastro.html">Cadastrar</a></button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="betting-hero">
+            <div class="hero-content">
+                <h1>APOSTE NOS MELHORES <span class="highlight">ESPORTS</span></h1>
+                <p>Odds competitivas, pagamentos rápidos e segurança garantida</p>
+            </div>
+            <div class="wallet-card">
+                <div class="wallet-header">
+                    <span>💰 Minha Carteira</span>
+                    <button class="btn-deposit" onclick="openDepositModal()">+ Depositar</button>
+                </div>
+                <div class="wallet-balance">
+                    <span class="balance-label">Saldo Disponível</span>
+                    <span class="balance-amount" id="walletBalance">R$ 0,00</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filters -->
+        <section class="filters-section">
+            <div class="filters-container">
+                <button class="filter-btn active" onclick="filterMatches('all')">🎮 Todos</button>
+                <button class="filter-btn" onclick="filterMatches('cs2')">🔫 CS2</button>
+                <button class="filter-btn" onclick="filterMatches('valorant')">⚔️ VALORANT</button>
+                <button class="filter-btn" onclick="filterMatches('rocket')">🚗 Rocket League</button>
+                <button class="filter-btn" onclick="filterMatches('fortnite')">🪂 Fortnite</button>
+                <button class="filter-btn" onclick="filterMatches('live')">🔴 Ao Vivo</button>
+            </div>
+        </section>
+
+        <!-- Live Matches -->
+        <section class="matches-section">
+            <h2 class="section-title">PARTIDAS <span class="highlight">AO VIVO</span></h2>
+            <div class="matches-container" id="liveMatches">
+                <!-- Match Card 1 -->
+                <div class="match-card live" data-game="cs2">
+                    <div class="match-header">
+                        <div class="match-game">
+                            <span class="game-icon">🔫</span>
+                            <span>CS2</span>
+                        </div>
+                        <span class="live-badge">🔴 AO VIVO</span>
+                    </div>
+                    <div class="match-info">
+                        <div class="tournament-name">IEM Katowice 2025 - Semifinal</div>
+                        <div class="match-time">Map 2 - 12:10</div>
+                    </div>
+                    <div class="match-teams">
+                        <div class="team team-1">
+                            <div class="team-logo">🛡️</div>
+                            <div class="team-details">
+                                <span class="team-name">FURIA Esports</span>
+                                <span class="team-score">12</span>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-2">
+                            <div class="team-details">
+                                <span class="team-name">LOUD Gaming</span>
+                                <span class="team-score">10</span>
+                            </div>
+                            <div class="team-logo">⚡</div>
+                        </div>
+                    </div>
+                    <div class="match-odds">
+                        <button class="odd-btn" onclick="addToBet('FURIA Esports', 1.85, 'CS2')">
+                            <span class="odd-team">FURIA</span>
+                            <span class="odd-value">1.85</span>
+                        </button>
+                        <button class="odd-btn" onclick="addToBet('LOUD Gaming', 2.10, 'CS2')">
+                            <span class="odd-team">LOUD</span>
+                            <span class="odd-value">2.10</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Match Card 2 -->
+                <div class="match-card live" data-game="valorant">
+                    <div class="match-header">
+                        <div class="match-game">
+                            <span class="game-icon">⚔️</span>
+                            <span>VALORANT</span>
+                        </div>
+                        <span class="live-badge">🔴 AO VIVO</span>
+                    </div>
+                    <div class="match-info">
+                        <div class="tournament-name">VCT Americas - Fase de Grupos</div>
+                        <div class="match-time">Map 1 - 8:7</div>
+                    </div>
+                    <div class="match-teams">
+                        <div class="team team-1">
+                            <div class="team-logo">🦅</div>
+                            <div class="team-details">
+                                <span class="team-name">Sentinels</span>
+                                <span class="team-score">8</span>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-2">
+                            <div class="team-details">
+                                <span class="team-name">Cloud9</span>
+                                <span class="team-score">7</span>
+                            </div>
+                            <div class="team-logo">☁️</div>
+                        </div>
+                    </div>
+                    <div class="match-odds">
+                        <button class="odd-btn" onclick="addToBet('Sentinels', 1.65, 'VALORANT')">
+                            <span class="odd-team">Sentinels</span>
+                            <span class="odd-value">1.65</span>
+                        </button>
+                        <button class="odd-btn" onclick="addToBet('Cloud9', 2.35, 'VALORANT')">
+                            <span class="odd-team">Cloud9</span>
+                            <span class="odd-value">2.35</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Upcoming Matches -->
+        <section class="matches-section">
+            <h2 class="section-title">PRÓXIMAS <span class="highlight">PARTIDAS</span></h2>
+            <div class="matches-container" id="upcomingMatches">
+                <!-- Match Card 3 -->
+                <div class="match-card" data-game="cs2">
+                    <div class="match-header">
+                        <div class="match-game">
+                            <span class="game-icon">🔫</span>
+                            <span>CS2</span>
+                        </div>
+                        <span class="match-status">Em 2h 30min</span>
+                    </div>
+                    <div class="match-info">
+                        <div class="tournament-name">BLAST Premier Spring 2025</div>
+                        <div class="match-time">Hoje às 20:00</div>
+                    </div>
+                    <div class="match-teams">
+                        <div class="team team-1">
+                            <div class="team-logo">🌟</div>
+                            <div class="team-details">
+                                <span class="team-name">Astralis</span>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-2">
+                            <div class="team-details">
+                                <span class="team-name">Vitality</span>
+                            </div>
+                            <div class="team-logo">🐝</div>
+                        </div>
+                    </div>
+                    <div class="match-odds">
+                        <button class="odd-btn" onclick="addToBet('Astralis', 2.20, 'CS2')">
+                            <span class="odd-team">Astralis</span>
+                            <span class="odd-value">2.20</span>
+                        </button>
+                        <button class="odd-btn" onclick="addToBet('Vitality', 1.75, 'CS2')">
+                            <span class="odd-team">Vitality</span>
+                            <span class="odd-value">1.75</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Match Card 4 -->
+                <div class="match-card" data-game="rocket">
+                    <div class="match-header">
+                        <div class="match-game">
+                            <span class="game-icon">🚗</span>
+                            <span>Rocket League</span>
+                        </div>
+                        <span class="match-status">Em 4h</span>
+                    </div>
+                    <div class="match-info">
+                        <div class="tournament-name">RLCS World Championship</div>
+                        <div class="match-time">Hoje às 22:00</div>
+                    </div>
+                    <div class="match-teams">
+                        <div class="team team-1">
+                            <div class="team-logo">🦁</div>
+                            <div class="team-details">
+                                <span class="team-name">G2 Esports</span>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-2">
+                            <div class="team-details">
+                                <span class="team-name">Team BDS</span>
+                            </div>
+                            <div class="team-logo">🔷</div>
+                        </div>
+                    </div>
+                    <div class="match-odds">
+                        <button class="odd-btn" onclick="addToBet('G2 Esports', 1.90, 'Rocket League')">
+                            <span class="odd-team">G2</span>
+                            <span class="odd-value">1.90</span>
+                        </button>
+                        <button class="odd-btn" onclick="addToBet('Team BDS', 1.95, 'Rocket League')">
+                            <span class="odd-team">BDS</span>
+                            <span class="odd-value">1.95</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Match Card 5 -->
+                <div class="match-card" data-game="valorant">
+                    <div class="match-header">
+                        <div class="match-game">
+                            <span class="game-icon">⚔️</span>
+                            <span>VALORANT</span>
+                        </div>
+                        <span class="match-status">Amanhã às 15:00</span>
+                    </div>
+                    <div class="match-info">
+                        <div class="tournament-name">VCT Pacific - Playoffs</div>
+                        <div class="match-time">27/10/2025</div>
+                    </div>
+                    <div class="match-teams">
+                        <div class="team team-1">
+                            <div class="team-logo">🐲</div>
+                            <div class="team-details">
+                                <span class="team-name">DRX</span>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-2">
+                            <div class="team-details">
+                                <span class="team-name">Paper Rex</span>
+                            </div>
+                            <div class="team-logo">🦖</div>
+                        </div>
+                    </div>
+                    <div class="match-odds">
+                        <button class="odd-btn" onclick="addToBet('DRX', 1.70, 'VALORANT')">
+                            <span class="odd-team">DRX</span>
+                            <span class="odd-value">1.70</span>
+                        </button>
+                        <button class="odd-btn" onclick="addToBet('Paper Rex', 2.25, 'VALORANT')">
+                            <span class="odd-team">PRX</span>
+                            <span class="odd-value">2.25</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Match Card 6 -->
+                <div class="match-card" data-game="fortnite">
+                    <div class="match-header">
+                        <div class="match-game">
+                            <span class="game-icon">🪂</span>
+                            <span>Fortnite</span>
+                        </div>
+                        <span class="match-status">Amanhã às 18:00</span>
+                    </div>
+                    <div class="match-info">
+                        <div class="tournament-name">FNCS Global Championship</div>
+                        <div class="match-time">27/10/2025</div>
+                    </div>
+                    <div class="match-teams">
+                        <div class="team team-1">
+                            <div class="team-logo">👑</div>
+                            <div class="team-details">
+                                <span class="team-name">Mero</span>
+                            </div>
+                        </div>
+                        <div class="vs-divider">VS</div>
+                        <div class="team team-2">
+                            <div class="team-details">
+                                <span class="team-name">Bugha</span>
+                            </div>
+                            <div class="team-logo">🎯</div>
+                        </div>
+                    </div>
+                    <div class="match-odds">
+                        <button class="odd-btn" onclick="addToBet('Mero', 1.80, 'Fortnite')">
+                            <span class="odd-team">Mero</span>
+                            <span class="odd-value">1.80</span>
+                        </button>
+                        <button class="odd-btn" onclick="addToBet('Bugha', 2.05, 'Fortnite')">
+                            <span class="odd-team">Bugha</span>
+                            <span class="odd-value">2.05</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bet Slip (Floating) -->
+    <div class="bet-slip" id="betSlip">
+        <div class="bet-slip-header">
+            <h3>🎫 Bilhete de Apostas</h3>
+            <button class="btn-clear" onclick="clearBetSlip()">Limpar</button>
+        </div>
+        <div class="bet-slip-content" id="betSlipContent">
+            <div class="empty-slip">
+                <p>Nenhuma aposta selecionada</p>
+                <span>Clique nas odds para adicionar</span>
+            </div>
+        </div>
+        <div class="bet-slip-footer" id="betSlipFooter" style="display: none;">
+            <div class="bet-input-group">
+                <label>Valor da Aposta (R$)</label>
+                <input type="number" id="betAmount" placeholder="0.00" min="1" step="0.01" oninput="calculatePotentialWin()">
+            </div>
+            <div class="bet-summary">
+                <div class="summary-row">
+                    <span>Total de Odds:</span>
+                    <span id="totalOdds">1.00</span>
+                </div>
+                <div class="summary-row highlight">
+                    <span>Ganho Potencial:</span>
+                    <span id="potentialWin">R$ 0,00</span>
+                </div>
+            </div>
+            <button class="btn-place-bet" onclick="placeBet()">Realizar Aposta</button>
+        </div>
+    </div>
+
+    <!-- Deposit Modal -->
+    <div class="modal" id="depositModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>💰 Depositar Fundos</h2>
+                <button class="modal-close" onclick="closeDepositModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="deposit-methods">
+                    <button class="deposit-method active" onclick="selectDepositMethod('pix')">
+                        <span class="method-icon">📱</span>
+                        <span>PIX</span>
+                    </button>
+                    <button class="deposit-method" onclick="selectDepositMethod('card')">
+                        <span class="method-icon">💳</span>
+                        <span>Cartão</span>
+                    </button>
+                    <button class="deposit-method" onclick="selectDepositMethod('boleto')">
+                        <span class="method-icon">🏦</span>
+                        <span>Boleto</span>
+                    </button>
+                </div>
+                <div class="deposit-form">
+                    <label>Valor do Depósito (R$)</label>
+                    <input type="number" id="depositAmount" placeholder="50.00" min="10" step="0.01">
+                    <div class="quick-amounts">
+                        <button onclick="setDepositAmount(50)">R$ 50</button>
+                        <button onclick="setDepositAmount(100)">R$ 100</button>
+                        <button onclick="setDepositAmount(200)">R$ 200</button>
+                        <button onclick="setDepositAmount(500)">R$ 500</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeDepositModal()">Cancelar</button>
+                <button class="btn-primary" onclick="confirmDeposit()">Confirmar Depósito</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>STARZ UP</h3>
+                    <p>A revolução dos torneios online</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Links Úteis</h4>
+                    <ul>
+                        <li><a href="#rules">Regulamento</a></li>
+                        <li><a href="#support">Suporte</a></li>
+                        <li><a href="#privacy">Privacidade</a></li>
+                        <li><a href="#terms">Termos de Uso</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>Siga-nos</h4>
+                    <div class="social-links">
+                        <a href="#">Discord</a>
+                        <a href="#">Twitch</a>
+                        <a href="#">Instagram</a>
+                        <a href="#">Twitter</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Starz Up. Todos os direitos reservados.</p>
+                <p style="font-size: 0.8rem; color: #A78BFA; margin-top: 0.5rem;">🔞 Jogo responsável. Aposte com moderação.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="apostas.js"></script>
+</body>
+</html>
