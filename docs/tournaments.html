@@ -24,7 +24,6 @@
                 <li><a href="index.html">Início</a></li>
                 <li><a href="comunidade.html">Comunidade</a></li>
                 <li><a href="tournaments.html" class="active">Campeonatos</a></li>
-                <li><a href="streams.html">Streams</a></li>
                 <li><a href="apostas.html">Apostas</a></li>
                 <li><a href="suporte.html">Suporte</a></li>
             </ul>
@@ -43,9 +42,6 @@
             <div class="container">
                 <h1 class="page-title">TORNEIOS <span class="highlight">DISPONÍVEIS</span></h1>
                 <p class="page-subtitle">Escolha seu desafio e mostre suas habilidades</p>
-                <button class="btn-create-tournament" onclick="openCreateModal()">
-                    + Criar Seu Torneio
-                </button>
             </div>
         </section>
 
@@ -409,89 +405,6 @@
         </section>
     </main>
 
-    <!-- Modal Criar Torneio -->
-    <div id="createTournamentModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeCreateModal()">&times;</span>
-            <h2>CRIAR SEU <span class="highlight">TORNEIO</span></h2>
-            <p class="modal-subtitle">Organize sua própria competição personalizada</p>
-            
-            <form class="create-tournament-form">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="tournament-name">Nome do Torneio</label>
-                        <input type="text" id="tournament-name" placeholder="Ex: Minha Copa 2025" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="tournament-game">Jogo</label>
-                        <select id="tournament-game" required>
-                            <option value="">Selecione o jogo</option>
-                            <option value="cs2">Counter-Strike 2</option>
-                            <option value="valorant">VALORANT</option>
-                            <option value="rocket">Rocket League</option>
-                            <option value="fortnite">Fortnite</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="tournament-format">Formato</label>
-                        <select id="tournament-format" required>
-                            <option value="">Selecione o formato</option>
-                            <option value="single">Eliminação Simples</option>
-                            <option value="double">Dupla Eliminação</option>
-                            <option value="swiss">Swiss System</option>
-                            <option value="round">Round Robin</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="tournament-date">Data do Torneio</label>
-                        <input type="date" id="tournament-date" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="tournament-time">Horário</label>
-                        <input type="time" id="tournament-time" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="tournament-slots">Número de Vagas</label>
-                        <input type="number" id="tournament-slots" placeholder="Ex: 32" min="4" max="128" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="tournament-fee">Taxa de Inscrição (R$)</label>
-                        <input type="number" id="tournament-fee" placeholder="Ex: 10.00" min="0" step="0.01" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="tournament-prize">Prêmio Total (R$)</label>
-                        <input type="number" id="tournament-prize" placeholder="Ex: 500.00" min="0" step="0.01" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="tournament-description">Descrição / Regras</label>
-                    <textarea id="tournament-description" rows="4" placeholder="Descreva as regras e detalhes do torneio..." required></textarea>
-                </div>
-
-                <div class="form-actions">
-                    <button type="button" class="btn-secondary" onclick="closeCreateModal()">Cancelar</button>
-                    <button type="submit" class="btn-primary">Criar Torneio</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <footer>
         <div class="container">
             <div class="footer-content">
@@ -578,22 +491,6 @@
             document.getElementById('status-filter').value = 'all';
             document.getElementById('prize-filter').value = 'all';
             applyFilters();
-        }
-
-        function openCreateModal() {
-            document.getElementById('createTournamentModal').style.display = 'flex';
-        }
-
-        function closeCreateModal() {
-            document.getElementById('createTournamentModal').style.display = 'none';
-        }
-
-        // Fechar modal clicando fora
-        window.onclick = function(event) {
-            const modal = document.getElementById('createTournamentModal');
-            if (event.target == modal) {
-                closeCreateModal();
-            }
         }
     </script>
 </body>
