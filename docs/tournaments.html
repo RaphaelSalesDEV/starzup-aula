@@ -10,6 +10,11 @@
     <link href="imagens/logoempresa.png" rel="icon" type="image/x-icon">
 </head>
 <body>
+    <a href="index.html" class="btn-back">
+        <span class="back-arrow">←</span>
+        <span class="back-text">Voltar</span>
+    </a>
+
     <header>
         <nav class="navbar">
             <div class="nav-brand">
@@ -19,6 +24,7 @@
                 <li><a href="index.html">Início</a></li>
                 <li><a href="comunidade.html">Comunidade</a></li>
                 <li><a href="tournaments.html" class="active">Campeonatos</a></li>
+                <li><a href="streams.html">Streams</a></li>
                 <li><a href="apostas.html">Apostas</a></li>
                 <li><a href="suporte.html">Suporte</a></li>
             </ul>
@@ -79,14 +85,6 @@
                             <option value="valorant">VALORANT</option>
                             <option value="rocket">Rocket League</option>
                             <option value="fortnite">Fortnite</option>
-                            <option value="lol">League of Legends</option>
-                            <option value="dota">Dota 2</option>
-                            <option value="apex">Apex Legends</option>
-                            <option value="cod">Call of Duty</option>
-                            <option value="fifa">FIFA</option>
-                            <option value="overwatch">Overwatch</option>
-                            <option value="r6">Rainbow Six Siege</option>
-                            <option value="sf">Street Fighter</option>
                         </select>
                     </div>
 
@@ -401,40 +399,6 @@
                             <button class="btn-secondary tournament-btn">Notificar-me</button>
                         </div>
                     </div>
-
-                    <!-- League of Legends Tournament -->
-                    <div class="tournament-card" data-game="lol" data-status="open" data-prize="high">
-                        <div class="tournament-badge status-open">INSCRIÇÕES ABERTAS</div>
-                        <div class="tournament-header lol-bg">
-                            <img src="imagens/LOLlogo.png" alt="League of Legends" class="tournament-game-icon" style="width: 140px;">
-                            <h3>LOL SUMMONER'S CUP</h3>
-                        </div>
-                        <div class="tournament-body">
-                            <div class="tournament-info">
-                                <div class="info-item">
-                                    <span class="info-label">Prêmio:</span>
-                                    <span class="info-value prize">R$ 6.000</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Data:</span>
-                                    <span class="info-value">02/11/2025</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Taxa:</span>
-                                    <span class="info-value">R$ 25</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Vagas:</span>
-                                    <span class="info-value">28/40</span>
-                                </div>
-                            </div>
-                            <div class="tournament-details">
-                                <p>Formato: 5v5 Dupla Eliminação</p>
-                                <p>Rank: Gold+</p>
-                            </div>
-                            <button class="btn-primary tournament-btn">Inscrever-se Agora</button>
-                        </div>
-                    </div>
                 </div>
 
                 <div id="no-results" class="no-results" style="display: none;">
@@ -469,7 +433,6 @@
                             <option value="valorant">VALORANT</option>
                             <option value="rocket">Rocket League</option>
                             <option value="fortnite">Fortnite</option>
-                            <option value="lol">League of Legends</option>
                         </select>
                     </div>
 
@@ -623,6 +586,14 @@
 
         function closeCreateModal() {
             document.getElementById('createTournamentModal').style.display = 'none';
+        }
+
+        // Fechar modal clicando fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('createTournamentModal');
+            if (event.target == modal) {
+                closeCreateModal();
+            }
         }
     </script>
 </body>
