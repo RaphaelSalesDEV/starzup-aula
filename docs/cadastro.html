@@ -13,39 +13,32 @@
         <img class="back-arrow" src="imagens/seta.png" alt="Ícone de voltar" width="50" height="40"> 
         <span class="back-text">Voltar ao Menu</span>
     </a>
-
     <div class="form-container">
         <div class="cadastro">
             <h1>CADASTRE-SE <span class="highlight">AQUI</span></h1>
             <p><br>Preencha os campos abaixo para criar sua conta.</p>
         </div>
-
         <div class="obrigatorio">
             <p>Todos os campos são obrigatórios!</p>
         </div>
-
-        <form action="processar_cadastro.html" method="POST">
+        <form id="cadastroForm">
             <div class="form-group">
                 <label for="nome" class="palavras">Nome:</label>
                 <input type="text" id="nome" name="nome" placeholder="Digite seu nome" required minlength="3">
             </div>
-
             <div class="form-group">
                 <label for="email" class="palavras">Email:</label>
                 <input type="email" id="email" name="email" placeholder="seu@email.com" required>
             </div>
-
             <div class="form-group">
                 <label for="senha" class="palavras">Senha:</label>
                 <input type="password" id="senha" name="senha" placeholder="Mínimo 6 caracteres" required minlength="6">
             </div>
-
             <h4 class="japossuiconta">Já possui uma conta? <a class="botaologin" href="login.html">Faça login</a></h4>
-
-            <a href="index.html">
-                <button type="submit" class="btn-primary">Cadastrar</button>
-            </a>
+            <button type="submit" class="btn-primary">Cadastrar</button>
         </form>
     </div>
+    
+    <script type="module" src="cadastro-script.js"></script>
 </body>
 </html>
