@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Starz Up - Dashboard do Jogador">
+    <title>Starz Up - Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link href="imagens/logoempresa.png" rel="icon" type="image/x-icon">
+</head>
+<body>
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <img src="imagens/logoempresa.png" alt="Logo Starz Up" class="logo">
+            <h2>STARZ UP</h2>
+        </div>
+        
+        <div class="user-profile">
+            <div class="profile-avatar">
+                <img id="userAvatar" src="imagens/avatar-default.png" alt="Avatar">
+            </div>
+            <div class="profile-info">
+                <h3 id="userName">Carregando...</h3>
+                <p id="userEmail">email@exemplo.com</p>
+            </div>
+        </div>
+        
+        <ul class="nav-menu">
+            <li><a href="#dashboard" class="active" data-section="dashboard">
+                <span class="icon">🏠</span>
+                <span>Dashboard</span>
+            </a></li>
+            <li><a href="#campeonatos" data-section="campeonatos">
+                <span class="icon">🏆</span>
+                <span>Campeonatos</span>
+            </a></li>
+            <li><a href="#comunidade" data-section="comunidade">
+                <span class="icon">👥</span>
+                <span>Comunidade</span>
+            </a></li>
+            <li><a href="#apostas" data-section="apostas">
+                <span class="icon">🎲</span>
+                <span>Apostas</span>
+            </a></li>
+            <li><a href="#saldo" data-section="saldo">
+                <span class="icon">💰</span>
+                <span>Saldo</span>
+            </a></li>
+            <li><a href="#suporte" data-section="suporte">
+                <span class="icon">💬</span>
+                <span>Suporte</span>
+            </a></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <button id="logoutBtn" class="btn-logout">
+                <span class="icon">🚪</span>
+                <span>Sair</span>
+            </button>
+        </div>
+    </nav>
+    
+    <main class="main-content">
+        <header class="top-bar">
+            <div class="search-container">
+                <input type="text" placeholder="Buscar torneios, jogadores...">
+                <button class="search-btn">🔍</button>
+            </div>
+            <div class="user-actions">
+                <button class="notification-btn">
+                    <span class="icon">🔔</span>
+                    <span class="badge">3</span>
+                </button>
+                <div class="balance-display">
+                    <span class="balance-label">Saldo:</span>
+                    <span class="balance-amount" id="headerBalance">R$ 0,00</span>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Dashboard Section -->
+        <section id="section-dashboard" class="content-section active">
+            <div class="welcome-banner">
+                <h1>Bem-vindo de volta, <span id="welcomeName">Jogador</span>!</h1>
+                <p>Pronto para dominar os torneios?</p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🏆</div>
+                    <div class="stat-info">
+                        <h3 id="statTorneios">0</h3>
+                        <p>Torneios Inscritos</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🎮</div>
+                    <div class="stat-info">
+                        <h3 id="statPartidas">0</h3>
+                        <p>Partidas Jogadas</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-info">
+                        <h3 id="statVitorias">0</h3>
+                        <p>Vitórias</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-info">
+                        <h3 id="statRanking">#-</h3>
+                        <p>Ranking Geral</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="tournaments-preview">
+                    <h2>Próximos Torneios</h2>
+                    <div id="upcomingTournaments" class="tournaments-list">
+                        <p class="loading">Carregando torneios...</p>
+                    </div>
+                </div>
+                
+                <div class="activity-feed">
+                    <h2>Atividade Recente</h2>
+                    <div id="activityFeed" class="activity-list">
+                        <p class="loading">Carregando atividades...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Campeonatos Section -->
+        <section id="section-campeonatos" class="content-section">
+            <h1>Campeonatos Disponíveis</h1>
+            <div class="filters">
+                <button class="filter-btn active" data-game="all">Todos</button>
+                <button class="filter-btn" data-game="cs2">CS2</button>
+                <button class="filter-btn" data-game="valorant">VALORANT</button>
+                <button class="filter-btn" data-game="rocket">Rocket League</button>
+                <button class="filter-btn" data-game="fortnite">Fortnite</button>
+            </div>
+            <div id="tournamentsGrid" class="tournaments-grid">
+                <p class="loading">Carregando campeonatos...</p>
+            </div>
+        </section>
+        
+        <!-- Comunidade Section -->
+        <section id="section-comunidade" class="content-section">
+            <h1>Comunidade</h1>
+            <div class="community-tabs">
+                <button class="tab-btn active" data-tab="chat">Chat Geral</button>
+                <button class="tab-btn" data-tab="teams">Equipes</button>
+                <button class="tab-btn" data-tab="friends">Amigos</button>
+            </div>
+            <div class="community-content">
+                <div id="chatContent" class="tab-content active">
+                    <div class="chat-container">
+                        <div id="chatMessages" class="chat-messages"></div>
+                        <div class="chat-input">
+                            <input type="text" id="messageInput" placeholder="Digite sua mensagem...">
+                            <button id="sendMessage">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="teamsContent" class="tab-content">
+                    <p>Equipes em desenvolvimento...</p>
+                </div>
+                <div id="friendsContent" class="tab-content">
+                    <p>Lista de amigos em desenvolvimento...</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Apostas Section -->
+        <section id="section-apostas" class="content-section">
+            <h1>Apostas</h1>
+            <div class="bets-container">
+                <div class="available-bets">
+                    <h2>Apostas Disponíveis</h2>
+                    <div id="availableBets" class="bets-grid">
+                        <p class="loading">Carregando apostas...</p>
+                    </div>
+                </div>
+                <div class="my-bets">
+                    <h2>Minhas Apostas</h2>
+                    <div id="myBets" class="bets-list">
+                        <p class="empty-state">Você ainda não fez apostas</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Saldo Section -->
+        <section id="section-saldo" class="content-section">
+            <h1>Gerenciar Saldo</h1>
+            <div class="balance-container">
+                <div class="balance-card">
+                    <h2>Saldo Atual</h2>
+                    <div class="balance-display-large">
+                        <span id="currentBalance">R$ 0,00</span>
+                    </div>
+                </div>
+                
+                <div class="balance-actions">
+                    <div class="action-card">
+                        <h3>Adicionar Saldo</h3>
+                        <input type="number" id="depositAmount" placeholder="Valor (R$)" min="10">
+                        <button id="depositBtn" class="btn-primary">Depositar</button>
+                    </div>
+                    
+                    <div class="action-card">
+                        <h3>Sacar Saldo</h3>
+                        <input type="number" id="withdrawAmount" placeholder="Valor (R$)" min="10">
+                        <button id="withdrawBtn" class="btn-secondary">Sacar</button>
+                    </div>
+                </div>
+                
+                <div class="transaction-history">
+                    <h2>Histórico de Transações</h2>
+                    <div id="transactionHistory" class="transactions-list">
+                        <p class="empty-state">Nenhuma transação ainda</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Suporte Section -->
+        <section id="section-suporte" class="content-section">
+            <h1>Suporte</h1>
+            <div class="support-container">
+                <div class="support-options">
+                    <div class="support-card">
+                        <h3>📚 Central de Ajuda</h3>
+                        <p>Encontre respostas para perguntas frequentes</p>
+                        <button class="btn-secondary">Acessar</button>
+                    </div>
+                    <div class="support-card">
+                        <h3>💬 Chat ao Vivo</h3>
+                        <p>Fale com nossa equipe de suporte</p>
+                        <button class="btn-primary">Iniciar Chat</button>
+                    </div>
+                    <div class="support-card">
+                        <h3>✉️ E-mail</h3>
+                        <p>Envie uma mensagem detalhada</p>
+                        <button class="btn-secondary">Enviar E-mail</button>
+                    </div>
+                </div>
+                
+                <div class="faq-section">
+                    <h2>Perguntas Frequentes</h2>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <button class="faq-question">Como me inscrever em um torneio?</button>
+                            <div class="faq-answer">
+                                <p>Acesse a seção de Campeonatos, escolha o torneio desejado e clique em "Inscrever-se".</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question">Como adicionar saldo?</button>
+                            <div class="faq-answer">
+                                <p>Vá para a seção Saldo e escolha um dos métodos de pagamento disponíveis.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question">Posso cancelar minha inscrição?</button>
+                            <div class="faq-answer">
+                                <p>Sim, até 24 horas antes do início do torneio.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <script type="module" src="dashboard-script.js"></script>
+</body>
+</html>
