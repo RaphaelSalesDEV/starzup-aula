@@ -15,19 +15,15 @@
             <div class="nav-brand">
                 <h1>STARZ UP</h1>
             </div>
-                <ul class="nav-menu">
-                    <li><a href="../index.html">Início</a></li>
-                    <li><a href="../comunidade/comunidade.html">Comunidade</a></li>
-                    <li><a href="../campeonatos/tournaments.html">Campeonatos</a></li>
-                    <li><a href="apostas.html">Apostas</a></li>
-                    <li><a href="../suporte/suporte.html">Suporte</a></li>
-                </ul>
-            <div class="search-container">
-                <span class="search-icon"><img class="search-icon" src="../imagens/lupadepesquisa.png" alt="Ícone de busca" width="20" height="19"></span>
-                <input type="text" class="search-bar" placeholder="Buscar partidas...">
-            </div>
+            <ul class="nav-menu">
+                <li><a href="../index.html">Início</a></li>
+                <li><a href="../comunidade/comunidade.html">Comunidade</a></li>
+                <li><a href="../campeonatos/tournaments.html">Campeonatos</a></li>
+                <li><a href="apostas.html">Apostas</a></li>
+                <li><a href="../suporte/suporte.html">Suporte</a></li>
+            </ul>
             <div class="nav-login">
-                <button class="btn-primary"><a href="../cadastro.html">Cadastrar</a></button>
+                <button class="btn-primary"><a href="../login.html">Acessar</a></button>
             </div>
         </nav>
     </header>
@@ -38,15 +34,42 @@
             <div class="hero-content">
                 <h1>APOSTE NOS MELHORES <span class="highlight">ESPORTS</span></h1>
                 <p>Odds competitivas, pagamentos rápidos e segurança garantida</p>
-            </div>
-            <div class="wallet-card">
-                <div class="wallet-header">
-                    <span>💰 Minha Carteira</span>
-                    <button class="btn-deposit" onclick="openDepositModal()">+ Depositar</button>
+                <div class="cta-buttons">
+                    <a href="../cadastro.html" class="btn-primary large">Começar Agora</a>
+                    <a href="../login.html" class="btn-secondary large">Já tenho conta</a>
                 </div>
-                <div class="wallet-balance">
-                    <span class="balance-label">Saldo Disponível</span>
-                    <span class="balance-amount" id="walletBalance">R$ 0,00</span>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">🎰</div>
+                <h3>Faça Login para Apostar</h3>
+                <p>Cadastre-se e receba R$ 50 de bônus de boas-vindas!</p>
+                <a href="../cadastro.html" class="btn-signup">Criar Conta Grátis</a>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits-section">
+            <h2 class="section-title">POR QUE APOSTAR NA <span class="highlight">STARZ UP</span>?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">💰</div>
+                    <h3>Bônus de Boas-vindas</h3>
+                    <p>Ganhe R$ 50 grátis ao criar sua conta e fazer o primeiro depósito</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">⚡</div>
+                    <h3>Saques Instantâneos</h3>
+                    <p>Receba seus ganhos em até 5 minutos via PIX</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🛡️</div>
+                    <h3>100% Seguro</h3>
+                    <p>Plataforma criptografada e regulamentada</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">📊</div>
+                    <h3>Melhores Odds</h3>
+                    <p>As cotações mais competitivas do mercado</p>
                 </div>
             </div>
         </section>
@@ -54,21 +77,21 @@
         <!-- Filters -->
         <section class="filters-section">
             <div class="filters-container">
-                <button class="filter-btn active" onclick="filterMatches('all')">🎮 Todos</button>
-                <button class="filter-btn" onclick="filterMatches('cs2')">🔫 CS2</button>
-                <button class="filter-btn" onclick="filterMatches('valorant')">⚔️ VALORANT</button>
-                <button class="filter-btn" onclick="filterMatches('rocket')">🚗 Rocket League</button>
-                <button class="filter-btn" onclick="filterMatches('fortnite')">🪂 Fortnite</button>
-                <button class="filter-btn" onclick="filterMatches('live')">🔴 Ao Vivo</button>
+                <button class="filter-btn active">🎮 Todos</button>
+                <button class="filter-btn">🔫 CS2</button>
+                <button class="filter-btn">⚔️ VALORANT</button>
+                <button class="filter-btn">🚗 Rocket League</button>
+                <button class="filter-btn">🪂 Fortnite</button>
+                <button class="filter-btn">🔴 Ao Vivo</button>
             </div>
         </section>
 
-        <!-- Live Matches -->
+        <!-- Live Matches Preview -->
         <section class="matches-section">
             <h2 class="section-title">PARTIDAS <span class="highlight">AO VIVO</span></h2>
-            <div class="matches-container" id="liveMatches">
+            <div class="matches-container">
                 <!-- Match Card 1 -->
-                <div class="match-card live" data-game="cs2">
+                <div class="match-card live">
                     <div class="match-header">
                         <div class="match-game">
                             <span class="game-icon">🔫</span>
@@ -98,19 +121,23 @@
                         </div>
                     </div>
                     <div class="match-odds">
-                        <button class="odd-btn" onclick="addToBet('FURIA Esports', 1.85, 'CS2')">
+                        <div class="odd-display">
                             <span class="odd-team">FURIA</span>
                             <span class="odd-value">1.85</span>
-                        </button>
-                        <button class="odd-btn" onclick="addToBet('LOUD Gaming', 2.10, 'CS2')">
+                        </div>
+                        <div class="odd-display">
                             <span class="odd-team">LOUD</span>
                             <span class="odd-value">2.10</span>
-                        </button>
+                        </div>
+                    </div>
+                    <div class="login-overlay">
+                        <p>🔒 Faça login para apostar</p>
+                        <a href="../login.html" class="btn-login-overlay">Entrar Agora</a>
                     </div>
                 </div>
 
                 <!-- Match Card 2 -->
-                <div class="match-card live" data-game="valorant">
+                <div class="match-card live">
                     <div class="match-header">
                         <div class="match-game">
                             <span class="game-icon">⚔️</span>
@@ -140,25 +167,29 @@
                         </div>
                     </div>
                     <div class="match-odds">
-                        <button class="odd-btn" onclick="addToBet('Sentinels', 1.65, 'VALORANT')">
+                        <div class="odd-display">
                             <span class="odd-team">Sentinels</span>
                             <span class="odd-value">1.65</span>
-                        </button>
-                        <button class="odd-btn" onclick="addToBet('Cloud9', 2.35, 'VALORANT')">
+                        </div>
+                        <div class="odd-display">
                             <span class="odd-team">Cloud9</span>
                             <span class="odd-value">2.35</span>
-                        </button>
+                        </div>
+                    </div>
+                    <div class="login-overlay">
+                        <p>🔒 Faça login para apostar</p>
+                        <a href="../login.html" class="btn-login-overlay">Entrar Agora</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Upcoming Matches -->
+        <!-- Upcoming Matches Preview -->
         <section class="matches-section">
             <h2 class="section-title">PRÓXIMAS <span class="highlight">PARTIDAS</span></h2>
-            <div class="matches-container" id="upcomingMatches">
+            <div class="matches-container">
                 <!-- Match Card 3 -->
-                <div class="match-card" data-game="cs2">
+                <div class="match-card">
                     <div class="match-header">
                         <div class="match-game">
                             <span class="game-icon">🔫</span>
@@ -186,19 +217,23 @@
                         </div>
                     </div>
                     <div class="match-odds">
-                        <button class="odd-btn" onclick="addToBet('Astralis', 2.20, 'CS2')">
+                        <div class="odd-display">
                             <span class="odd-team">Astralis</span>
                             <span class="odd-value">2.20</span>
-                        </button>
-                        <button class="odd-btn" onclick="addToBet('Vitality', 1.75, 'CS2')">
+                        </div>
+                        <div class="odd-display">
                             <span class="odd-team">Vitality</span>
                             <span class="odd-value">1.75</span>
-                        </button>
+                        </div>
+                    </div>
+                    <div class="login-overlay">
+                        <p>🔒 Faça login para apostar</p>
+                        <a href="../login.html" class="btn-login-overlay">Entrar Agora</a>
                     </div>
                 </div>
 
                 <!-- Match Card 4 -->
-                <div class="match-card" data-game="rocket">
+                <div class="match-card">
                     <div class="match-header">
                         <div class="match-game">
                             <span class="game-icon">🚗</span>
@@ -226,19 +261,23 @@
                         </div>
                     </div>
                     <div class="match-odds">
-                        <button class="odd-btn" onclick="addToBet('G2 Esports', 1.90, 'Rocket League')">
+                        <div class="odd-display">
                             <span class="odd-team">G2</span>
                             <span class="odd-value">1.90</span>
-                        </button>
-                        <button class="odd-btn" onclick="addToBet('Team BDS', 1.95, 'Rocket League')">
+                        </div>
+                        <div class="odd-display">
                             <span class="odd-team">BDS</span>
                             <span class="odd-value">1.95</span>
-                        </button>
+                        </div>
+                    </div>
+                    <div class="login-overlay">
+                        <p>🔒 Faça login para apostar</p>
+                        <a href="../login.html" class="btn-login-overlay">Entrar Agora</a>
                     </div>
                 </div>
 
                 <!-- Match Card 5 -->
-                <div class="match-card" data-game="valorant">
+                <div class="match-card">
                     <div class="match-header">
                         <div class="match-game">
                             <span class="game-icon">⚔️</span>
@@ -248,7 +287,7 @@
                     </div>
                     <div class="match-info">
                         <div class="tournament-name">VCT Pacific - Playoffs</div>
-                        <div class="match-time">27/10/2025</div>
+                        <div class="match-time">13/11/2025</div>
                     </div>
                     <div class="match-teams">
                         <div class="team team-1">
@@ -266,19 +305,23 @@
                         </div>
                     </div>
                     <div class="match-odds">
-                        <button class="odd-btn" onclick="addToBet('DRX', 1.70, 'VALORANT')">
+                        <div class="odd-display">
                             <span class="odd-team">DRX</span>
                             <span class="odd-value">1.70</span>
-                        </button>
-                        <button class="odd-btn" onclick="addToBet('Paper Rex', 2.25, 'VALORANT')">
+                        </div>
+                        <div class="odd-display">
                             <span class="odd-team">PRX</span>
                             <span class="odd-value">2.25</span>
-                        </button>
+                        </div>
+                    </div>
+                    <div class="login-overlay">
+                        <p>🔒 Faça login para apostar</p>
+                        <a href="../login.html" class="btn-login-overlay">Entrar Agora</a>
                     </div>
                 </div>
 
                 <!-- Match Card 6 -->
-                <div class="match-card" data-game="fortnite">
+                <div class="match-card">
                     <div class="match-header">
                         <div class="match-game">
                             <span class="game-icon">🪂</span>
@@ -288,7 +331,7 @@
                     </div>
                     <div class="match-info">
                         <div class="tournament-name">FNCS Global Championship</div>
-                        <div class="match-time">27/10/2025</div>
+                        <div class="match-time">13/11/2025</div>
                     </div>
                     <div class="match-teams">
                         <div class="team team-1">
@@ -306,90 +349,35 @@
                         </div>
                     </div>
                     <div class="match-odds">
-                        <button class="odd-btn" onclick="addToBet('Mero', 1.80, 'Fortnite')">
+                        <div class="odd-display">
                             <span class="odd-team">Mero</span>
                             <span class="odd-value">1.80</span>
-                        </button>
-                        <button class="odd-btn" onclick="addToBet('Bugha', 2.05, 'Fortnite')">
+                        </div>
+                        <div class="odd-display">
                             <span class="odd-team">Bugha</span>
                             <span class="odd-value">2.05</span>
-                        </button>
+                        </div>
+                    </div>
+                    <div class="login-overlay">
+                        <p>🔒 Faça login para apostar</p>
+                        <a href="../login.html" class="btn-login-overlay">Entrar Agora</a>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Final CTA -->
+        <section class="final-cta">
+            <div class="cta-content">
+                <h2>PRONTO PARA <span class="highlight-gold">GANHAR</span>?</h2>
+                <p>Cadastre-se agora e receba R$ 50 de bônus para suas primeiras apostas!</p>
+                <div class="cta-buttons-final">
+                    <a href="../cadastro.html" class="btn-cta-primary">Criar Conta Grátis</a>
+                    <a href="../login.html" class="btn-cta-secondary">Já Tenho Conta</a>
+                </div>
+            </div>
+        </section>
     </main>
-
-    <!-- Bet Slip (Floating) -->
-    <div class="bet-slip" id="betSlip">
-        <div class="bet-slip-header">
-            <h3>🎫 Bilhete de Apostas</h3>
-            <button class="btn-clear" onclick="clearBetSlip()">Limpar</button>
-        </div>
-        <div class="bet-slip-content" id="betSlipContent">
-            <div class="empty-slip">
-                <p>Nenhuma aposta selecionada</p>
-                <span>Clique nas odds para adicionar</span>
-            </div>
-        </div>
-        <div class="bet-slip-footer" id="betSlipFooter" style="display: none;">
-            <div class="bet-input-group">
-                <label>Valor da Aposta (R$)</label>
-                <input type="number" id="betAmount" placeholder="0.00" min="1" step="0.01" oninput="calculatePotentialWin()">
-            </div>
-            <div class="bet-summary">
-                <div class="summary-row">
-                    <span>Total de Odds:</span>
-                    <span id="totalOdds">1.00</span>
-                </div>
-                <div class="summary-row highlight">
-                    <span>Ganho Potencial:</span>
-                    <span id="potentialWin">R$ 0,00</span>
-                </div>
-            </div>
-            <button class="btn-place-bet" onclick="placeBet()">Realizar Aposta</button>
-        </div>
-    </div>
-
-    <!-- Deposit Modal -->
-    <div class="modal" id="depositModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>💰 Depositar Fundos</h2>
-                <button class="modal-close" onclick="closeDepositModal()">✕</button>
-            </div>
-            <div class="modal-body">
-                <div class="deposit-methods">
-                    <button class="deposit-method active" onclick="selectDepositMethod('pix')">
-                        <span class="method-icon">📱</span>
-                        <span>PIX</span>
-                    </button>
-                    <button class="deposit-method" onclick="selectDepositMethod('card')">
-                        <span class="method-icon">💳</span>
-                        <span>Cartão</span>
-                    </button>
-                    <button class="deposit-method" onclick="selectDepositMethod('boleto')">
-                        <span class="method-icon">🏦</span>
-                        <span>Boleto</span>
-                    </button>
-                </div>
-                <div class="deposit-form">
-                    <label>Valor do Depósito (R$)</label>
-                    <input type="number" id="depositAmount" placeholder="50.00" min="10" step="0.01">
-                    <div class="quick-amounts">
-                        <button onclick="setDepositAmount(50)">R$ 50</button>
-                        <button onclick="setDepositAmount(100)">R$ 100</button>
-                        <button onclick="setDepositAmount(200)">R$ 200</button>
-                        <button onclick="setDepositAmount(500)">R$ 500</button>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-secondary" onclick="closeDepositModal()">Cancelar</button>
-                <button class="btn-primary" onclick="confirmDeposit()">Confirmar Depósito</button>
-            </div>
-        </div>
-    </div>
 
     <footer>
         <div class="container">
@@ -423,7 +411,5 @@
             </div>
         </div>
     </footer>
-
-    <script src="apostas.js"></script>
 </body>
 </html>
