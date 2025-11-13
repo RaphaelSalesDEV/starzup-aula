@@ -19,16 +19,12 @@
             <ul class="nav-menu">
                 <li><a href="../index.html">Início</a></li>
                 <li><a href="../comunidade/comunidade.html">Comunidade</a></li>
-                <li><a href="tournaments.html">Campeonatos</a></li>
+                <li><a href="tournaments.html" class="active">Campeonatos</a></li>
                 <li><a href="../apostas/apostas.html">Apostas</a></li>
                 <li><a href="../suporte/suporte.html">Suporte</a></li>
             </ul>
-            <div class="search-container">
-                <span class="search-icon"><img class="search-icon" src="../imagens/lupadepesquisa.png" alt="Ícone de busca" width="20" height="19"></span>
-                <input type="text" class="search-bar" placeholder="Buscar jogos, torneios...">
-            </div>
             <div class="nav-login">
-                <button class="btn-primary"><a href="../cadastro.html">Cadastrar</a></button>
+                <button class="btn-primary"><a href="../cadastro.html">Acessar</a></button>
             </div>
         </nav>
     </header>
@@ -62,38 +58,6 @@
                         <img src="imagens/logofortnite.png" alt="Fortnite" style="border-radius: 10px;">
                         <span>Fortnite</span>
                     </div>
-                    <div class="game-item">
-                        <img src="imagens/LOLlogo.png" alt="League of Legends">
-                        <span>League of Legends</span>
-                    </div>
-                    <div class="game-item">
-                        <img src="imagens/logoDota.png" alt="Dota 2">
-                        <span>Dota 2</span>
-                    </div>
-                    <div class="game-item">
-                        <img src="imagens/apexlogo.png" alt="Apex Legends">
-                        <span>Apex Legends</span>
-                    </div>
-                    <div class="game-item">
-                        <img src="imagens/codlogo.png" alt="Call of Duty">
-                        <span>Call of Duty</span>
-                    </div>
-                    <div class="game-item">
-                        <img src="imagens/fifalogo.png" alt="FIFA">
-                        <span>FIFA</span>
-                    </div>
-                    <div class="game-item">
-                        <img src="imagens/logoover.png" alt="Overwatch">
-                        <span>Overwatch</span>
-                    </div>
-                     <div class="game-item">
-                        <img src="imagens/logor6.png" alt="Rainbow Six Siege">
-                        <span>Rainbow Six Siege</span>
-                    </div>
-                     <div class="game-item">
-                        <img src="imagens/logosf.png" alt="Street Fighter">
-                        <span>Street Fighter</span>
-                    </div>
                 </div>
             </div>
         </section>
@@ -109,14 +73,6 @@
                             <option value="valorant">VALORANT</option>
                             <option value="rocket">Rocket League</option>
                             <option value="fortnite">Fortnite</option>
-                            <option value="lol">League of Legends</option>
-                            <option value="dota">Dota 2</option>
-                            <option value="apex">Apex Legends</option>
-                            <option value="cod">Call of Duty</option>
-                            <option value="fifa">FIFA</option>
-                            <option value="overwatch">Overwatch</option>
-                            <option value="r6">Rainbow Six Siege</option>
-                            <option value="sf">Street Fighter</option>
                         </select>
                     </div>
 
@@ -150,15 +106,15 @@
             <div class="container">
                 <div class="tournaments-stats">
                     <div class="stat-card">
-                        <span class="stat-number" id="totalTournaments">8</span>
+                        <span class="stat-number" id="totalTournaments">7</span>
                         <span class="stat-label">Torneios Ativos</span>
                     </div>
                     <div class="stat-card">
-                        <span class="stat-number">R$ 30.300</span>
+                        <span class="stat-number">R$ 24.300</span>
                         <span class="stat-label">Total em Prêmios</span>
                     </div>
                     <div class="stat-card">
-                        <span class="stat-number">405</span>
+                        <span class="stat-number">377</span>
                         <span class="stat-label">Jogadores Inscritos</span>
                     </div>
                 </div>
@@ -194,7 +150,7 @@
                                 <p>Formato: 5v5 Eliminação Simples</p>
                                 <p>Mapa: Best of 3</p>
                             </div>
-                            <button class="btn-primary tournament-btn">Inscrever-se Agora</button>
+                            <button class="btn-primary tournament-btn" onclick="alert('Faça login ou cadastre-se para participar dos torneios!')">Inscrever-se Agora</button>
                         </div>
                     </div>
 
@@ -227,7 +183,7 @@
                                 <p>Formato: 5v5 Swiss System</p>
                                 <p>Exclusivo para iniciantes</p>
                             </div>
-                            <button class="btn-secondary tournament-btn">Notificar-me</button>
+                            <button class="btn-secondary tournament-btn" onclick="alert('Faça login ou cadastre-se para receber notificações!')">Notificar-me</button>
                         </div>
                     </div>
 
@@ -261,7 +217,7 @@
                                 <p>Formato: 5v5 Dupla Eliminação</p>
                                 <p>Rank mínimo: Platinum</p>
                             </div>
-                            <button class="btn-primary tournament-btn">Inscrever-se Agora</button>
+                            <button class="btn-primary tournament-btn" onclick="alert('Faça login ou cadastre-se para participar dos torneios!')">Inscrever-se Agora</button>
                         </div>
                     </div>
 
@@ -294,7 +250,7 @@
                                 <p>Formato: Rápido - Best of 1</p>
                                 <p>Quartas de final em andamento</p>
                             </div>
-                            <button class="btn-secondary tournament-btn">Assistir Ao Vivo</button>
+                            <button class="btn-secondary tournament-btn" onclick="alert('Este torneio está ao vivo! Faça login para assistir.')">Assistir Ao Vivo</button>
                         </div>
                     </div>
 
@@ -328,7 +284,7 @@
                                 <p>Formato: 3v3 Round Robin</p>
                                 <p>Rank: Diamond+</p>
                             </div>
-                            <button class="btn-primary tournament-btn">Inscrever-se Agora</button>
+                            <button class="btn-primary tournament-btn" onclick="alert('Faça login ou cadastre-se para participar dos torneios!')">Inscrever-se Agora</button>
                         </div>
                     </div>
 
@@ -361,7 +317,7 @@
                                 <p>Formato: 3v3 Eliminação Simples</p>
                                 <p>Todos os ranks bem-vindos</p>
                             </div>
-                            <button class="btn-primary tournament-btn">Inscrever-se Agora</button>
+                            <button class="btn-primary tournament-btn" onclick="alert('Faça login ou cadastre-se para participar dos torneios!')">Inscrever-se Agora</button>
                         </div>
                     </div>
 
@@ -395,7 +351,7 @@
                                 <p>Formato: Solo - 3 Partidas</p>
                                 <p>Sistema de pontos por eliminação</p>
                             </div>
-                            <button class="btn-primary tournament-btn">Inscrever-se Agora</button>
+                            <button class="btn-primary tournament-btn" onclick="alert('Faça login ou cadastre-se para participar dos torneios!')">Inscrever-se Agora</button>
                         </div>
                     </div>
 
@@ -428,41 +384,7 @@
                                 <p>Formato: Duplas - 4 Partidas</p>
                                 <p>Inscrições abrem em 3 dias</p>
                             </div>
-                            <button class="btn-secondary tournament-btn">Notificar-me</button>
-                        </div>
-                    </div>
-
-                    <!-- League of Legends Tournament -->
-                    <div class="tournament-card" data-game="lol" data-status="open" data-prize="high">
-                        <div class="tournament-badge status-open">INSCRIÇÕES ABERTAS</div>
-                        <div class="tournament-header lol-bg">
-                            <img src="imagens/LOLlogo.png" alt="League of Legends" class="tournament-game-icon" style="width: 140px;">
-                            <h3>LOL SUMMONER'S CUP</h3>
-                        </div>
-                        <div class="tournament-body">
-                            <div class="tournament-info">
-                                <div class="info-item">
-                                    <span class="info-label">Prêmio:</span>
-                                    <span class="info-value prize">R$ 6.000</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Data:</span>
-                                    <span class="info-value">02/11/2025</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Taxa:</span>
-                                    <span class="info-value">R$ 25</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Vagas:</span>
-                                    <span class="info-value">28/40</span>
-                                </div>
-                            </div>
-                            <div class="tournament-details">
-                                <p>Formato: 5v5 Dupla Eliminação</p>
-                                <p>Rank: Gold+</p>
-                            </div>
-                            <button class="btn-primary tournament-btn">Inscrever-se Agora</button>
+                            <button class="btn-secondary tournament-btn" onclick="alert('Faça login ou cadastre-se para receber notificações!')">Notificar-me</button>
                         </div>
                     </div>
                 </div>
