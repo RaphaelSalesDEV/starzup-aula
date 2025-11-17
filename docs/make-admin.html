@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starz Up - Criar Administrador</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            background: #1a1a2e;
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            background: linear-gradient(135deg, #ff0080, #00d9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #a0a0a0;
+            margin-bottom: 3rem;
+        }
+        
+        .info-box {
+            background: #0a0a0f;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #ff0080;
+            margin-bottom: 2rem;
+        }
+        
+        .info-box h3 {
+            color: #ff0080;
+            margin-bottom: 0.5rem;
+        }
+        
+        .info-box p {
+            color: #a0a0a0;
+            line-height: 1.6;
+        }
+        
+        .user-info {
+            background: #0a0a0f;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+        
+        .user-info p {
+            margin-bottom: 0.5rem;
+            color: #a0a0a0;
+        }
+        
+        .user-info strong {
+            color: white;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #ff0080, #00d9ff);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin-bottom: 1rem;
+        }
+        
+        .btn:hover {
+            transform: scale(1.02);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .status {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+        
+        .status.success {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid #00ff88;
+            color: #00ff88;
+        }
+        
+        .status.error {
+            background: rgba(255, 51, 102, 0.1);
+            border: 1px solid #ff3366;
+            color: #ff3366;
+        }
+        
+        .status.info {
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid #00d9ff;
+            color: #00d9ff;
+        }
+        
+        .steps {
+            background: #0a0a0f;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+        }
+        
+        .steps h3 {
+            color: #00d9ff;
+            margin-bottom: 1rem;
+        }
+        
+        .steps ol {
+            padding-left: 1.5rem;
+            color: #a0a0a0;
+            line-height: 2;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #a0a0a0;
+            padding: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚙️ Criar Administrador</h1>
+        <p class="subtitle">Transforme o usuário atual em administrador</p>
+        
+        <div class="info-box">
+            <h3>ℹ️ Informações Importantes</h3>
+            <p>Esta página permite que você promova o usuário atualmente logado a administrador. Certifique-se de estar logado com a conta correta antes de continuar.</p>
+        </div>
+        
+        <div id="userInfo" class="user-info">
+            <p class="loading">Carregando informações do usuário...</p>
+        </div>
+        
+        <button id="makeAdminBtn" class="btn" disabled>
+            Tornar Administrador
+        </button>
+        
+        <button onclick="window.location.href='dashboard.html'" class="btn btn-secondary">
+            Voltar ao Dashboard
+        </button>
+        
+        <div id="status"></div>
+        
+        <div class="steps">
+            <h3>📋 Passos após criar o admin:</h3>
+            <ol>
+                <li>Clique no botão "Tornar Administrador"</li>
+                <li>Aguarde a confirmação</li>
+                <li>Recarregue a página do dashboard</li>
+                <li>Veja o menu "Admin" aparecer na barra lateral</li>
+                <li>Comece a criar torneios!</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script type="module">
+        import { auth, database } from './firebase-config.js';
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+        import { ref, set, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+        
+        let currentUser = null;
+        
+        // Verificar autenticação
+        onAuthStateChanged(auth, async (user) => {
+            const userInfoDiv = document.getElementById('userInfo');
+            const makeAdminBtn = document.getElementById('makeAdminBtn');
+            const statusDiv = document.getElementById('status');
+            
+            if (user) {
+                currentUser = user;
+                
+                // Verificar se já é admin
+                const adminRef = ref(database, 'admins/' + user.uid);
+                const adminSnapshot = await get(adminRef);
+                const isAdmin = adminSnapshot.exists();
+                
+                userInfoDiv.innerHTML = `
+                    <p><strong>Email:</strong> ${user.email}</p>
+                    <p><strong>Nome:</strong> ${user.displayName || 'Não definido'}</p>
+                    <p><strong>UID:</strong> ${user.uid}</p>
+                    ${isAdmin ? '<p style="color: #00ff88;"><strong>✓ Já é administrador</strong></p>' : '<p style="color: #ffaa00;"><strong>⚠️ Não é administrador ainda</strong></p>'}
+                `;
+                
+                if (isAdmin) {
+                    statusDiv.innerHTML = '<div class="status info">Este usuário já possui privilégios de administrador. Você pode voltar ao dashboard.</div>';
+                    makeAdminBtn.textContent = 'Já é Admin - Ir para Dashboard';
+                    makeAdminBtn.disabled = false;
+                    makeAdminBtn.onclick = () => window.location.href = 'dashboard.html';
+                } else {
+                    makeAdminBtn.disabled = false;
+                }
+            } else {
+                userInfoDiv.innerHTML = `
+                    <div class="status error">
+                        ❌ Você precisa estar logado para usar esta página.
+                    </div>
+                `;
+                statusDiv.innerHTML = '<div class="status info">Por favor, faça login primeiro e depois volte para esta página.</div>';
+                
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 3000);
+            }
+        });
+        
+        // Função para tornar admin
+        document.getElementById('makeAdminBtn').addEventListener('click', async () => {
+            if (!currentUser) {
+                alert('Erro: Nenhum usuário logado');
+                return;
+            }
+            
+            const btn = document.getElementById('makeAdminBtn');
+            const statusDiv = document.getElementById('status');
+            
+            btn.disabled = true;
+            btn.textContent = 'Processando...';
+            
+            try {
+                const adminRef = ref(database, 'admins/' + currentUser.uid);
+                
+                // Verificar se já existe
+                const snapshot = await get(adminRef);
+                if (snapshot.exists()) {
+                    statusDiv.innerHTML = '<div class="status info">Este usuário já é administrador!</div>';
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                    return;
+                }
+                
+                // Criar admin
+                await set(adminRef, {
+                    email: currentUser.email,
+                    displayName: currentUser.displayName || currentUser.email.split('@')[0],
+                    createdAt: Date.now()
+                });
+                
+                statusDiv.innerHTML = `
+                    <div class="status success">
+                        <h3>✅ Sucesso!</h3>
+                        <p>O usuário foi promovido a administrador.</p>
+                        <p>Redirecionando para o dashboard...</p>
+                    </div>
+                `;
+                
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 2000);
+                
+            } catch (error) {
+                console.error('Erro ao criar admin:', error);
+                statusDiv.innerHTML = `
+                    <div class="status error">
+                        <h3>❌ Erro</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+                btn.disabled = false;
+                btn.textContent = 'Tentar Novamente';
+            }
+        });
+    </script>
+</body>
+</html>
