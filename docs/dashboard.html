@@ -152,19 +152,13 @@
         <section id="section-comunidade" class="content-section">
             <h1>Comunidade</h1>
             <div class="community-tabs">
-                <button class="tab-btn active" data-tab="chat">Chat Geral</button>
+                <button class="tab-btn active" data-tab="chat">Usuários Cadastrados</button>
                 <button class="tab-btn" data-tab="teams">Equipes</button>
                 <button class="tab-btn" data-tab="friends">Amigos</button>
             </div>
             <div class="community-content">
                 <div id="chatContent" class="tab-content active">
-                    <div class="chat-container">
-                        <div id="chatMessages" class="chat-messages"></div>
-                        <div class="chat-input">
-                            <input type="text" id="messageInput" placeholder="Digite sua mensagem...">
-                            <button id="sendMessage">Enviar</button>
-                        </div>
-                    </div>
+                    <p class="loading">Carregando usuários...</p>
                 </div>
                 <div id="teamsContent" class="tab-content">
                     <p>Equipes em desenvolvimento...</p>
@@ -177,19 +171,21 @@
         
         <!-- Apostas Section -->
         <section id="section-apostas" class="content-section">
-            <h1>Apostas</h1>
-            <div class="bets-container">
-                <div class="available-bets">
-                    <h2>Apostas Disponíveis</h2>
-                    <div id="availableBets" class="bets-grid">
-                        <p class="loading">Carregando apostas...</p>
-                    </div>
-                </div>
-                <div class="my-bets">
-                    <h2>Minhas Apostas</h2>
-                    <div id="myBets" class="bets-list">
-                        <p class="empty-state">Você ainda não fez apostas</p>
-                    </div>
+            <div class="maintenance-container" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 500px; text-align: center;">
+                <div style="font-size: 6rem; margin-bottom: 2rem;">🔧</div>
+                <h1 style="font-size: 3rem; margin-bottom: 1rem; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Em Manutenção</h1>
+                <p style="font-size: 1.2rem; color: var(--text-secondary); max-width: 600px; margin-bottom: 2rem;">
+                    Estamos trabalhando para trazer a melhor experiência de apostas para você. Esta funcionalidade estará disponível em breve!
+                </p>
+                <div style="background: var(--card-bg); padding: 2rem; border-radius: 12px; max-width: 500px;">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary-color);">🎯 O que está por vir:</h3>
+                    <ul style="text-align: left; color: var(--text-secondary); line-height: 2;">
+                        <li>✓ Apostas em tempo real</li>
+                        <li>✓ Múltiplas opções de jogos</li>
+                        <li>✓ Odds competitivas</li>
+                        <li>✓ Sistema de recompensas</li>
+                        <li>✓ Histórico detalhado</li>
+                    </ul>
                 </div>
             </div>
         </section>
@@ -256,19 +252,25 @@
                         <div class="faq-item">
                             <button class="faq-question">Como me inscrever em um torneio?</button>
                             <div class="faq-answer">
-                                <p>Acesse a seção de Campeonatos, escolha o torneio desejado e clique em "Inscrever-se".</p>
+                                <p>Acesse a seção de Campeonatos, escolha o torneio desejado e clique em "Inscrever-se". Você precisará ter saldo suficiente para pagar a taxa de inscrição.</p>
                             </div>
                         </div>
                         <div class="faq-item">
                             <button class="faq-question">Como adicionar saldo?</button>
                             <div class="faq-answer">
-                                <p>Vá para a seção Saldo e escolha um dos métodos de pagamento disponíveis.</p>
+                                <p>Vá para a seção Saldo e escolha o valor que deseja adicionar. O valor mínimo é R$ 10,00.</p>
                             </div>
                         </div>
                         <div class="faq-item">
                             <button class="faq-question">Posso cancelar minha inscrição?</button>
                             <div class="faq-answer">
-                                <p>Sim, até 24 horas antes do início do torneio.</p>
+                                <p>Sim, até 24 horas antes do início do torneio. Entre em contato com o suporte para solicitar o cancelamento.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item">
+                            <button class="faq-question">Como me tornar administrador?</button>
+                            <div class="faq-answer">
+                                <p>Entre em contato com a equipe Starz Up através do suporte para solicitar permissões de administrador.</p>
                             </div>
                         </div>
                     </div>
