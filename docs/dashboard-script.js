@@ -32,118 +32,38 @@ async function checkAdminStatus(user) {
 
 // Mostrar recursos de admin
 function showAdminFeatures() {
-    // Adicionar botão de admin no menu
-    const navMenu = document.querySelector('.nav-menu');
-    const adminItem = document.createElement('li');
-    adminItem.innerHTML = `
-        <a href="#admin" data-section="admin">
-            <span class="icon">⚙️</span>
-            <span>Admin</span>
-        </a>
-    `;
-    navMenu.appendChild(adminItem);
-    
-    // Criar seção de admin
-    const mainContent = document.querySelector('.main-content');
-    const adminSection = document.createElement('section');
-    adminSection.id = 'section-admin';
-    adminSection.className = 'content-section';
-    adminSection.innerHTML = `
-        <h1>Painel Administrativo</h1>
-        <div class="admin-container">
-            <div class="admin-card">
-                <h2>Criar Novo Torneio</h2>
-                <form id="createTournamentForm" class="tournament-form">
-                    <div class="form-group">
-                        <label>Nome do Torneio</label>
-                        <input type="text" id="tournamentName" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Jogo</label>
-                        <select id="tournamentGame" required>
-                            <option value="cs2">CS2</option>
-                            <option value="valorant">VALORANT</option>
-                            <option value="rocket">Rocket League</option>
-                            <option value="fortnite">Fortnite</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Data do Torneio</label>
-                        <input type="date" id="tournamentDate" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Horário</label>
-                        <input type="time" id="tournamentTime" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Prêmio (R$)</label>
-                        <input type="number" id="tournamentPrize" min="0" step="0.01" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Número Máximo de Jogadores</label>
-                        <input type="number" id="tournamentMaxPlayers" min="2" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Taxa de Inscrição (R$)</label>
-                        <input type="number" id="tournamentFee" min="0" step="0.01" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Descrição</label>
-                        <textarea id="tournamentDescription" rows="4" required></textarea>
-                    </div>
-                    
-                    <button type="submit" class="btn-primary">Criar Torneio</button>
-                </form>
-            </div>
-            
-            <div class="admin-card">
-                <h2>Torneios Criados</h2>
-                <div id="adminTournamentsList" class="admin-tournaments-list">
-                    <p class="loading">Carregando torneios...</p>
-                </div>
-            </div>
-        </div>
-    `;
-    mainContent.appendChild(adminSection);
-    
     // Adicionar estilos para admin
     const style = document.createElement('style');
     style.textContent = `
-        .admin-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-        
-        .admin-card {
+        .admin-section {
             background: var(--card-bg);
             padding: 2rem;
             border-radius: 12px;
+            margin-bottom: 2rem;
         }
         
-        .admin-card h2 {
+        .admin-section h2 {
             margin-bottom: 1.5rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--primary-color);
         }
         
         .tournament-form {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
+            margin-bottom: 2rem;
         }
         
         .form-group {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
         }
         
         .form-group label {
@@ -163,15 +83,17 @@ function showAdminFeatures() {
         }
         
         .admin-tournaments-list {
-            max-height: 600px;
-            overflow-y: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
         }
         
         .admin-tournament-item {
             background: var(--dark-bg);
             padding: 1rem;
             border-radius: 8px;
-            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .admin-tournament-item h4 {
@@ -193,25 +115,34 @@ function showAdminFeatures() {
             color: white;
             cursor: pointer;
             transition: opacity 0.3s;
+            font-size: 0.9rem;
         }
         
         .btn-danger:hover {
             opacity: 0.8;
         }
         
-        @media (max-width: 1024px) {
-            .admin-container {
+        .toggle-admin-btn {
+            margin-bottom: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .tournament-form {
                 grid-template-columns: 1fr;
             }
         }
     `;
     document.head.appendChild(style);
-    
-    // Setup form de criar torneio
-    setTimeout(() => {
-        setupCreateTournamentForm();
-        loadAdminTournaments();
-    }, 100);
 }
 
 // Setup form de criação de torneio
@@ -457,6 +388,102 @@ async function loadTournamentsByGame(game) {
     const container = document.getElementById('tournamentsGrid');
     const tournamentsRef = ref(database, 'tournaments');
     
+    // Adicionar seção admin se for administrador
+    if (isAdmin) {
+        const adminSection = document.getElementById('adminTournamentsSection');
+        if (!adminSection) {
+            const campeonatosSection = document.getElementById('section-campeonatos');
+            const adminDiv = document.createElement('div');
+            adminDiv.id = 'adminTournamentsSection';
+            adminDiv.className = 'admin-section';
+            adminDiv.style.display = 'none';
+            adminDiv.innerHTML = `
+                <h2>⚙️ Painel Administrativo</h2>
+                <form id="createTournamentForm" class="tournament-form">
+                    <div class="form-group">
+                        <label>Nome do Torneio</label>
+                        <input type="text" id="tournamentName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Jogo</label>
+                        <select id="tournamentGame" required>
+                            <option value="cs2">CS2</option>
+                            <option value="valorant">VALORANT</option>
+                            <option value="rocket">Rocket League</option>
+                            <option value="fortnite">Fortnite</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Data do Torneio</label>
+                        <input type="date" id="tournamentDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Horário</label>
+                        <input type="time" id="tournamentTime" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Prêmio (R$)</label>
+                        <input type="number" id="tournamentPrize" min="0" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Número Máximo de Jogadores</label>
+                        <input type="number" id="tournamentMaxPlayers" min="2" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Taxa de Inscrição (R$)</label>
+                        <input type="number" id="tournamentFee" min="0" step="0.01" required>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <label>Descrição</label>
+                        <textarea id="tournamentDescription" rows="4" required></textarea>
+                    </div>
+                    
+                    <div class="form-group full-width">
+                        <button type="submit" class="btn-primary" style="width: 100%;">✨ Criar Torneio</button>
+                    </div>
+                </form>
+                
+                <h2 style="margin-top: 2rem;">Gerenciar Torneios</h2>
+                <div id="adminTournamentsList" class="admin-tournaments-list">
+                    <p class="loading">Carregando torneios...</p>
+                </div>
+            `;
+            
+            // Inserir antes dos filtros
+            const filters = campeonatosSection.querySelector('.filters');
+            campeonatosSection.insertBefore(adminDiv, filters);
+            
+            // Adicionar botão para toggle admin
+            const toggleBtn = document.createElement('button');
+            toggleBtn.className = 'toggle-admin-btn';
+            toggleBtn.innerHTML = '⚙️ Modo Administrador';
+            toggleBtn.onclick = () => {
+                const adminSection = document.getElementById('adminTournamentsSection');
+                if (adminSection.style.display === 'none') {
+                    adminSection.style.display = 'block';
+                    toggleBtn.innerHTML = '👁️ Visualizar Torneios';
+                } else {
+                    adminSection.style.display = 'none';
+                    toggleBtn.innerHTML = '⚙️ Modo Administrador';
+                }
+            };
+            campeonatosSection.insertBefore(toggleBtn, filters);
+            
+            // Setup form
+            setTimeout(() => {
+                setupCreateTournamentForm();
+                loadAdminTournaments();
+            }, 100);
+        }
+    }
+    
     try {
         const snapshot = await get(tournamentsRef);
         
@@ -513,6 +540,7 @@ async function loadTournamentsByGame(game) {
                         ? '<button class="btn-secondary" style="width: 100%;" disabled>Lotado</button>'
                         : `<button class="btn-primary" style="width: 100%;" onclick="registerTournament('${t.id}', ${t.fee})">Inscrever-se</button>`
                     }
+                    ${isAdmin ? `<button class="btn-danger" style="width: 100%; margin-top: 0.5rem;" onclick="deleteTournament('${t.id}')">🗑️ Excluir</button>` : ''}
                 </div>
             `;
         }).join('');
