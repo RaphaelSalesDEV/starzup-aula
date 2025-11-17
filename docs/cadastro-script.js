@@ -4,14 +4,58 @@ import { createUserWithEmailAndPassword, updateProfile } from "https://www.gstat
 import { ref, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form');
+    const form = document.getElementById('cadastroForm');
+    const avatarInput = document.getElementById('avatarInput');
+    const avatarPreview = document.getElementById('avatarPreview');
+    let avatarBase64 = null;
     
+    // Preview do avatar
+    avatarInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        
+        if (file) {
+            // Validar tamanho (máximo 2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                alert('A imagem deve ter no máximo 2MB!');
+                avatarInput.value = '';
+                return;
+            }
+            
+            // Validar tipo
+            if (!file.type.startsWith('image/')) {
+                alert('Por favor, selecione apenas imagens!');
+                avatarInput.value = '';
+                return;
+            }
+            
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                avatarBase64 = e.target.result;
+                avatarPreview.innerHTML = `<img src="${avatarBase64}" alt="Avatar Preview">`;
+            };
+            
+            reader.readAsDataURL(file);
+        }
+    });
+    
+    // Clique no preview também abre o seletor
+    avatarPreview.addEventListener('click', function() {
+        avatarInput.click();
+    });
+    
+    // Cadastro
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         const nome = document.getElementById('nome').value;
         const email = document.getElementById('email').value;
         const senha = document.getElementById('senha').value;
+        
+        // Desabilitar botão durante o processo
+        const btnSubmit = form.querySelector('.btn-primary');
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = 'Cadastrando...';
         
         try {
             // Criar usuário no Firebase Auth
@@ -23,14 +67,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 displayName: nome
             });
             
-            // Salvar dados adicionais no Realtime Database
+            // Avatar padrão caso não tenha sido selecionado
+            const avatarFinal = avatarBase64 || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(nome) + '&background=8B5CF6&color=fff&size=200';
+            
+            // Salvar dados no Realtime Database
             await set(ref(database, 'users/' + user.uid), {
                 nome: nome,
                 email: email,
+                avatar: avatarFinal,
                 saldo: 0,
                 dataCriacao: new Date().toISOString(),
                 torneiosInscritos: [],
-                apostas: []
+                apostas: [],
+                vitorias: 0,
+                derrotas: 0
             });
             
             alert('Cadastro realizado com sucesso!');
@@ -55,6 +105,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             
             alert(mensagem);
+            
+            // Reabilitar botão
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = 'Cadastrar';
         }
     });
 });
