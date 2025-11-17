@@ -310,74 +310,10 @@ body::after {
     transform: translateY(-1px);
 }
 
-/* Divider */
-.divider {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    margin: 2rem 0;
-    color: var(--light-gray);
-    font-size: 0.85rem;
-}
-
-.divider::before,
-.divider::after {
-    content: '';
-    flex: 1;
-    border-bottom: 1px solid rgba(167, 139, 250, 0.3);
-}
-
-.divider span {
-    padding: 0 1.2rem;
-}
-
-/* Social Login */
-.social-login {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.8rem;
-    margin-bottom: 2rem;
-}
-
-.btn-social {
-    padding: 0.9rem;
-    background: var(--gray);
-    border: 2px solid transparent;
-    border-radius: 12px;
-    color: #fff;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    font-size: 0.8rem;
-}
-
-.btn-social:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-.btn-social.google:hover {
-    border-color: #4285F4;
-    background: rgba(66, 133, 244, 0.1);
-}
-
-.btn-social.facebook:hover {
-    border-color: #1877F2;
-    background: rgba(24, 119, 242, 0.1);
-}
-
-.btn-social.twitter:hover {
-    border-color: #000;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.btn-social svg {
-    flex-shrink: 0;
+.btn-login:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
 }
 
 /* Signup Link */
@@ -443,15 +379,5 @@ body::after {
     .logo-img {
         width: 70px;
         height: 70px;
-    }
-
-    .social-login {
-        grid-template-columns: 1fr;
-    }
-
-    .btn-social {
-        flex-direction: row;
-        justify-content: center;
-        font-size: 0.9rem;
     }
 }
