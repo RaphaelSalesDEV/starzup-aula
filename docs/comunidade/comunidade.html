@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Comunidade Starz Up - Conecte-se com Gamers">
-    <link rel="stylesheet" href="style.css">
     <title>Comunidade - Starz Up</title>
     <link href="../imagens/logoempresa.png" rel="icon" type="image/x-icon">
     <link rel="stylesheet" href="../style.css">
@@ -23,12 +22,8 @@
                 <li><a href="../apostas/apostas.html">Apostas</a></li>
                 <li><a href="../suporte/suporte.html">Suporte</a></li>
             </ul>
-            <div class="search-container">
-                <span class="search-icon"><img class="search-icon" src="../imagens/lupadepesquisa.png" alt="Ícone de busca" width="20" height="19"></span>
-                <input type="text" class="search-bar" placeholder="Buscar jogadores, chats...">
-            </div>
             <div class="nav-login">
-                <button class="btn-primary"><a href="../cadastro.html">Cadastrar</a></button>
+                <button class="btn-primary"><a href="../cadastro.html">Acessar</a></button>
             </div>
         </nav>
     </header>
@@ -39,318 +34,76 @@
             <p>Conecte-se com gamers, participe de chats e encontre novos companheiros de equipe</p>
         </section>
 
-        <div class="community-container">
-            <!-- Sidebar de Jogos -->
-            <aside class="games-sidebar">
-                <h3>Filtrar por Jogo</h3>
-                <div class="game-filter">
-                    <div class="game-filter-item active">
-                        <div class="game-filter-icon">🎮</div>
-                        <div class="game-filter-info">
-                            <span>Todos</span>
-                            <small>850 online</small>
-                        </div>
-                    </div>
-                    <div class="game-filter-item">
-                        <div class="game-filter-icon">🔫</div>
-                        <div class="game-filter-info">
-                            <span>CS2</span>
-                            <small>320 online</small>
-                        </div>
-                    </div>
-                    <div class="game-filter-item">
-                        <div class="game-filter-icon">⚔️</div>
-                        <div class="game-filter-info">
-                            <span>VALORANT</span>
-                            <small>285 online</small>
-                        </div>
-                    </div>
-                    <div class="game-filter-item">
-                        <div class="game-filter-icon">🚗</div>
-                        <div class="game-filter-info">
-                            <span>Rocket League</span>
-                            <small>145 online</small>
-                        </div>
-                    </div>
-                    <div class="game-filter-item">
-                        <div class="game-filter-icon">🪂</div>
-                        <div class="game-filter-info">
-                            <span>Fortnite</span>
-                            <small>100 online</small>
-                        </div>
-                    </div>
-                </div>
-            </aside>
+        <section class="community-intro">
+            <div class="intro-content">
+                <h2>Uma Comunidade para Cada Jogo</h2>
+                <p>Na Starz Up, você encontra espaços dedicados para se conectar com outros jogadores, formar equipes e participar de discussões sobre seus jogos favoritos.</p>
+            </div>
+        </section>
 
-            <!-- Feed de Chats -->
-            <section class="chat-feed">
-                <div class="chat-header">
-                    <h2>Chats da Comunidade</h2>
-                    <button class="new-chat-btn">+ Criar Chat</button>
+        <section class="games-section">
+            <h2>Comunidades Disponíveis</h2>
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-icon" style="background: linear-gradient(135deg, #FF6B35, #F7931E);">🔫</div>
+                    <h3>Counter-Strike 2</h3>
+                    <p>Encontre times competitivos, participe de treinos táticos e discuta estratégias com outros jogadores de CS2.</p>
                 </div>
 
-                <div class="chat-rooms">
-                    <div class="chat-room-card">
-                        <div class="chat-room-icon" style="background: linear-gradient(135deg, #FF6B35, #F7931E);">🔫</div>
-                        <div class="chat-room-info">
-                            <div class="chat-room-header">
-                                <h3 class="chat-room-title">CS2 - Procurando Time Competitivo</h3>
-                                <span class="chat-room-time">Há 5 min</span>
-                            </div>
-                            <p class="chat-room-description">Procurando jogadores DMG+ para formar time competitivo. Foco em strats e comunicação!</p>
-                            <div class="chat-room-meta">
-                                <span><span class="status-indicator"></span> 12 online</span>
-                                <span>💬 45 mensagens</span>
-                                <span>👥 28 membros</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="chat-room-card">
-                        <div class="chat-room-icon" style="background: linear-gradient(135deg, #FF4655, #BD3944);">⚔️</div>
-                        <div class="chat-room-info">
-                            <div class="chat-room-header">
-                                <h3 class="chat-room-title">Valorant - Treino de Mira e Strats</h3>
-                                <span class="chat-room-time">Há 15 min</span>
-                            </div>
-                            <p class="chat-room-description">Grupo para treinar mira, crosshair placement e executar strats. Todos os ranks!</p>
-                            <div class="chat-room-meta">
-                                <span><span class="status-indicator"></span> 8 online</span>
-                                <span>💬 32 mensagens</span>
-                                <span>👥 19 membros</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="chat-room-card">
-                        <div class="chat-room-icon" style="background: linear-gradient(135deg, #0095FF, #00D8FF);">🚗</div>
-                        <div class="chat-room-info">
-                            <div class="chat-room-header">
-                                <h3 class="chat-room-title">Rocket League - 3v3 Ranked Grind</h3>
-                                <span class="chat-room-time">Há 30 min</span>
-                            </div>
-                            <p class="chat-room-description">Time 3v3 para subir ranked! Diamond+ only. Rotação e mecânicas consistentes.</p>
-                            <div class="chat-room-meta">
-                                <span><span class="status-indicator"></span> 6 online</span>
-                                <span>💬 18 mensagens</span>
-                                <span>👥 15 membros</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="chat-room-card">
-                        <div class="chat-room-icon" style="background: linear-gradient(135deg, #8B5CF6, #6D28D9);">🎮</div>
-                        <div class="chat-room-info">
-                            <div class="chat-room-header">
-                                <h3 class="chat-room-title">Geral - Papo de Gamers</h3>
-                                <span class="chat-room-time">Há 1 hora</span>
-                            </div>
-                            <p class="chat-room-description">Chat geral para conversar sobre jogos, hardware, notícias e fazer amizades!</p>
-                            <div class="chat-room-meta">
-                                <span><span class="status-indicator"></span> 35 online</span>
-                                <span>💬 234 mensagens</span>
-                                <span>👥 156 membros</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="chat-room-card">
-                        <div class="chat-room-icon" style="background: linear-gradient(135deg, #5B21B6, #7C3AED);">🪂</div>
-                        <div class="chat-room-info">
-                            <div class="chat-room-header">
-                                <h3 class="chat-room-title">Fortnite - Arena e Torneios</h3>
-                                <span class="chat-room-time">Há 2 horas</span>
-                            </div>
-                            <p class="chat-room-description">Grupo focado em Arena e torneios competitivos. Procurando duo/trio para campeonatos!</p>
-                            <div class="chat-room-meta">
-                                <span><span class="status-indicator"></span> 4 online</span>
-                                <span>💬 12 mensagens</span>
-                                <span>👥 22 membros</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="chat-room-card">
-                        <div class="chat-room-icon" style="background: linear-gradient(135deg, #EC4899, #BE185D);">🎯</div>
-                        <div class="chat-room-info">
-                            <div class="chat-room-header">
-                                <h3 class="chat-room-title">CS2 - Noobs Friendly</h3>
-                                <span class="chat-room-time">Há 3 horas</span>
-                            </div>
-                            <p class="chat-room-description">Começando no CS2? Aqui você aprende sem julgamentos! Dicas, treinos e diversão.</p>
-                            <div class="chat-room-meta">
-                                <span><span class="status-indicator"></span> 7 online</span>
-                                <span>💬 56 mensagens</span>
-                                <span>👥 41 membros</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="game-card">
+                    <div class="game-icon" style="background: linear-gradient(135deg, #FF4655, #BD3944);">⚔️</div>
+                    <h3>Valorant</h3>
+                    <p>Aprimore sua mira, aprenda novas strats e forme equipes para subir de rank no Valorant.</p>
                 </div>
-            </section>
 
-            <!-- Sidebar de Perfis -->
-            <aside class="profiles-sidebar">
-                <h3>Gamers Online</h3>
-                <div class="profile-cards">
-                    <div class="profile-card">
-                        <div class="profile-header">
-                            <div class="profile-avatar">🎮</div>
-                            <div class="profile-info">
-                                <h4>ProGamer_BR</h4>
-                                <p class="profile-rank">Global Elite</p>
-                            </div>
-                        </div>
-                        <div class="profile-stats">
-                            <div class="profile-stat">
-                                <div class="profile-stat-value">156</div>
-                                <div class="profile-stat-label">Partidas</div>
-                            </div>
-                            <div class="profile-stat">
-                                <div class="profile-stat-value">78%</div>
-                                <div class="profile-stat-label">Vitórias</div>
-                            </div>
-                            <div class="profile-stat">
-                                <div class="profile-stat-value">1.8</div>
-                                <div class="profile-stat-label">K/D</div>
-                            </div>
-                        </div>
-                        <div class="profile-games">
-                            <span class="profile-game-tag">CS2</span>
-                            <span class="profile-game-tag">Valorant</span>
-                        </div>
-                        <div class="profile-actions">
-                            <button class="profile-btn profile-btn-primary">Perfil</button>
-                            <button class="profile-btn profile-btn-secondary">Chat</button>
-                        </div>
-                    </div>
-
-                    <div class="profile-card">
-                        <div class="profile-header">
-                            <div class="profile-avatar">⚡</div>
-                            <div class="profile-info">
-                                <h4>ValorantQueen</h4>
-                                <p class="profile-rank">Imortal 2</p>
-                            </div>
-                        </div>
-                        <div class="profile-stats">
-                            <div class="profile-stat">
-                                <div class="profile-stat-value">243</div>
-                                <div class="profile-stat-label">Partidas</div>
-                            </div>
-                            <div class="profile-stat">
-                                <div class="profile-stat-value">65%</div>
-                                <div class="profile-stat-label">Vitórias</div>
-                            </div>
-                            <div class="profile-stat">
-                                <div class="profile-stat-value">1.5</div>
-                                <div class="profile-stat-label">K/D</div>
-                            </div>
-                        </div>
-                        <div class="profile-games">
-                            <span class="profile-game-tag">Valorant</span>
-                        </div>
-                        <div class="profile-actions">
-                            <button class="profile-btn profile-btn-primary">Perfil</button>
-                            <button class="profile-btn profile-btn-secondary">Chat</button>
-                        </div>
-                    </div>
-
-                    <div class="profile-card">
-                        <div class="profile-header">
-                            <div class="profile-avatar">🚀</div>
-                            <div class="profile-info">
-                                <h4>RocketMaster</h4>
-                                <p class="profile-rank">Champion III</p>
-                            </div>
-                        </div>
-                        <div class="profile-stats">
-                            <div class="profile-stat">
-                                <div class="profile-stat-value">189</div>
-                                <div class="profile-stat-label">Partidas</div>
-                            </div>
-                            <div class="profile-stat">
-                                <div class="profile-stat-value">72%</div>
-                                <div class="profile-stat-label">Vitórias</div>
-                            </div>
-                            <div class="profile-stat">
-                                <div class="profile-stat-value">2.3</div>
-                                <div class="profile-stat-label">Gols/J</div>
-                            </div>
-                        </div>
-                        <div class="profile-games">
-                            <span class="profile-game-tag">Rocket League</span>
-                        </div>
-                        <div class="profile-actions">
-                            <button class="profile-btn profile-btn-primary">Perfil</button>
-                            <button class="profile-btn profile-btn-secondary">Chat</button>
-                        </div>
-                    </div>
-
-                    <div class="profile-card">
-                        <div class="profile-header">
-                            <div class="profile-avatar">🏆</div>
-                            <div class="profile-info">
-                                <h4>StratMaster_47</h4>
-                                <p class="profile-rank">Supreme</p>
-                            </div>
-                        </div>
-                        <div class="profile-stats">
-                            <div class="profile-stat">
-                                <div class="profile-stat-value">312</div>
-                                <div class="profile-stat-label">Partidas</div>
-                            </div>
-                            <div class="profile-stat">
-                                <div class="profile-stat-value">69%</div>
-                                <div class="profile-stat-label">Vitórias</div>
-                            </div>
-                            <div class="profile-stat">
-                                <div class="profile-stat-value">1.6</div>
-                                <div class="profile-stat-label">K/D</div>
-                            </div>
-                        </div>
-                        <div class="profile-games">
-                            <span class="profile-game-tag">CS2</span>
-                            <span class="profile-game-tag">Valorant</span>
-                        </div>
-                        <div class="profile-actions">
-                            <button class="profile-btn profile-btn-primary">Perfil</button>
-                            <button class="profile-btn profile-btn-secondary">Chat</button>
-                        </div>
-                    </div>
-
-                    <div class="profile-card">
-                        <div class="profile-header">
-                            <div class="profile-avatar">🎯</div>
-                            <div class="profile-info">
-                                <h4>NinjaBR_99</h4>
-                                <p class="profile-rank">Unranked</p>
-                            </div>
-                        </div>
-                        <div class="profile-stats">
-                            <div class="profile-stat">
-                                <div class="profile-stat-value">87</div>
-                                <div class="profile-stat-label">Partidas</div>
-                            </div>
-                            <div class="profile-stat">
-                                <div class="profile-stat-value">58%</div>
-                                <div class="profile-stat-label">Vitórias</div>
-                            </div>
-                            <div class="profile-stat">
-                                <div class="profile-stat-value">3.5</div>
-                                <div class="profile-stat-label">Elims/J</div>
-                            </div>
-                        </div>
-                        <div class="profile-games">
-                            <span class="profile-game-tag">Fortnite</span>
-                        </div>
-                        <div class="profile-actions">
-                            <button class="profile-btn profile-btn-primary">Perfil</button>
-                            <button class="profile-btn profile-btn-secondary">Chat</button>
-                        </div>
-                    </div>
+                <div class="game-card">
+                    <div class="game-icon" style="background: linear-gradient(135deg, #0095FF, #00D8FF);">🚗</div>
+                    <h3>Rocket League</h3>
+                    <p>Conecte-se com jogadores para partidas 3v3, treine mecânicas e participe de campeonatos.</p>
                 </div>
-            </aside>
-        </div>
+
+                <div class="game-card">
+                    <div class="game-icon" style="background: linear-gradient(135deg, #5B21B6, #7C3AED);">🪂</div>
+                    <h3>Fortnite</h3>
+                    <p>Forme duos e trios para Arena, participe de torneios e compartilhe dicas de gameplay.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="features-section">
+            <h2>O Que Você Pode Fazer</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Chats por Jogo</h3>
+                    <p>Participe de conversas organizadas por jogo e encontre jogadores com os mesmos interesses.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Forme Equipes</h3>
+                    <p>Encontre companheiros de equipe para jogar ranked ou participar de campeonatos.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Treinos em Grupo</h3>
+                    <p>Organize sessões de treino com outros jogadores para melhorar suas habilidades.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h3>Conecte-se com Jogadores</h3>
+                    <p>Veja perfis de outros gamers, suas estatísticas e principais jogos.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Pronto para Fazer Parte?</h2>
+            <p>Acesse sua conta para começar a interagir com a comunidade</p>
+            <button class="cta-button"><a href="../cadastro.html">Acessar Agora</a></button>
+        </section>
     </main>
 
     <footer>
