@@ -9,14 +9,60 @@ document.addEventListener('DOMContentLoaded', function() {
     const avatarPreview = document.getElementById('avatarPreview');
     let avatarBase64 = null;
     
+    // Função para redimensionar imagem
+    function resizeImage(file, maxWidth, maxHeight, quality) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const img = new Image();
+                
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+                    
+                    // Calcular novas dimensões mantendo proporção
+                    if (width > height) {
+                        if (width > maxWidth) {
+                            height *= maxWidth / width;
+                            width = maxWidth;
+                        }
+                    } else {
+                        if (height > maxHeight) {
+                            width *= maxHeight / height;
+                            height = maxHeight;
+                        }
+                    }
+                    
+                    canvas.width = width;
+                    canvas.height = height;
+                    
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    // Converter para base64 com qualidade reduzida
+                    const resizedBase64 = canvas.toDataURL('image/jpeg', quality);
+                    resolve(resizedBase64);
+                };
+                
+                img.onerror = reject;
+                img.src = e.target.result;
+            };
+            
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
+    
     // Preview do avatar
-    avatarInput.addEventListener('change', function(e) {
+    avatarInput.addEventListener('change', async function(e) {
         const file = e.target.files[0];
         
         if (file) {
-            // Validar tamanho (máximo 2MB)
-            if (file.size > 2 * 1024 * 1024) {
-                alert('A imagem deve ter no máximo 2MB!');
+            // Validar tamanho (máximo 5MB antes da compressão)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('A imagem deve ter no máximo 5MB!');
                 avatarInput.value = '';
                 return;
             }
@@ -28,14 +74,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                avatarBase64 = e.target.result;
+            try {
+                // Mostrar loading
+                avatarPreview.innerHTML = '<span style="font-size: 2rem;">⏳</span>';
+                
+                // Redimensionar imagem para 400x400 com qualidade 0.7
+                avatarBase64 = await resizeImage(file, 400, 400, 0.7);
+                
+                // Verificar tamanho final
+                const sizeInKB = (avatarBase64.length * 3) / 4 / 1024;
+                console.log(`Imagem redimensionada: ${sizeInKB.toFixed(2)} KB`);
+                
+                // Se ainda estiver muito grande, reduzir mais
+                if (sizeInKB > 200) {
+                    avatarBase64 = await resizeImage(file, 300, 300, 0.6);
+                    console.log('Imagem comprimida novamente para reduzir tamanho');
+                }
+                
                 avatarPreview.innerHTML = `<img src="${avatarBase64}" alt="Avatar Preview">`;
-            };
-            
-            reader.readAsDataURL(file);
+                
+            } catch (error) {
+                console.error('Erro ao processar imagem:', error);
+                alert('Erro ao processar imagem. Tente outra foto.');
+                avatarInput.value = '';
+                avatarPreview.innerHTML = '<span class="avatar-placeholder">👤</span>';
+            }
         }
     });
     
@@ -63,15 +126,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const user = userCredential.user;
             
             // Avatar padrão caso não tenha sido selecionado
-            const avatarFinal = avatarBase64 || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(nome) + '&background=8B5CF6&color=fff&size=200';
+            const avatarFinal = avatarBase64 || `https://ui-avatars.com/api/?name=${encodeURIComponent(nome)}&background=8B5CF6&color=fff&size=400&bold=true`;
             
-            // Atualizar perfil com o nome e avatar
+            // Atualizar apenas o displayName (não o photoURL para evitar erro)
             await updateProfile(user, {
-                displayName: nome,
-                photoURL: avatarFinal
+                displayName: nome
             });
             
-            // Salvar dados no Realtime Database
+            // Salvar dados no Realtime Database (incluindo o avatar)
             await set(ref(database, 'users/' + user.uid), {
                 nome: nome,
                 email: email,
@@ -83,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 vitorias: 0,
                 derrotas: 0,
                 partidasJogadas: 0,
-                isAdmin: false // Por padrão, não é admin
+                isAdmin: false
             });
             
             alert('Cadastro realizado com sucesso!');
