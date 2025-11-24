@@ -361,6 +361,8 @@ function setupCreateTournamentForm() {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
+        console.log('Tentando criar torneio...');
+        
         const tournamentData = {
             name: document.getElementById('tournamentName').value,
             game: document.getElementById('tournamentGame').value,
@@ -376,15 +378,22 @@ function setupCreateTournamentForm() {
             status: 'open'
         };
         
+        console.log('Dados do torneio:', tournamentData);
+        
         try {
-            await push(ref(database, 'tournaments'), tournamentData);
+            const tournamentsRef = ref(database, 'tournaments');
+            const newTournamentRef = await push(tournamentsRef, tournamentData);
+            console.log('Torneio criado com ID:', newTournamentRef.key);
+            
             alert('Torneio criado com sucesso!');
             form.reset();
             loadAdminTournaments();
             loadTournamentsByGame('all');
         } catch (error) {
-            console.error('Erro:', error);
-            alert('Erro ao criar torneio');
+            console.error('Erro completo:', error);
+            console.error('Código do erro:', error.code);
+            console.error('Mensagem do erro:', error.message);
+            alert('Erro ao criar torneio: ' + error.message);
         }
     });
 }
