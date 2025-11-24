@@ -54,16 +54,22 @@ async function loadUserData(user) {
     if (snapshot.exists()) {
         const userData = snapshot.val();
         
-        // Carregar avatar (prioridade: photoURL do Auth > avatar do Database > avatar padrão)
-        const avatarUrl = user.photoURL || userData.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(displayName) + '&background=8B5CF6&color=fff&size=200';
+        // Carregar avatar SEMPRE do Database (prioridade total)
+        const avatarUrl = userData.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=8B5CF6&color=fff&size=400&bold=true`;
+        
+        // Atualizar imagem com tratamento de erro
         userAvatar.src = avatarUrl;
+        userAvatar.onerror = function() {
+            console.warn('Erro ao carregar avatar, usando padrão');
+            this.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=8B5CF6&color=fff&size=400&bold=true`;
+        };
         
         // Atualizar saldo e stats
         updateBalance(userData.saldo || 0);
         updateStats(userData);
     } else {
         // Criar dados do usuário se não existir
-        const avatarUrl = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(displayName) + '&background=8B5CF6&color=fff&size=200';
+        const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=8B5CF6&color=fff&size=400&bold=true`;
         
         await set(userRef, {
             email: user.email,
