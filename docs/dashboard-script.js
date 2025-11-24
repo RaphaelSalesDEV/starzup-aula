@@ -11,7 +11,7 @@ onAuthStateChanged(auth, async (user) => {
     if (user) {
         currentUser = user;
         await checkAdminStatus(user);
-        loadUserData(user);
+        await loadUserData(user);
         loadDashboardData(user.uid);
         setupRealtimeListeners();
     } else {
@@ -21,229 +21,17 @@ onAuthStateChanged(auth, async (user) => {
 
 // Verificar se é administrador
 async function checkAdminStatus(user) {
-    const adminRef = ref(database, 'admins/' + user.uid);
-    const snapshot = await get(adminRef);
-    isAdmin = snapshot.exists();
+    const userRef = ref(database, 'users/' + user.uid);
+    const snapshot = await get(userRef);
     
-    if (isAdmin) {
-        showAdminFeatures();
+    if (snapshot.exists()) {
+        const userData = snapshot.val();
+        isAdmin = userData.isAdmin === true;
+        
+        if (isAdmin) {
+            console.log('✅ Usuário é ADMINISTRADOR');
+        }
     }
-}
-
-// Mostrar recursos de admin
-function showAdminFeatures() {
-    // Adicionar estilos para admin
-    const style = document.createElement('style');
-    style.textContent = `
-        .admin-section {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-        }
-        
-        .admin-section h2 {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--primary-color);
-        }
-        
-        .tournament-form {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        
-        .form-group.full-width {
-            grid-column: 1 / -1;
-        }
-        
-        .form-group label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            padding: 0.75rem;
-            background: var(--dark-bg);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            color: white;
-            font-family: inherit;
-        }
-        
-        .admin-tournaments-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .admin-tournament-item {
-            background: var(--dark-bg);
-            padding: 1rem;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .admin-tournament-item h4 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
-        
-        .admin-tournament-actions {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-        
-        .btn-danger {
-            padding: 0.5rem 1rem;
-            background: var(--danger);
-            border: none;
-            border-radius: 6px;
-            color: white;
-            cursor: pointer;
-            transition: opacity 0.3s;
-            font-size: 0.9rem;
-        }
-        
-        .btn-danger:hover {
-            opacity: 0.8;
-        }
-        
-        .toggle-admin-btn {
-            margin-bottom: 1rem;
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            border: none;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        @media (max-width: 768px) {
-            .tournament-form {
-                grid-template-columns: 1fr;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-// Setup form de criação de torneio
-function setupCreateTournamentForm() {
-    const form = document.getElementById('createTournamentForm');
-    if (!form) return;
-    
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const tournamentData = {
-            name: document.getElementById('tournamentName').value,
-            game: document.getElementById('tournamentGame').value,
-            date: document.getElementById('tournamentDate').value,
-            time: document.getElementById('tournamentTime').value,
-            prize: parseFloat(document.getElementById('tournamentPrize').value),
-            maxPlayers: parseInt(document.getElementById('tournamentMaxPlayers').value),
-            fee: parseFloat(document.getElementById('tournamentFee').value),
-            description: document.getElementById('tournamentDescription').value,
-            createdBy: currentUser.uid,
-            createdAt: Date.now(),
-            players: [],
-            status: 'open'
-        };
-        
-        try {
-            const tournamentsRef = ref(database, 'tournaments');
-            await push(tournamentsRef, tournamentData);
-            
-            alert('Torneio criado com sucesso!');
-            form.reset();
-            loadAdminTournaments();
-            loadTournamentsByGame('all');
-        } catch (error) {
-            console.error('Erro ao criar torneio:', error);
-            alert('Erro ao criar torneio: ' + error.message);
-        }
-    });
-}
-
-// Carregar torneios do admin
-async function loadAdminTournaments() {
-    const container = document.getElementById('adminTournamentsList');
-    if (!container) return;
-    
-    const tournamentsRef = ref(database, 'tournaments');
-    const snapshot = await get(tournamentsRef);
-    
-    if (!snapshot.exists()) {
-        container.innerHTML = '<p class="empty-state">Nenhum torneio criado ainda</p>';
-        return;
-    }
-    
-    const tournaments = [];
-    snapshot.forEach((childSnapshot) => {
-        tournaments.push({
-            id: childSnapshot.key,
-            ...childSnapshot.val()
-        });
-    });
-    
-    container.innerHTML = tournaments.map(t => `
-        <div class="admin-tournament-item">
-            <h4>${t.name}</h4>
-            <p style="color: var(--text-secondary); font-size: 0.9rem;">
-                ${t.game.toUpperCase()} | ${formatDate(t.date)} ${t.time}
-            </p>
-            <p style="color: var(--success); margin-top: 0.5rem;">
-                💰 Prêmio: R$ ${t.prize.toFixed(2)}
-            </p>
-            <p style="color: var(--text-secondary); margin-top: 0.25rem;">
-                👥 Inscritos: ${t.players?.length || 0}/${t.maxPlayers}
-            </p>
-            <div class="admin-tournament-actions">
-                <button class="btn-danger" onclick="deleteTournament('${t.id}')">
-                    🗑️ Excluir
-                </button>
-            </div>
-        </div>
-    `).join('');
-}
-
-// Excluir torneio
-window.deleteTournament = async function(tournamentId) {
-    if (!confirm('Tem certeza que deseja excluir este torneio?')) return;
-    
-    try {
-        await remove(ref(database, 'tournaments/' + tournamentId));
-        alert('Torneio excluído com sucesso!');
-        loadAdminTournaments();
-        loadTournamentsByGame('all');
-    } catch (error) {
-        console.error('Erro ao excluir torneio:', error);
-        alert('Erro ao excluir torneio');
-    }
-};
-
-// Formatar data
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR');
 }
 
 // Carregar dados do usuário
@@ -251,30 +39,47 @@ async function loadUserData(user) {
     const userName = document.getElementById('userName');
     const userEmail = document.getElementById('userEmail');
     const welcomeName = document.getElementById('welcomeName');
+    const userAvatar = document.getElementById('userAvatar');
     
-    userName.textContent = user.displayName || user.email.split('@')[0];
+    // Atualizar nome e email
+    const displayName = user.displayName || user.email.split('@')[0];
+    userName.textContent = displayName;
     userEmail.textContent = user.email;
-    welcomeName.textContent = user.displayName || user.email.split('@')[0];
+    welcomeName.textContent = displayName;
     
-    // Inicializar dados do usuário se não existir
+    // Carregar dados do database
     const userRef = ref(database, 'users/' + user.uid);
     const snapshot = await get(userRef);
     
-    if (!snapshot.exists()) {
+    if (snapshot.exists()) {
+        const userData = snapshot.val();
+        
+        // Carregar avatar (prioridade: photoURL do Auth > avatar do Database > avatar padrão)
+        const avatarUrl = user.photoURL || userData.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(displayName) + '&background=8B5CF6&color=fff&size=200';
+        userAvatar.src = avatarUrl;
+        
+        // Atualizar saldo e stats
+        updateBalance(userData.saldo || 0);
+        updateStats(userData);
+    } else {
+        // Criar dados do usuário se não existir
+        const avatarUrl = user.photoURL || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(displayName) + '&background=8B5CF6&color=fff&size=200';
+        
         await set(userRef, {
             email: user.email,
-            displayName: user.displayName || user.email.split('@')[0],
+            displayName: displayName,
+            avatar: avatarUrl,
             saldo: 0,
             torneiosInscritos: [],
             partidasJogadas: 0,
             vitorias: 0,
+            derrotas: 0,
+            isAdmin: false,
             createdAt: Date.now()
         });
+        
+        userAvatar.src = avatarUrl;
         updateBalance(0);
-    } else {
-        const userData = snapshot.val();
-        updateBalance(userData.saldo || 0);
-        updateStats(userData);
     }
 }
 
@@ -324,7 +129,6 @@ async function loadUpcomingTournaments() {
             }
         });
         
-        // Ordenar por data
         tournaments.sort((a, b) => new Date(a.date) - new Date(b.date));
         
         container.innerHTML = tournaments.slice(0, 3).map(t => `
@@ -334,7 +138,7 @@ async function loadUpcomingTournaments() {
                     ${t.game.toUpperCase()} | ${formatDate(t.date)} ${t.time}
                 </p>
                 <div style="display: flex; justify-content: space-between; margin-top: 0.5rem;">
-                    <span style="color: var(--success);">💰 ${t.prize.toFixed(2)}</span>
+                    <span style="color: var(--success);">💰 R$ ${t.prize.toFixed(2)}</span>
                     <span style="color: var(--text-secondary);">👥 ${t.players?.length || 0}/${t.maxPlayers}</span>
                 </div>
             </div>
@@ -351,6 +155,12 @@ async function loadActivityFeed(userId) {
     container.innerHTML = '<p class="empty-state">Nenhuma atividade recente</p>';
 }
 
+// Formatar data
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR');
+}
+
 // Navegação entre seções
 document.querySelectorAll('.nav-menu a').forEach(link => {
     link.addEventListener('click', (e) => {
@@ -363,7 +173,6 @@ document.querySelectorAll('.nav-menu a').forEach(link => {
         const section = link.dataset.section;
         document.getElementById(`section-${section}`).classList.add('active');
         
-        // Carregar dados específicos da seção
         if (section === 'campeonatos') {
             loadTournamentsByGame('all');
         } else if (section === 'comunidade') {
@@ -386,28 +195,36 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 // Carregar torneios por jogo
 async function loadTournamentsByGame(game) {
     const container = document.getElementById('tournamentsGrid');
-    const tournamentsRef = ref(database, 'tournaments');
+    const campeonatosSection = document.getElementById('section-campeonatos');
     
-    // Adicionar seção admin se for administrador
+    // Adicionar painel admin se for administrador
     if (isAdmin) {
-        const adminSection = document.getElementById('adminTournamentsSection');
+        let adminSection = document.getElementById('adminTournamentsSection');
+        
         if (!adminSection) {
-            const campeonatosSection = document.getElementById('section-campeonatos');
+            const filters = campeonatosSection.querySelector('.filters');
+            
+            // Botão toggle admin
+            const toggleBtn = document.createElement('button');
+            toggleBtn.className = 'toggle-admin-btn';
+            toggleBtn.innerHTML = '⚙️ Painel Administrativo';
+            toggleBtn.style.cssText = 'margin-bottom: 1rem; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border: none; border-radius: 8px; color: white; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 0.5rem;';
+            
+            // Admin section
             const adminDiv = document.createElement('div');
             adminDiv.id = 'adminTournamentsSection';
-            adminDiv.className = 'admin-section';
-            adminDiv.style.display = 'none';
+            adminDiv.style.cssText = 'display: none; background: var(--card-bg); padding: 2rem; border-radius: 12px; margin-bottom: 2rem;';
             adminDiv.innerHTML = `
-                <h2>⚙️ Painel Administrativo</h2>
-                <form id="createTournamentForm" class="tournament-form">
-                    <div class="form-group">
-                        <label>Nome do Torneio</label>
-                        <input type="text" id="tournamentName" required>
+                <h2 style="margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1); color: var(--primary-color);">⚙️ Criar Novo Torneio</h2>
+                <form id="createTournamentForm" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem;">
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <label style="color: var(--text-secondary); font-size: 0.9rem;">Nome do Torneio</label>
+                        <input type="text" id="tournamentName" required style="padding: 0.75rem; background: var(--dark-bg); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white;">
                     </div>
                     
-                    <div class="form-group">
-                        <label>Jogo</label>
-                        <select id="tournamentGame" required>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <label style="color: var(--text-secondary); font-size: 0.9rem;">Jogo</label>
+                        <select id="tournamentGame" required style="padding: 0.75rem; background: var(--dark-bg); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white;">
                             <option value="cs2">CS2</option>
                             <option value="valorant">VALORANT</option>
                             <option value="rocket">Rocket League</option>
@@ -415,80 +232,72 @@ async function loadTournamentsByGame(game) {
                         </select>
                     </div>
                     
-                    <div class="form-group">
-                        <label>Data do Torneio</label>
-                        <input type="date" id="tournamentDate" required>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <label style="color: var(--text-secondary); font-size: 0.9rem;">Data</label>
+                        <input type="date" id="tournamentDate" required style="padding: 0.75rem; background: var(--dark-bg); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white;">
                     </div>
                     
-                    <div class="form-group">
-                        <label>Horário</label>
-                        <input type="time" id="tournamentTime" required>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <label style="color: var(--text-secondary); font-size: 0.9rem;">Horário</label>
+                        <input type="time" id="tournamentTime" required style="padding: 0.75rem; background: var(--dark-bg); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white;">
                     </div>
                     
-                    <div class="form-group">
-                        <label>Prêmio (R$)</label>
-                        <input type="number" id="tournamentPrize" min="0" step="0.01" required>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <label style="color: var(--text-secondary); font-size: 0.9rem;">Prêmio (R$)</label>
+                        <input type="number" id="tournamentPrize" min="0" step="0.01" required style="padding: 0.75rem; background: var(--dark-bg); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white;">
                     </div>
                     
-                    <div class="form-group">
-                        <label>Número Máximo de Jogadores</label>
-                        <input type="number" id="tournamentMaxPlayers" min="2" required>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <label style="color: var(--text-secondary); font-size: 0.9rem;">Máx. Jogadores</label>
+                        <input type="number" id="tournamentMaxPlayers" min="2" required style="padding: 0.75rem; background: var(--dark-bg); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white;">
                     </div>
                     
-                    <div class="form-group">
-                        <label>Taxa de Inscrição (R$)</label>
-                        <input type="number" id="tournamentFee" min="0" step="0.01" required>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <label style="color: var(--text-secondary); font-size: 0.9rem;">Taxa (R$)</label>
+                        <input type="number" id="tournamentFee" min="0" step="0.01" required style="padding: 0.75rem; background: var(--dark-bg); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white;">
                     </div>
                     
-                    <div class="form-group full-width">
-                        <label>Descrição</label>
-                        <textarea id="tournamentDescription" rows="4" required></textarea>
+                    <div style="grid-column: 1 / -1; display: flex; flex-direction: column; gap: 0.5rem;">
+                        <label style="color: var(--text-secondary); font-size: 0.9rem;">Descrição</label>
+                        <textarea id="tournamentDescription" rows="4" required style="padding: 0.75rem; background: var(--dark-bg); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: white; font-family: inherit;"></textarea>
                     </div>
                     
-                    <div class="form-group full-width">
+                    <div style="grid-column: 1 / -1;">
                         <button type="submit" class="btn-primary" style="width: 100%;">✨ Criar Torneio</button>
                     </div>
                 </form>
                 
-                <h2 style="margin-top: 2rem;">Gerenciar Torneios</h2>
-                <div id="adminTournamentsList" class="admin-tournaments-list">
-                    <p class="loading">Carregando torneios...</p>
-                </div>
+                <h2 style="margin-top: 2rem; margin-bottom: 1rem;">Gerenciar Torneios</h2>
+                <div id="adminTournamentsList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;"></div>
             `;
             
-            // Inserir antes dos filtros
-            const filters = campeonatosSection.querySelector('.filters');
-            campeonatosSection.insertBefore(adminDiv, filters);
-            
-            // Adicionar botão para toggle admin
-            const toggleBtn = document.createElement('button');
-            toggleBtn.className = 'toggle-admin-btn';
-            toggleBtn.innerHTML = '⚙️ Modo Administrador';
             toggleBtn.onclick = () => {
-                const adminSection = document.getElementById('adminTournamentsSection');
-                if (adminSection.style.display === 'none') {
-                    adminSection.style.display = 'block';
-                    toggleBtn.innerHTML = '👁️ Visualizar Torneios';
+                if (adminDiv.style.display === 'none') {
+                    adminDiv.style.display = 'block';
+                    toggleBtn.innerHTML = '👁️ Ver Torneios Públicos';
+                    loadAdminTournaments();
                 } else {
-                    adminSection.style.display = 'none';
-                    toggleBtn.innerHTML = '⚙️ Modo Administrador';
+                    adminDiv.style.display = 'none';
+                    toggleBtn.innerHTML = '⚙️ Painel Administrativo';
                 }
             };
+            
             campeonatosSection.insertBefore(toggleBtn, filters);
+            campeonatosSection.insertBefore(adminDiv, filters);
             
             // Setup form
-            setTimeout(() => {
-                setupCreateTournamentForm();
-                loadAdminTournaments();
-            }, 100);
+            setTimeout(() => setupCreateTournamentForm(), 100);
         }
     }
+    
+    // Carregar torneios públicos
+    const tournamentsRef = ref(database, 'tournaments');
     
     try {
         const snapshot = await get(tournamentsRef);
         
         if (!snapshot.exists()) {
-            container.innerHTML = '<p class="loading">Nenhum campeonato disponível no momento</p>';
+            container.innerHTML = '<p class="loading">Nenhum campeonato disponível</p>';
             return;
         }
         
@@ -516,56 +325,120 @@ async function loadTournamentsByGame(game) {
             return `
                 <div class="tournament-card" style="background: var(--card-bg); padding: 1.5rem; border-radius: 12px;">
                     <h3 style="margin-bottom: 1rem; color: var(--primary-color);">${t.name}</h3>
-                    <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">
-                        🎮 ${t.game.toUpperCase()}
-                    </p>
-                    <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">
-                        📅 ${formatDate(t.date)} ${t.time}
-                    </p>
-                    <p style="color: var(--success); margin-bottom: 0.5rem;">
-                        💰 Prêmio: R$ ${t.prize.toFixed(2)}
-                    </p>
-                    <p style="color: var(--warning); margin-bottom: 0.5rem;">
-                        💳 Taxa: R$ ${t.fee.toFixed(2)}
-                    </p>
-                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">
-                        👥 ${t.players?.length || 0}/${t.maxPlayers} inscritos
-                    </p>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">
-                        ${t.description}
-                    </p>
+                    <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">🎮 ${t.game.toUpperCase()}</p>
+                    <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">📅 ${formatDate(t.date)} ${t.time}</p>
+                    <p style="color: var(--success); margin-bottom: 0.5rem;">💰 Prêmio: R$ ${t.prize.toFixed(2)}</p>
+                    <p style="color: var(--warning); margin-bottom: 0.5rem;">💳 Taxa: R$ ${t.fee.toFixed(2)}</p>
+                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">👥 ${t.players?.length || 0}/${t.maxPlayers} inscritos</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">${t.description}</p>
                     ${isRegistered 
                         ? '<button class="btn-secondary" style="width: 100%;" disabled>✓ Inscrito</button>'
                         : isFull
                         ? '<button class="btn-secondary" style="width: 100%;" disabled>Lotado</button>'
                         : `<button class="btn-primary" style="width: 100%;" onclick="registerTournament('${t.id}', ${t.fee})">Inscrever-se</button>`
                     }
-                    ${isAdmin ? `<button class="btn-danger" style="width: 100%; margin-top: 0.5rem;" onclick="deleteTournament('${t.id}')">🗑️ Excluir</button>` : ''}
+                    ${isAdmin ? `<button class="btn-danger" style="width: 100%; margin-top: 0.5rem; padding: 0.75rem; background: var(--danger); border: none; border-radius: 8px; color: white; cursor: pointer;" onclick="deleteTournament('${t.id}')">🗑️ Excluir</button>` : ''}
                 </div>
             `;
         }).join('');
     } catch (error) {
-        console.error('Erro ao carregar torneios:', error);
-        container.innerHTML = '<p class="loading">Erro ao carregar campeonatos</p>';
+        console.error('Erro:', error);
+        container.innerHTML = '<p class="loading">Erro ao carregar</p>';
     }
 }
+
+// Setup form de criação
+function setupCreateTournamentForm() {
+    const form = document.getElementById('createTournamentForm');
+    if (!form) return;
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const tournamentData = {
+            name: document.getElementById('tournamentName').value,
+            game: document.getElementById('tournamentGame').value,
+            date: document.getElementById('tournamentDate').value,
+            time: document.getElementById('tournamentTime').value,
+            prize: parseFloat(document.getElementById('tournamentPrize').value),
+            maxPlayers: parseInt(document.getElementById('tournamentMaxPlayers').value),
+            fee: parseFloat(document.getElementById('tournamentFee').value),
+            description: document.getElementById('tournamentDescription').value,
+            createdBy: currentUser.uid,
+            createdAt: Date.now(),
+            players: [],
+            status: 'open'
+        };
+        
+        try {
+            await push(ref(database, 'tournaments'), tournamentData);
+            alert('Torneio criado com sucesso!');
+            form.reset();
+            loadAdminTournaments();
+            loadTournamentsByGame('all');
+        } catch (error) {
+            console.error('Erro:', error);
+            alert('Erro ao criar torneio');
+        }
+    });
+}
+
+// Carregar torneios admin
+async function loadAdminTournaments() {
+    const container = document.getElementById('adminTournamentsList');
+    if (!container) return;
+    
+    const snapshot = await get(ref(database, 'tournaments'));
+    
+    if (!snapshot.exists()) {
+        container.innerHTML = '<p class="empty-state">Nenhum torneio</p>';
+        return;
+    }
+    
+    const tournaments = [];
+    snapshot.forEach((child) => {
+        tournaments.push({ id: child.key, ...child.val() });
+    });
+    
+    container.innerHTML = tournaments.map(t => `
+        <div style="background: var(--dark-bg); padding: 1rem; border-radius: 8px;">
+            <h4 style="color: var(--primary-color); margin-bottom: 0.5rem;">${t.name}</h4>
+            <p style="color: var(--text-secondary); font-size: 0.9rem;">${t.game.toUpperCase()} | ${formatDate(t.date)}</p>
+            <p style="color: var(--success); margin-top: 0.5rem;">💰 R$ ${t.prize.toFixed(2)}</p>
+            <p style="color: var(--text-secondary);">👥 ${t.players?.length || 0}/${t.maxPlayers}</p>
+            <button onclick="deleteTournament('${t.id}')" style="width: 100%; margin-top: 1rem; padding: 0.5rem; background: var(--danger); border: none; border-radius: 6px; color: white; cursor: pointer;">🗑️ Excluir</button>
+        </div>
+    `).join('');
+}
+
+// Excluir torneio
+window.deleteTournament = async function(id) {
+    if (!confirm('Excluir este torneio?')) return;
+    
+    try {
+        await remove(ref(database, 'tournaments/' + id));
+        alert('Torneio excluído!');
+        loadAdminTournaments();
+        loadTournamentsByGame('all');
+    } catch (error) {
+        alert('Erro ao excluir');
+    }
+};
 
 // Inscrever em torneio
 window.registerTournament = async function(tournamentId, fee) {
     if (!currentUser) return;
     
     try {
-        // Verificar saldo
         const userRef = ref(database, 'users/' + currentUser.uid);
         const userSnapshot = await get(userRef);
         const userData = userSnapshot.val();
         
         if (userData.saldo < fee) {
-            alert('Saldo insuficiente! Você precisa de R$ ' + fee.toFixed(2));
+            alert(`Saldo insuficiente! Você precisa de R$ ${fee.toFixed(2)}`);
             return;
         }
         
-        // Verificar se torneio ainda está aberto
         const tournamentRef = ref(database, 'tournaments/' + tournamentId);
         const tournamentSnapshot = await get(tournamentRef);
         const tournament = tournamentSnapshot.val();
@@ -576,95 +449,73 @@ window.registerTournament = async function(tournamentId, fee) {
         }
         
         if (tournament.players?.includes(currentUser.uid)) {
-            alert('Você já está inscrito neste torneio!');
+            alert('Você já está inscrito!');
             return;
         }
         
-        // Registrar no torneio
         const players = tournament.players || [];
         players.push(currentUser.uid);
         
         await update(tournamentRef, { players });
         
-        // Deduzir taxa do saldo
         const newBalance = userData.saldo - fee;
         await update(userRef, {
             saldo: newBalance,
             torneiosInscritos: [...(userData.torneiosInscritos || []), tournamentId]
         });
         
-        // Registrar transação
-        const transactionRef = push(ref(database, 'transactions/' + currentUser.uid));
-        await set(transactionRef, {
-            type: 'tournament_fee',
-            amount: -fee,
-            tournamentId: tournamentId,
-            tournamentName: tournament.name,
-            date: Date.now()
-        });
-        
         updateBalance(newBalance);
-        alert('Inscrição realizada com sucesso!');
+        alert('Inscrição realizada!');
         loadTournamentsByGame(document.querySelector('.filter-btn.active').dataset.game);
         loadUpcomingTournaments();
         
     } catch (error) {
-        console.error('Erro ao se inscrever:', error);
-        alert('Erro ao realizar inscrição');
+        console.error('Erro:', error);
+        alert('Erro ao se inscrever');
     }
 };
 
-// Carregar usuários da comunidade
+// Carregar usuários comunidade
 async function loadCommunityUsers() {
     const container = document.getElementById('chatContent');
-    const usersRef = ref(database, 'users');
+    const snapshot = await get(ref(database, 'users'));
     
-    try {
-        const snapshot = await get(usersRef);
-        
-        if (!snapshot.exists()) {
-            container.innerHTML = '<p class="empty-state">Nenhum usuário encontrado</p>';
-            return;
-        }
-        
-        const users = [];
-        snapshot.forEach((childSnapshot) => {
-            if (childSnapshot.key !== currentUser.uid) {
-                users.push({
-                    id: childSnapshot.key,
-                    ...childSnapshot.val()
-                });
-            }
-        });
-        
-        container.innerHTML = `
-            <div class="users-list" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem;">
-                ${users.map(user => `
-                    <div class="user-card" style="background: var(--dark-bg); padding: 1.5rem; border-radius: 8px; text-align: center;">
-                        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
-                            ${user.displayName ? user.displayName[0].toUpperCase() : '👤'}
-                        </div>
-                        <h4 style="margin-bottom: 0.5rem;">${user.displayName || 'Usuário'}</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.5rem;">${user.email}</p>
-                        <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap;">
-                            <span style="background: rgba(255, 0, 128, 0.2); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem;">
-                                🏆 ${user.torneiosInscritos?.length || 0} torneios
-                            </span>
-                            <span style="background: rgba(0, 217, 255, 0.2); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem;">
-                                ⭐ ${user.vitorias || 0} vitórias
-                            </span>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-    } catch (error) {
-        console.error('Erro ao carregar usuários:', error);
-        container.innerHTML = '<p class="empty-state">Erro ao carregar usuários</p>';
+    if (!snapshot.exists()) {
+        container.innerHTML = '<p class="empty-state">Nenhum usuário</p>';
+        return;
     }
+    
+    const users = [];
+    snapshot.forEach((child) => {
+        if (child.key !== currentUser.uid) {
+            users.push({ id: child.key, ...child.val() });
+        }
+    });
+    
+    container.innerHTML = `
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem;">
+            ${users.map(user => `
+                <div style="background: var(--dark-bg); padding: 1.5rem; border-radius: 8px; text-align: center;">
+                    <div style="width: 60px; height: 60px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); border-radius: 50%; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                        ${user.displayName ? user.displayName[0].toUpperCase() : '👤'}
+                    </div>
+                    <h4 style="margin-bottom: 0.5rem;">${user.displayName || 'Usuário'}</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">${user.email}</p>
+                    <div style="display: flex; gap: 0.5rem; justify-content: center; margin-top: 1rem; flex-wrap: wrap;">
+                        <span style="background: rgba(255, 0, 128, 0.2); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem;">
+                            🏆 ${user.torneiosInscritos?.length || 0}
+                        </span>
+                        <span style="background: rgba(0, 217, 255, 0.2); padding: 0.25rem 0.75rem; border-radius: 12px; font-size: 0.8rem;">
+                            ⭐ ${user.vitorias || 0}
+                        </span>
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
 }
 
-// Tabs da comunidade
+// Tabs comunidade
 document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -674,9 +525,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
         const tabId = btn.dataset.tab;
         document.getElementById(`${tabId}Content`).classList.add('active');
         
-        if (tabId === 'chat') {
-            loadCommunityUsers();
-        }
+        if (tabId === 'chat') loadCommunityUsers();
     });
 });
 
@@ -687,57 +536,47 @@ document.querySelectorAll('.faq-question').forEach(btn => {
     });
 });
 
-// Gerenciamento de saldo
+// Depósito
 document.getElementById('depositBtn')?.addEventListener('click', async () => {
     const amount = parseFloat(document.getElementById('depositAmount').value);
     
     if (!amount || amount < 10) {
-        alert('Valor mínimo de depósito: R$ 10');
+        alert('Valor mínimo: R$ 10');
         return;
     }
     
-    const user = auth.currentUser;
-    if (!user) return;
-    
     try {
-        const userRef = ref(database, 'users/' + user.uid);
+        const userRef = ref(database, 'users/' + currentUser.uid);
         const snapshot = await get(userRef);
         const currentBalance = snapshot.val()?.saldo || 0;
         
-        await update(userRef, {
-            saldo: currentBalance + amount
-        });
+        await update(userRef, { saldo: currentBalance + amount });
         
-        const transactionRef = push(ref(database, 'transactions/' + user.uid));
-        await set(transactionRef, {
+        await set(push(ref(database, 'transactions/' + currentUser.uid)), {
             type: 'deposit',
             amount: amount,
             date: Date.now()
         });
         
         updateBalance(currentBalance + amount);
-        alert(`Depósito de R$ ${amount.toFixed(2)} realizado com sucesso!`);
+        alert(`Depósito de R$ ${amount.toFixed(2)} realizado!`);
         document.getElementById('depositAmount').value = '';
-        
     } catch (error) {
-        console.error('Erro ao depositar:', error);
-        alert('Erro ao realizar depósito');
+        alert('Erro ao depositar');
     }
 });
 
+// Saque
 document.getElementById('withdrawBtn')?.addEventListener('click', async () => {
     const amount = parseFloat(document.getElementById('withdrawAmount').value);
     
     if (!amount || amount < 10) {
-        alert('Valor mínimo de saque: R$ 10');
+        alert('Valor mínimo: R$ 10');
         return;
     }
     
-    const user = auth.currentUser;
-    if (!user) return;
-    
     try {
-        const userRef = ref(database, 'users/' + user.uid);
+        const userRef = ref(database, 'users/' + currentUser.uid);
         const snapshot = await get(userRef);
         const currentBalance = snapshot.val()?.saldo || 0;
         
@@ -746,45 +585,37 @@ document.getElementById('withdrawBtn')?.addEventListener('click', async () => {
             return;
         }
         
-        await update(userRef, {
-            saldo: currentBalance - amount
-        });
+        await update(userRef, { saldo: currentBalance - amount });
         
-        const transactionRef = push(ref(database, 'transactions/' + user.uid));
-        await set(transactionRef, {
+        await set(push(ref(database, 'transactions/' + currentUser.uid)), {
             type: 'withdraw',
             amount: -amount,
             date: Date.now()
         });
         
         updateBalance(currentBalance - amount);
-        alert(`Saque de R$ ${amount.toFixed(2)} realizado com sucesso!`);
+        alert(`Saque de R$ ${amount.toFixed(2)} realizado!`);
         document.getElementById('withdrawAmount').value = '';
-        
     } catch (error) {
-        console.error('Erro ao sacar:', error);
-        alert('Erro ao realizar saque');
+        alert('Erro ao sacar');
     }
 });
 
 // Logout
 document.getElementById('logoutBtn').addEventListener('click', async () => {
-    if (confirm('Deseja realmente sair?')) {
+    if (confirm('Deseja sair?')) {
         try {
             await signOut(auth);
             window.location.href = 'index.html';
         } catch (error) {
-            console.error('Erro ao fazer logout:', error);
             alert('Erro ao sair');
         }
     }
 });
 
-// Setup listeners em tempo real
+// Listeners em tempo real
 function setupRealtimeListeners() {
-    // Listener para torneios
-    const tournamentsRef = ref(database, 'tournaments');
-    onValue(tournamentsRef, () => {
+    onValue(ref(database, 'tournaments'), () => {
         if (document.getElementById('section-campeonatos').classList.contains('active')) {
             const activeFilter = document.querySelector('.filter-btn.active').dataset.game;
             loadTournamentsByGame(activeFilter);
@@ -793,5 +624,4 @@ function setupRealtimeListeners() {
     });
 }
 
-// Inicializar
 loadTournamentsByGame('all');
