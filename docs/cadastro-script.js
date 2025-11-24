@@ -62,13 +62,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const userCredential = await createUserWithEmailAndPassword(auth, email, senha);
             const user = userCredential.user;
             
-            // Atualizar perfil com o nome
-            await updateProfile(user, {
-                displayName: nome
-            });
-            
             // Avatar padrão caso não tenha sido selecionado
             const avatarFinal = avatarBase64 || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(nome) + '&background=8B5CF6&color=fff&size=200';
+            
+            // Atualizar perfil com o nome e avatar
+            await updateProfile(user, {
+                displayName: nome,
+                photoURL: avatarFinal
+            });
             
             // Salvar dados no Realtime Database
             await set(ref(database, 'users/' + user.uid), {
@@ -80,7 +81,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 torneiosInscritos: [],
                 apostas: [],
                 vitorias: 0,
-                derrotas: 0
+                derrotas: 0,
+                partidasJogadas: 0,
+                isAdmin: false // Por padrão, não é admin
             });
             
             alert('Cadastro realizado com sucesso!');
