@@ -72,36 +72,14 @@
         <!-- Games Showcase Section -->
         <section class="games-showcase">
             <div class="container">
-                <h2 class="section-title">COMPETE NOS <span class="highlight">MAIORES JOGOS</span></h2>
-                <p class="section-description">Torneios diários nos games mais competitivos do momento</p>
+                <h2 class="section-title">TORNEIOS <span class="highlight">DISPONÍVEIS AGORA</span></h2>
+                <p class="section-description">Participe dos campeonatos mais emocionantes e ganhe prêmios em dinheiro</p>
+                
+                <!-- Grid de torneios será preenchido dinamicamente -->
                 <div class="games-grid">
-                    <div class="game-card">
-                        <img src="imagens/logocs.png" alt="CS2">
-                        <div class="game-info">
-                            <h3>Counter-Strike 2</h3>
-                            <p>Torneios 5v5 com prêmios até R$ 10.000</p>
-                        </div>
-                    </div>
-                    <div class="game-card">
-                        <img src="imagens/logovalorant.png" alt="VALORANT">
-                        <div class="game-info">
-                            <h3>VALORANT</h3>
-                            <p>Competições táticas com formato profissional</p>
-                        </div>
-                    </div>
-                    <div class="game-card">
-                        <img src="imagens/logorocketleague.png" alt="Rocket League">
-                        <div class="game-info">
-                            <h3>Rocket League</h3>
-                            <p>Torneios 3v3 para todos os níveis</p>
-                        </div>
-                    </div>
-                    <div class="game-card">
-                        <img src="imagens/logofortnite.png" alt="Fortnite" style="border-radius: 10px;">
-                        <div class="game-info">
-                            <h3>Fortnite</h3>
-                            <p>Battle Royales com até 100 participantes</p>
-                        </div>
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">⏳</div>
+                        <h3 style="color: var(--light-gray);">Carregando torneios...</h3>
                     </div>
                 </div>
             </div>
@@ -231,20 +209,6 @@
         </div>
     </footer>
 
-    <script>
-        // Smooth scroll for internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-    </script>
+    <script type="module" src="tournaments-script.js"></script>
 </body>
 </html>
