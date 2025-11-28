@@ -1,5 +1,5 @@
 // tournaments-script.js
-import { auth, database } from './firebase-config.js';
+import { auth, database } from '../firebase-config.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { ref, get, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
