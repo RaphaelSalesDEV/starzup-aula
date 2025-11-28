@@ -1,7 +1,7 @@
 // tournaments-script.js
 import { auth, database } from '../firebase-config.js';
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { ref, get, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { ref, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 let currentUser = null;
 let allTournaments = [];
@@ -15,7 +15,7 @@ onAuthStateChanged(auth, (user) => {
 // Carregar torneios ao carregar a página
 window.addEventListener('DOMContentLoaded', () => {
     loadTournamentsFromFirebase();
-    setupFilterButtons();
+    setTimeout(addFilterButtons, 100);
 });
 
 // Configurar botões de filtro
@@ -24,9 +24,7 @@ function setupFilterButtons() {
     
     filterButtons.forEach(btn => {
         btn.addEventListener('click', () => {
-            // Remover active de todos
             filterButtons.forEach(b => b.classList.remove('active'));
-            // Adicionar active no clicado
             btn.classList.add('active');
             
             const gameFilter = btn.dataset.game;
@@ -39,7 +37,6 @@ function setupFilterButtons() {
 function loadTournamentsFromFirebase() {
     const tournamentsRef = ref(database, 'tournaments');
     
-    // Listener em tempo real
     onValue(tournamentsRef, (snapshot) => {
         if (snapshot.exists()) {
             allTournaments = [];
@@ -50,13 +47,11 @@ function loadTournamentsFromFirebase() {
                     ...childSnapshot.val()
                 };
                 
-                // Apenas torneios abertos
                 if (tournament.status === 'open') {
                     allTournaments.push(tournament);
                 }
             });
             
-            // Ordenar por data
             allTournaments.sort((a, b) => {
                 const dateA = new Date(a.date + ' ' + a.time);
                 const dateB = new Date(b.date + ' ' + b.time);
@@ -64,11 +59,7 @@ function loadTournamentsFromFirebase() {
             });
             
             console.log('Torneios carregados:', allTournaments.length);
-            
-            // Atualizar estatísticas
             updateStats();
-            
-            // Mostrar todos inicialmente
             filterTournaments('all');
         } else {
             console.log('Nenhum torneio encontrado');
@@ -112,8 +103,6 @@ function displayTournaments(tournaments) {
     }
     
     gamesGrid.innerHTML = tournaments.map(tournament => createTournamentCard(tournament)).join('');
-    
-    // Configurar event listeners nos botões
     setupParticipateButtons();
 }
 
@@ -124,7 +113,6 @@ function createTournamentCard(tournament) {
     const isFull = playersCount >= maxPlayers;
     const progress = maxPlayers > 0 ? (playersCount / maxPlayers) * 100 : 0;
     
-    // Ícones por jogo
     const gameIcons = {
         'cs2': '🎯',
         'valorant': '⚔️',
@@ -133,8 +121,6 @@ function createTournamentCard(tournament) {
     };
     
     const gameIcon = gameIcons[tournament.game] || '🎮';
-    
-    // Formatar data
     const tournamentDate = formatDate(tournament.date);
     const tournamentTime = tournament.time || '00:00';
     
@@ -202,8 +188,8 @@ function createTournamentCard(tournament) {
                 <button 
                     class="btn-participate" 
                     data-tournament-id="${tournament.id}"
-                    ${isFull ? 'disabled' : ''}
-                    style="width: 100%; padding: 1rem; background: ${isFull ? 'rgba(255, 255, 255, 0.1)' : 'linear-gradient(135deg, var(--primary), var(--secondary))'}; border: none; border-radius: 10px; color: white; font-weight: bold; font-size: 1.1rem; cursor: ${isFull ? 'not-allowed' : 'pointer'}; transition: all 0.3s;">
+                    type="button"
+                    ${isFull ? 'disabled' : ''}>
                     ${isFull ? '🔒 Torneio Lotado' : '🎮 Participar Agora'}
                 </button>
             </div>
@@ -234,21 +220,18 @@ function formatDate(dateString) {
 
 // Atualizar estatísticas da plataforma
 function updateStats() {
-    // Total de prêmios
     const totalPrizes = allTournaments.reduce((sum, t) => sum + (t.prize || 0), 0);
     const prizeElement = document.querySelector('.stats-grid .stat-item:nth-child(1) .stat-number');
     if (prizeElement) {
         prizeElement.textContent = `R$ ${(totalPrizes / 1000).toFixed(0)}K+`;
     }
     
-    // Total de jogadores (somando todos os inscritos)
     const totalPlayers = allTournaments.reduce((sum, t) => sum + (t.players?.length || 0), 0);
     const playersElement = document.querySelector('.stats-grid .stat-item:nth-child(2) .stat-number');
     if (playersElement) {
         playersElement.textContent = `${totalPlayers.toLocaleString('pt-BR')}+`;
     }
     
-    // Total de torneios
     const tournamentsElement = document.querySelector('.stats-grid .stat-item:nth-child(3) .stat-number');
     if (tournamentsElement) {
         tournamentsElement.textContent = `${allTournaments.length}+`;
@@ -290,60 +273,71 @@ function showErrorState() {
     }
 }
 
-// Configurar event listeners para botões de participar
+// Configurar event listeners para botões de participar - VERSÃO FINAL CORRIGIDA
 function setupParticipateButtons() {
-    document.querySelectorAll('.btn-participate').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+    console.log('=== Configurando botões de participar ===');
+    
+    // Usar querySelectorAll diretamente no documento
+    const buttons = document.querySelectorAll('.btn-participate');
+    console.log('Total de botões encontrados:', buttons.length);
+    
+    buttons.forEach((button, index) => {
+        console.log(`Configurando botão ${index + 1}:`, button.dataset.tournamentId);
+        
+        // Remover todos os event listeners anteriores clonando o botão
+        const newButton = button.cloneNode(true);
+        button.parentNode.replaceChild(newButton, button);
+        
+        // Adicionar eventos com capture=true para garantir execução
+        newButton.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            const tournamentId = this.dataset.tournamentId;
-            console.log('Clicou no botão Participar! ID:', tournamentId);
+            e.stopImmediatePropagation();
+            
+            const tournamentId = this.getAttribute('data-tournament-id');
+            console.log(`✅ CLIQUE DETECTADO no botão ${index + 1}! Tournament ID:`, tournamentId);
             handleParticipate(tournamentId);
-        });
+        }, true);
+        
+        // Backup com mousedown
+        newButton.addEventListener('mousedown', function(e) {
+            console.log(`🖱️ MOUSEDOWN no botão ${index + 1}`);
+        }, true);
+        
+        // Para touch devices
+        newButton.addEventListener('touchstart', function(e) {
+            console.log(`👆 TOUCHSTART no botão ${index + 1}`);
+        }, true);
     });
-}
-
-// Handler para participar do torneio - CORRIGIDO
-function handleParticipate(tournamentId) {
-    console.log('handleParticipate chamado com ID:', tournamentId);
     
-    if (!currentUser) {
-        // Usuário NÃO logado - redirecionar para LOGIN
-        console.log('Usuário não logado, redirecionando para login...');
-        localStorage.setItem('pendingTournamentId', tournamentId);
-        window.location.href = '../login.html'; // Caminho correto para login.html
-    } else {
-        // Usuário JÁ logado - redirecionar para DASHBOARD
-        console.log('Usuário logado, redirecionando para dashboard...');
-        localStorage.setItem('pendingTournamentId', tournamentId);
-        window.location.href = '../dashboard.html';
-    }
+    console.log('=== Configuração concluída ===');
 }
 
-// Adicionar botões de filtro na página se não existirem
+// Handler para participar do torneio - SEMPRE vai para login.html
+function handleParticipate(tournamentId) {
+    console.log('🎯 handleParticipate chamado com ID:', tournamentId);
+    console.log('📍 Redirecionando para login.html...');
+    
+    // Salvar ID do torneio
+    localStorage.setItem('pendingTournamentId', tournamentId);
+    
+    // SEMPRE redirecionar para login
+    window.location.href = '../login.html';
+}
+
+// Adicionar botões de filtro na página
 function addFilterButtons() {
     const gamesShowcase = document.querySelector('.games-showcase .container');
     
     if (gamesShowcase && !document.querySelector('.tournament-filters')) {
         const filtersDiv = document.createElement('div');
         filtersDiv.className = 'tournament-filters';
-        filtersDiv.style.cssText = 'display: flex; gap: 1rem; justify-content: center; margin: 2rem 0; flex-wrap: wrap;';
         filtersDiv.innerHTML = `
-            <button class="filter-btn active" data-game="all" style="padding: 0.75rem 1.5rem; background: linear-gradient(135deg, var(--primary), var(--secondary)); border: none; border-radius: 20px; color: white; font-weight: bold; cursor: pointer; transition: all 0.3s;">
-                Todos os Jogos
-            </button>
-            <button class="filter-btn" data-game="cs2" style="padding: 0.75rem 1.5rem; background: var(--gray); border: none; border-radius: 20px; color: white; font-weight: bold; cursor: pointer; transition: all 0.3s;">
-                🎯 CS2
-            </button>
-            <button class="filter-btn" data-game="valorant" style="padding: 0.75rem 1.5rem; background: var(--gray); border: none; border-radius: 20px; color: white; font-weight: bold; cursor: pointer; transition: all 0.3s;">
-                ⚔️ VALORANT
-            </button>
-            <button class="filter-btn" data-game="rocket" style="padding: 0.75rem 1.5rem; background: var(--gray); border: none; border-radius: 20px; color: white; font-weight: bold; cursor: pointer; transition: all 0.3s;">
-                🚀 Rocket League
-            </button>
-            <button class="filter-btn" data-game="fortnite" style="padding: 0.75rem 1.5rem; background: var(--gray); border: none; border-radius: 20px; color: white; font-weight: bold; cursor: pointer; transition: all 0.3s;">
-                🏝️ Fortnite
-            </button>
+            <button class="filter-btn active" data-game="all">Todos os Jogos</button>
+            <button class="filter-btn" data-game="cs2">🎯 CS2</button>
+            <button class="filter-btn" data-game="valorant">⚔️ VALORANT</button>
+            <button class="filter-btn" data-game="rocket">🚀 Rocket League</button>
+            <button class="filter-btn" data-game="fortnite">🏝️ Fortnite</button>
         `;
         
         const gamesGrid = document.querySelector('.games-grid');
@@ -352,6 +346,3 @@ function addFilterButtons() {
         setupFilterButtons();
     }
 }
-
-// Adicionar filtros após carregar a página
-setTimeout(addFilterButtons, 100);
