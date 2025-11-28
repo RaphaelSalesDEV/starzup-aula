@@ -236,17 +236,23 @@ function formatDate(dateString) {
 function updateStats() {
     // Total de prêmios
     const totalPrizes = allTournaments.reduce((sum, t) => sum + (t.prize || 0), 0);
-    document.querySelector('.stats-grid .stat-item:nth-child(1) .stat-number').textContent = 
-        `R$ ${(totalPrizes / 1000).toFixed(0)}K+`;
+    const prizeElement = document.querySelector('.stats-grid .stat-item:nth-child(1) .stat-number');
+    if (prizeElement) {
+        prizeElement.textContent = `R$ ${(totalPrizes / 1000).toFixed(0)}K+`;
+    }
     
     // Total de jogadores (somando todos os inscritos)
     const totalPlayers = allTournaments.reduce((sum, t) => sum + (t.players?.length || 0), 0);
-    document.querySelector('.stats-grid .stat-item:nth-child(2) .stat-number').textContent = 
-        `${totalPlayers.toLocaleString('pt-BR')}+`;
+    const playersElement = document.querySelector('.stats-grid .stat-item:nth-child(2) .stat-number');
+    if (playersElement) {
+        playersElement.textContent = `${totalPlayers.toLocaleString('pt-BR')}+`;
+    }
     
     // Total de torneios
-    document.querySelector('.stats-grid .stat-item:nth-child(3) .stat-number').textContent = 
-        `${allTournaments.length}+`;
+    const tournamentsElement = document.querySelector('.stats-grid .stat-item:nth-child(3) .stat-number');
+    if (tournamentsElement) {
+        tournamentsElement.textContent = `${allTournaments.length}+`;
+    }
 }
 
 // Mostrar estado vazio
@@ -291,19 +297,24 @@ function setupParticipateButtons() {
             e.preventDefault();
             e.stopPropagation();
             const tournamentId = this.dataset.tournamentId;
-            console.log('Clicou no botão! ID:', tournamentId);
+            console.log('Clicou no botão Participar! ID:', tournamentId);
             handleParticipate(tournamentId);
         });
     });
 }
 
-// Handler para participar do torneio
+// Handler para participar do torneio - CORRIGIDO
 function handleParticipate(tournamentId) {
     console.log('handleParticipate chamado com ID:', tournamentId);
+    
     if (!currentUser) {
+        // Usuário NÃO logado - redirecionar para LOGIN
+        console.log('Usuário não logado, redirecionando para login...');
         localStorage.setItem('pendingTournamentId', tournamentId);
-        window.location.href = '../login.html';
+        window.location.href = '../login.html'; // Caminho correto para login.html
     } else {
+        // Usuário JÁ logado - redirecionar para DASHBOARD
+        console.log('Usuário logado, redirecionando para dashboard...');
         localStorage.setItem('pendingTournamentId', tournamentId);
         window.location.href = '../dashboard.html';
     }
