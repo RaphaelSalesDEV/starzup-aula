@@ -112,6 +112,9 @@ function displayTournaments(tournaments) {
     }
     
     gamesGrid.innerHTML = tournaments.map(tournament => createTournamentCard(tournament)).join('');
+    
+    // Configurar event listeners nos botões
+    setupParticipateButtons();
 }
 
 // Criar card de torneio
@@ -198,7 +201,7 @@ function createTournamentCard(tournament) {
                 
                 <button 
                     class="btn-participate" 
-                    onclick="handleParticipate('${tournament.id}')"
+                    data-tournament-id="${tournament.id}"
                     ${isFull ? 'disabled' : ''}
                     style="width: 100%; padding: 1rem; background: ${isFull ? 'rgba(255, 255, 255, 0.1)' : 'linear-gradient(135deg, var(--primary), var(--secondary))'}; border: none; border-radius: 10px; color: white; font-weight: bold; font-size: 1.1rem; cursor: ${isFull ? 'not-allowed' : 'pointer'}; transition: all 0.3s;">
                     ${isFull ? '🔒 Torneio Lotado' : '🎮 Participar Agora'}
@@ -281,18 +284,30 @@ function showErrorState() {
     }
 }
 
+// Configurar event listeners para botões de participar
+function setupParticipateButtons() {
+    document.querySelectorAll('.btn-participate').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const tournamentId = this.dataset.tournamentId;
+            console.log('Clicou no botão! ID:', tournamentId);
+            handleParticipate(tournamentId);
+        });
+    });
+}
+
 // Handler para participar do torneio
-window.handleParticipate = function(tournamentId) {
+function handleParticipate(tournamentId) {
+    console.log('handleParticipate chamado com ID:', tournamentId);
     if (!currentUser) {
-        // Usuário não autenticado - salvar ID do torneio e redirecionar direto
         localStorage.setItem('pendingTournamentId', tournamentId);
         window.location.href = '../login.html';
     } else {
-        // Usuário autenticado - redirecionar para dashboard
         localStorage.setItem('pendingTournamentId', tournamentId);
         window.location.href = '../dashboard.html';
     }
-};
+}
 
 // Adicionar botões de filtro na página se não existirem
 function addFilterButtons() {
