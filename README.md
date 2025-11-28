@@ -126,7 +126,6 @@ starzup/
 
 ### Design
 
-- **Design Responsivo** - Mobile-first approach
 - **Glassmorphism** - Efeitos modernos de vidro
 - **Gradientes Vibrantes** - Paleta de cores neon/cyberpunk
 - **Animações CSS** - Transições suaves e efeitos hover
@@ -406,7 +405,6 @@ onValue(ref(database, 'tournaments'), (snapshot) => {
 **Visualização**:
 - Cards com avatar, nome e email
 - Estatísticas públicas (torneios, vitórias)
-- Design em grid responsivo
 - Sistema de equipes (planejado)
 
 ---
@@ -481,24 +479,6 @@ onValue(ref(database, 'tournaments'), (snapshot) => {
 5. Firebase valida permissões
 6. Torneio aparece para todos os usuários
 7. Admin pode gerenciar/excluir
-
----
-
-## 📱 Responsividade
-
-### Breakpoints
-
-- **Desktop**: > 1024px
-- **Tablet**: 768px - 1024px
-- **Mobile**: < 768px
-
-### Ajustes Mobile
-
-- Navbar colapsa
-- Grid de torneios vira coluna única
-- Sidebar do dashboard esconde labels
-- Stats exibidos em 2 colunas
-- Botões ocupam largura total
 
 ---
 
