@@ -291,12 +291,12 @@ window.handleParticipate = function(tournamentId) {
         const confirmed = confirm('Você precisa estar logado para participar de torneios.\n\nDeseja fazer login ou criar uma conta agora?');
         
         if (confirmed) {
-            window.location.href = 'cadastro.html';
+            window.location.href = '../login.html';  // ← CORRIGIDO
         }
     } else {
         // Usuário autenticado - redirecionar para dashboard
         localStorage.setItem('pendingTournamentId', tournamentId);
-        window.location.href = 'dashboard.html';
+        window.location.href = '../dashboard.html';  // ← CORRIGIDO também
     }
 };
 
