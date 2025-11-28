@@ -284,19 +284,13 @@ function showErrorState() {
 // Handler para participar do torneio
 window.handleParticipate = function(tournamentId) {
     if (!currentUser) {
-        // Usuário não autenticado - salvar ID do torneio e redirecionar
+        // Usuário não autenticado - salvar ID do torneio e redirecionar direto
         localStorage.setItem('pendingTournamentId', tournamentId);
-        
-        // Mostrar mensagem e redirecionar
-        const confirmed = confirm('Você precisa estar logado para participar de torneios.\n\nDeseja fazer login ou criar uma conta agora?');
-        
-        if (confirmed) {
-            window.location.href = '../login.html';  // ← CORRIGIDO
-        }
+        window.location.href = '../login.html';
     } else {
         // Usuário autenticado - redirecionar para dashboard
         localStorage.setItem('pendingTournamentId', tournamentId);
-        window.location.href = '../dashboard.html';  // ← CORRIGIDO também
+        window.location.href = '../dashboard.html';
     }
 };
 
