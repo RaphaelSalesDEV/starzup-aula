@@ -19,6 +19,7 @@
     top: -250px;
     left: -250px;
     animation: float 8s ease-in-out infinite;
+    pointer-events: none;
 }
 
 .tournaments-hero::after {
@@ -30,6 +31,7 @@
     bottom: -200px;
     right: -200px;
     animation: float 6s ease-in-out infinite reverse;
+    pointer-events: none;
 }
 
 @keyframes float {
@@ -111,6 +113,7 @@
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     opacity: 0;
     transition: opacity 0.4s;
+    pointer-events: none;
 }
 
 .stat-item:hover {
@@ -175,45 +178,69 @@
     margin-top: 2rem;
 }
 
-.game-card {
+/* Tournament Cards Públicos - CORRIGIDO */
+.tournament-card-public {
     background: var(--gray);
     border-radius: 20px;
     overflow: hidden;
     transition: all 0.4s;
     border: 2px solid transparent;
-    cursor: pointer;
+    position: relative;
 }
 
-.game-card:hover {
+.tournament-card-public:hover {
     border-color: var(--primary);
     transform: translateY(-10px);
     box-shadow: 0 20px 50px rgba(139, 92, 246, 0.5);
 }
 
-.game-card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    transition: transform 0.4s;
-}
-
-.game-card:hover img {
-    transform: scale(1.1);
+.tournament-header {
+    position: relative;
+    pointer-events: none;
 }
 
 .game-info {
     padding: 1.5rem;
+    position: relative;
 }
 
-.game-info h3 {
-    font-size: 1.4rem;
-    margin-bottom: 0.5rem;
-    color: #fff;
+/* Botão Participar - CRÍTICO */
+.btn-participate {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    z-index: 100 !important;
+    pointer-events: auto !important;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
 }
 
-.game-info p {
-    color: var(--light-gray);
-    font-size: 0.95rem;
+.btn-participate:not(:disabled) {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+}
+
+.btn-participate:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.6);
+}
+
+.btn-participate:not(:disabled):active {
+    transform: translateY(0);
+    box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+}
+
+.btn-participate:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 /* How It Works Section */
@@ -344,6 +371,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     animation: pulse 4s ease-in-out infinite;
+    pointer-events: none;
 }
 
 @keyframes pulse {
@@ -390,6 +418,36 @@
     font-weight: 600;
 }
 
+/* Filtros de Torneio */
+.tournament-filters {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: var(--gray);
+}
+
+.filter-btn:not(.active):hover {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.3));
+    transform: translateY(-2px);
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    box-shadow: 0 5px 20px rgba(139, 92, 246, 0.5);
+}
+
 /* Active Nav Link */
 .nav-menu a.active {
     color: var(--secondary);
@@ -397,6 +455,22 @@
 
 .nav-menu a.active::after {
     width: 100%;
+}
+
+/* Animação de entrada dos cards */
+.tournament-card-public {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Responsive */
@@ -444,6 +518,22 @@
     .games-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+    }
+
+    .tournament-card-public {
+        margin-bottom: 1rem;
+    }
+    
+    .tournament-header {
+        padding: 1rem !important;
+    }
+    
+    .tournament-header h3 {
+        font-size: 1.2rem !important;
+    }
+    
+    .game-info {
+        padding: 1rem !important;
     }
 
     .steps-grid {
@@ -510,117 +600,4 @@
     .cta-content h2 {
         font-size: 2rem;
     }
-/* ADICIONAR NO FINAL DO tournaments.css */
-
-/* Tournament Cards Públicos */
-.tournament-card-public {
-    background: var(--gray);
-    border-radius: 20px;
-    overflow: hidden;
-    transition: all 0.4s;
-    border: 2px solid transparent;
-    cursor: pointer;
-}
-
-.tournament-card-public:hover {
-    border-color: var(--primary);
-    transform: translateY(-10px);
-    box-shadow: 0 20px 50px rgba(139, 92, 246, 0.5);
-}
-
-.tournament-header {
-    position: relative;
-}
-
-.btn-participate {
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-participate:not(:disabled):hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(139, 92, 246, 0.6);
-}
-
-.btn-participate:not(:disabled):active {
-    transform: translateY(0);
-}
-
-.btn-participate:disabled {
-    opacity: 0.5;
-}
-
-/* Filtros de Torneio */
-.tournament-filters {
-    margin: 2rem 0;
-}
-
-.filter-btn {
-    transition: all 0.3s;
-}
-
-.filter-btn:not(.active) {
-    background: var(--gray) !important;
-}
-
-.filter-btn:not(.active):hover {
-    background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(236, 72, 153, 0.3)) !important;
-    transform: translateY(-2px);
-}
-
-.filter-btn.active {
-    background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
-    box-shadow: 0 5px 20px rgba(139, 92, 246, 0.5);
-}
-
-/* Loading States */
-.loading {
-    text-align: center;
-    color: var(--light-gray);
-    padding: 3rem;
-    font-size: 1.1rem;
-}
-
-.empty-state {
-    text-align: center;
-    color: var(--light-gray);
-    padding: 2rem;
-}
-
-/* Animação de entrada dos cards */
-.tournament-card-public {
-    animation: fadeInUp 0.5s ease-out;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Responsivo para cards de torneio */
-@media (max-width: 768px) {
-    .tournament-card-public {
-        margin-bottom: 1rem;
-    }
-    
-    .tournament-header {
-        padding: 1rem !important;
-    }
-    
-    .tournament-header h3 {
-        font-size: 1.2rem !important;
-    }
-    
-    .game-info {
-        padding: 1rem !important;
-    }
-}
-
 }
