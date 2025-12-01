@@ -113,6 +113,11 @@
     font-size: 0.95rem;
 }
 
+.game-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
 /* Seção de Features */
 .features-section {
     padding: 4rem 5%;
