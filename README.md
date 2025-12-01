@@ -583,9 +583,8 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 
 **Equipe Starz Up**
 
-- Website: [starzup.com](https://starzup.com)
-- Discord: [/starzup](https://discord.gg/starzup)
-- Email: suporte@starzup.com
+- Discord: cottril.
+- Email: raphaelsales08@gmail.com
 
 ---
 
