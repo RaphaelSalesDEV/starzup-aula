@@ -1,5 +1,5 @@
 {
-  "buildCommand": "node build-config.js",
-  "outputDirectory": ".",
+  "buildCommand": "node docs/build-config.js",
+  "outputDirectory": "docs",
   "installCommand": "echo 'sem dependencias'"
 }
