@@ -1,183 +1,135 @@
-# 🎮 Starz Up - Plataforma de Torneios de Jogos Online
+# 🎮 Starz Up - Online Gaming Tournament Platform
 
-## 📋 Sobre o Projeto
+## 📋 About
 
-**Starz Up** é uma plataforma web completa para organização e gerenciamento de torneios competitivos de jogos eletrônicos. O projeto oferece uma experiência moderna e intuitiva para jogadores se inscreverem em campeonatos, gerenciarem saldo, interagirem com a comunidade e competirem em seus jogos favoritos.
+**Starz Up** is a full-featured web platform for organizing and managing competitive gaming tournaments. It offers a modern, intuitive experience for players to register in championships, manage their balance, interact with the community, and compete in their favorite games.
 
-### 🎯 Jogos Suportados
+### 🎯 Supported Games
 
 - **CS2** (Counter-Strike 2)
-- **VALORANT** (FPS Tático)
-- **Rocket League** (Futebol com Carros)
+- **VALORANT** (Tactical FPS)
+- **Rocket League** (Soccer with Cars)
 - **Fortnite** (Battle Royale)
 
 ---
 
-## ✨ Funcionalidades Principais
+## ✨ Features
 
-### 👥 Para Usuários
+### 👥 For Users
 
-- **Cadastro e Autenticação Completa**
-  - Sistema de login/cadastro com Firebase Authentication
-  - Upload de avatar personalizado com compressão automática
-  - Perfil de usuário com estatísticas de desempenho
+- **Authentication System** — Login/register with Firebase Authentication, custom avatar upload with automatic compression, and performance stats profile
+- **Interactive Dashboard** — Personal statistics (tournaments, wins, losses), real-time activity feed, and upcoming tournaments
+- **Tournament System** — Join championships by game, filter by category, view prizes and entry fees, limited slots system
+- **Balance Management** — Deposits and withdrawals, transaction history, real-time balance sync
+- **Community** — View registered players, public user stats, teams system (in development)
+- **Support** — Integrated FAQ, contact options (chat, email)
 
-- **Dashboard Interativo**
-  - Visualização de estatísticas pessoais (torneios, vitórias, derrotas)
-  - Feed de atividades em tempo real
-  - Próximos torneios disponíveis
+### 🛠️ For Admins
 
-- **Sistema de Torneios**
-  - Inscrição em campeonatos por jogo
-  - Filtros por categoria (CS2, VALORANT, etc.)
-  - Visualização de prêmios e taxas de inscrição
-  - Sistema de vagas limitadas
-
-- **Gerenciamento de Saldo**
-  - Depósitos e saques
-  - Histórico de transações
-  - Saldo em tempo real
-
-- **Comunidade**
-  - Visualização de jogadores cadastrados
-  - Estatísticas públicas de outros usuários
-  - Sistema de equipes (em desenvolvimento)
-
-- **Suporte**
-  - FAQ integrado
-  - Opções de contato (chat, email)
-
-### 🛠️ Para Administradores
-
-- **Painel Administrativo**
-  - Criação de novos torneios
-  - Gerenciamento completo de campeonatos
-  - Exclusão de torneios
-  - Visualização de inscritos
-
-- **Controle Total**
-  - Permissões elevadas no Firebase
-  - Acesso a dados de todos os usuários
-  - Moderação da plataforma
+- **Admin Panel** — Create and manage tournaments, delete championships, view registered players
+- **Full Control** — Elevated Firebase permissions, access to all user data, platform moderation
 
 ---
 
-## 🏗️ Arquitetura do Projeto
+## 🏗️ Project Architecture
 
-### 📁 Estrutura de Arquivos
+### 📁 File Structure
 
 ```
-starzup/
-├── 📄 index.html              # Página inicial pública
-├── 📄 login.html              # Página de login
-├── 📄 cadastro.html           # Página de cadastro
-├── 📄 dashboard.html          # Dashboard do usuário
-├── 📄 style.css               # Estilos da página inicial
-├── 📄 cadastro.css            # Estilos do cadastro
-├── 📄 dashboard.css           # Estilos do dashboard
-├── 📄 firebase-config.js      # Configuração do Firebase
-├── 📄 cadastro-script.js      # Lógica de cadastro
-├── 📄 dashboard-script.js     # Lógica do dashboard
-├── 📄 login-script.js         # Lógica de login
+starzup-aula/
 │
-├── 📁 apostas/                # Seção de apostas (em manutenção)
-│   ├── apostas.html
-│   └── apostas.css
+├── build-config.js            # Generates firebase-config.js at deploy time
+├── vercel.json                # Vercel build configuration
+├── .gitignore                 # Excludes sensitive files from git
+├── LICENSE
+├── README.md
 │
-├── 📁 campeonatos/            # Seção de campeonatos
-│   ├── tournaments.html
-│   ├── tournaments.css
-│   └── tournaments-script.js
-│
-├── 📁 comunidade/             # Seção de comunidade
-│   ├── comunidade.html
-│   └── comunidade.css
-│
-├── 📁 imagens/                # Assets visuais
-│   ├── logoempresa.png
-│   ├── logocs.png
-│   ├── logovalorant.png
-│   ├── logorocketleague.png
-│   ├── logofortnite.png
-│   ├── avatar-default.png
-│   └── seta.png
-│
-└── 📁 suporte/                # Seção de suporte
-    ├── suporte.html
-    └── suporte.css
+└── docs/                      # Main application (served by Vercel)
+    ├── index.html             # Public landing page
+    ├── login.html             # Login page
+    ├── cadastro.html          # Register page
+    ├── dashboard.html         # User dashboard
+    ├── style.css
+    ├── login.css
+    ├── cadastro.css
+    ├── dashboard.css
+    ├── cadastro-script.js
+    ├── dashboard-script.js
+    ├── login-script.js
+    ├── firebase-config.js     # ⚠️ Auto-generated at deploy — NOT in repository
+    │
+    ├── apostas/               # Betting section (under maintenance)
+    ├── campeonatos/           # Championships section
+    ├── comunidade/            # Community section
+    ├── suporte/               # Support section
+    └── imagens/               # Visual assets
 ```
 
 ---
 
-## 🔥 Tecnologias Utilizadas
+## 🔥 Tech Stack
 
 ### Frontend
+- **HTML5** — Semantic structure
+- **CSS3** — Modern styling with gradients and animations
+- **JavaScript ES6+** — Logic and interactivity
+- **Firebase SDK 10.7.1** — Backend integration
 
-- **HTML5** - Estrutura semântica
-- **CSS3** - Estilização moderna com gradientes e animações
-- **JavaScript ES6+** - Lógica e interatividade
-- **Firebase SDK 10.7.1** - Integração com backend
-
-### Backend & Infraestrutura
-
-- **Firebase Authentication** - Sistema de autenticação
-- **Firebase Realtime Database** - Banco de dados NoSQL em tempo real
-- **Firebase Security Rules** - Controle de acesso e permissões
-
-### Design
-
-- **Glassmorphism** - Efeitos modernos de vidro
-- **Gradientes Vibrantes** - Paleta de cores neon/cyberpunk
-- **Animações CSS** - Transições suaves e efeitos hover
+### Backend & Infrastructure
+- **Firebase Authentication** — Auth system
+- **Firebase Realtime Database** — NoSQL real-time database
+- **Firebase Security Rules** — Access control
+- **Vercel** — Hosting and deployment
 
 ---
 
-## 🚀 Instalação e Configuração
+## 🚀 Setup & Installation
 
-### Pré-requisitos
+### Prerequisites
 
-- Navegador web moderno (Chrome, Firefox, Edge, Safari)
-- Conta no Firebase (gratuita)
-- Editor de código (VS Code recomendado)
+- Modern web browser (Chrome, Firefox, Edge, Safari)
+- Firebase account (free)
+- Vercel account (free)
+- VS Code (recommended)
 
-### Passo a Passo
+### Step by Step
 
-#### 1. Clone o Repositório
+#### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/seu-usuario/starzup.git
-cd starzup
+git clone https://github.com/RaphaelSalesDEV/starzup-aula.git
+cd starzup-aula
 ```
 
-#### 2. Configure o Firebase
+#### 2. Set Up Firebase
 
-Acesse o [Firebase Console](https://console.firebase.google.com/) e:
+Go to [Firebase Console](https://console.firebase.google.com/) and:
 
-1. Crie um novo projeto
-2. Ative **Authentication** (método Email/Password)
-3. Ative **Realtime Database**
-4. Configure as **Security Rules** (veja seção abaixo)
-5. Copie as credenciais do projeto
+1. Create a new project
+2. Enable **Authentication** (Email/Password method)
+3. Enable **Realtime Database**
+4. Configure **Security Rules** (see section below)
+5. Copy your project credentials
 
-#### 3. Atualize as Credenciais
+#### 3. Configure Environment Variables on Vercel
 
-Edite o arquivo `firebase-config.js`:
+In your Vercel project, go to **Settings → Environment Variables** and add:
 
-```javascript
-const firebaseConfig = {
-    apiKey: "SUA_API_KEY",
-    authDomain: "SEU_PROJETO.firebaseapp.com",
-    databaseURL: "https://SEU_PROJETO.firebaseio.com",
-    projectId: "SEU_PROJETO_ID",
-    storageBucket: "SEU_PROJETO.appspot.com",
-    messagingSenderId: "SEU_SENDER_ID",
-    appId: "SEU_APP_ID"
-};
+```
+FIREBASE_API_KEY
+FIREBASE_AUTH_DOMAIN
+FIREBASE_DATABASE_URL
+FIREBASE_PROJECT_ID
+FIREBASE_STORAGE_BUCKET
+FIREBASE_MESSAGING_SENDER
+FIREBASE_APP_ID
 ```
 
-#### 4. Configure as Security Rules do Firebase
+> The `firebase-config.js` file is **automatically generated at deploy time** by `build-config.js` using these environment variables. It is never stored in the repository.
 
-No Firebase Console, vá em **Realtime Database > Rules** e cole:
+#### 4. Configure Firebase Security Rules
+
+In Firebase Console, go to **Realtime Database > Rules**:
 
 ```json
 {
@@ -186,27 +138,13 @@ No Firebase Console, vá em **Realtime Database > Rules** e cole:
       "$uid": {
         ".read": "auth != null",
         ".write": "$uid === auth.uid || root.child('users').child(auth.uid).child('isAdmin').val() === true",
-        "nome": {
-          ".validate": "newData.isString() && newData.val().length >= 3"
-        },
-        "email": {
-          ".validate": "newData.isString()"
-        },
-        "avatar": {
-          ".validate": "newData.isString()"
-        },
-        "saldo": {
-          ".validate": "newData.isNumber() && newData.val() >= 0"
-        },
-        "vitorias": {
-          ".validate": "newData.isNumber() && newData.val() >= 0"
-        },
-        "derrotas": {
-          ".validate": "newData.isNumber() && newData.val() >= 0"
-        },
-        "isAdmin": {
-          ".validate": "newData.isBoolean()"
-        }
+        "nome": { ".validate": "newData.isString() && newData.val().length >= 3" },
+        "email": { ".validate": "newData.isString()" },
+        "avatar": { ".validate": "newData.isString()" },
+        "saldo": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+        "vitorias": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+        "derrotas": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+        "isAdmin": { ".validate": "newData.isBoolean()" }
       }
     },
     "tournaments": {
@@ -215,9 +153,7 @@ No Firebase Console, vá em **Realtime Database > Rules** e cole:
       "$tournamentId": {
         ".read": true,
         ".write": "auth != null && root.child('users').child(auth.uid).child('isAdmin').val() === true",
-        "players": {
-          ".write": "auth != null"
-        }
+        "players": { ".write": "auth != null" }
       }
     },
     "transactions": {
@@ -230,66 +166,42 @@ No Firebase Console, vá em **Realtime Database > Rules** e cole:
 }
 ```
 
-#### 5. Execute o Projeto
+#### 5. Deploy
 
-Você pode usar qualquer servidor local. Exemplos:
-
-**Opção 1: Live Server (VS Code)**
-```bash
-# Instale a extensão Live Server no VS Code
-# Clique com botão direito em index.html > Open with Live Server
-```
-
-**Opção 2: Python**
-```bash
-python -m http.server 8000
-# Acesse http://localhost:8000
-```
-
-**Opção 3: Node.js**
-```bash
-npx http-server
-```
+Push to your `main` branch — Vercel will automatically build and deploy.
 
 ---
 
-## 🔐 Sistema de Permissões
+## 🔐 Security Model
 
-### Regras de Segurança Explicadas
+### How Credentials Are Protected
 
-#### 👤 Usuários (`/users`)
+This project uses a **build-time secret injection** pattern:
 
-- **Leitura**: Qualquer usuário autenticado pode ler dados de outros usuários
-- **Escrita**: Apenas o próprio usuário ou um administrador pode modificar dados
-- **Validações**:
-  - Nome mínimo de 3 caracteres
-  - Email obrigatório
-  - Saldo sempre >= 0
-  - Estatísticas (vitórias/derrotas) sempre >= 0
+1. Firebase credentials are stored as **Vercel Environment Variables** (never in the repository)
+2. At deploy time, `build-config.js` reads those variables and generates `docs/firebase-config.js`
+3. The generated file is served to the browser but **never committed to git**
+4. `.gitignore` ensures `firebase-config.js` is always excluded
 
-#### 🏆 Torneios (`/tournaments`)
+### Permission Rules
 
-- **Leitura**: Todos podem ver torneios (mesmo não autenticados)
-- **Escrita**: Apenas administradores podem criar/editar/excluir
-- **Exceção**: Lista de jogadores pode ser modificada por qualquer usuário autenticado (para inscrições)
+| Resource | Read | Write |
+|---|---|---|
+| `/users` | Any authenticated user | Owner or admin |
+| `/tournaments` | Everyone (public) | Admins only |
+| `/tournaments/players` | Everyone | Any authenticated user |
+| `/transactions` | Owner or admin | Owner only |
 
-#### 💰 Transações (`/transactions`)
+### How to Make a User Admin
 
-- **Leitura**: Apenas o dono das transações ou administradores
-- **Escrita**: Apenas o próprio usuário
-
-### Como Tornar um Usuário Administrador
-
-1. Acesse o Firebase Console
-2. Vá em **Realtime Database**
-3. Navegue até `/users/{uid}/`
-4. Adicione/edite o campo `isAdmin: true`
+1. Go to Firebase Console
+2. Navigate to **Realtime Database**
+3. Find `/users/{uid}/`
+4. Set `isAdmin: true`
 
 ---
 
-## 📊 Estrutura do Banco de Dados
-
-### Modelo de Dados
+## 📊 Database Structure
 
 ```
 firebase-realtime-database/
@@ -298,11 +210,10 @@ firebase-realtime-database/
 │   └── {userId}/
 │       ├── nome: string
 │       ├── email: string
-│       ├── avatar: string (base64 ou URL)
+│       ├── avatar: string (base64 or URL)
 │       ├── saldo: number
 │       ├── dataCriacao: timestamp
 │       ├── torneiosInscritos: array
-│       ├── apostas: array
 │       ├── vitorias: number
 │       ├── derrotas: number
 │       ├── partidasJogadas: number
@@ -333,275 +244,79 @@ firebase-realtime-database/
 
 ---
 
-## 💻 Funcionalidades Detalhadas
-
-### 1. Sistema de Cadastro
-
-**Arquivo**: `cadastro.html` + `cadastro-script.js`
-
-- Upload de avatar com preview em tempo real
-- Compressão automática de imagens (máx 400x400px, qualidade 70%)
-- Validação de email e senha (mín. 6 caracteres)
-- Criação automática de perfil no Realtime Database
-- Geração de avatar padrão caso usuário não faça upload
-
-**Tecnologia de Compressão**:
-```javascript
-// Redimensiona e comprime para otimizar armazenamento
-resizeImage(file, maxWidth: 400, maxHeight: 400, quality: 0.7)
-```
-
-### 2. Dashboard Dinâmico
-
-**Arquivo**: `dashboard.html` + `dashboard-script.js`
-
-**Recursos**:
-- **Navegação SPA**: Troca de seções sem recarregar página
-- **Stats em Tempo Real**: Atualização automática via Firebase listeners
-- **Filtros de Torneios**: Por jogo (CS2, Valorant, etc.)
-- **Sistema de Inscrição**: Validação de saldo e disponibilidade
-- **Painel Admin**: Aparece apenas para usuários com `isAdmin: true`
-
-**Listeners em Tempo Real**:
-```javascript
-onValue(ref(database, 'tournaments'), (snapshot) => {
-  // Atualiza interface automaticamente quando torneios mudam
-});
-```
-
-### 3. Gerenciamento de Torneios (Admin)
-
-**Funcionalidades Admin**:
-- Formulário completo de criação
-- Validação de todos os campos
-- Preview de torneios criados
-- Exclusão com confirmação
-- Visualização de inscritos
-
-**Campos do Torneio**:
-- Nome do torneio
-- Jogo (dropdown)
-- Data e horário
-- Prêmio em R$
-- Número máximo de jogadores
-- Taxa de inscrição
-- Descrição detalhada
-
-### 4. Sistema de Saldo
-
-**Operações**:
-- **Depósito**: Valor mínimo R$ 10,00
-- **Saque**: Validação de saldo disponível
-- **Histórico**: Registro de todas as transações
-- **Sincronização**: Atualização em tempo real em toda a interface
-
-**Segurança**:
-- Validações no frontend e backend (Firebase Rules)
-- Saldo nunca pode ser negativo
-- Transações registradas com timestamp
-
-### 5. Comunidade
-
-**Visualização**:
-- Cards com avatar, nome e email
-- Estatísticas públicas (torneios, vitórias)
-- Sistema de equipes (planejado)
-
----
-
 ## 🎨 Design System
 
-### Paleta de Cores
+### Color Palette
 
 ```css
 :root {
-    --primary: #8B5CF6;        /* Roxo principal */
-    --primary-dark: #6D28D9;   /* Roxo escuro */
-    --secondary: #EC4899;      /* Rosa neon */
-    --accent: #F97316;         /* Laranja */
-    --dark: #1E1B2E;          /* Fundo escuro */
-    --darker: #0F0D1A;        /* Fundo mais escuro */
-    --gray: #2D2A3E;          /* Cinza cards */
-    --light-gray: #A78BFA;    /* Cinza claro */
-    --success: #F59E0B;       /* Amarelo/ouro */
+    --primary: #8B5CF6;        /* Main purple */
+    --primary-dark: #6D28D9;   /* Dark purple */
+    --secondary: #EC4899;      /* Neon pink */
+    --accent: #F97316;         /* Orange */
+    --dark: #1E1B2E;           /* Dark background */
+    --darker: #0F0D1A;         /* Deeper background */
+    --gray: #2D2A3E;           /* Card gray */
+    --light-gray: #A78BFA;     /* Light gray */
+    --success: #F59E0B;        /* Gold/yellow */
 }
 ```
 
-### Componentes Visuais
+---
 
-- **Cards**: Background `var(--card-bg)` com border-radius 12px
-- **Botões**: Gradientes com efeito hover scale
-- **Inputs**: Fundo escuro com borda sutil
-- **Navegação**: Sticky navbar com backdrop-blur
-- **Animações**: Float, pulse, fadeIn
+## 🚧 Roadmap
+
+### In Development
+- [ ] Full betting system
+- [ ] Real-time chat
+- [ ] Teams system
+- [ ] Automatic matchmaking
+- [ ] Global rankings
+
+### Planned
+- [ ] Push notifications
+- [ ] Discord integration
+- [ ] Match streaming
+- [ ] Replays & highlights
+- [ ] Achievement system
+- [ ] Virtual item store
+- [ ] Public API
 
 ---
 
-## 🔄 Fluxo de Usuário
+## 🤝 Contributing
 
-### Novo Usuário
+Contributions are welcome! To contribute:
 
-1. Acessa `index.html` (landing page)
-2. Clica em "Cadastrar"
-3. Preenche formulário e faz upload de avatar
-4. Sistema cria conta no Firebase Auth
-5. Cria perfil no Realtime Database
-6. Redireciona para `dashboard.html`
-
-### Usuário Existente
-
-1. Acessa `index.html`
-2. Clica em "Acessar"
-3. Faz login no `login.html`
-4. Firebase valida credenciais
-5. Redireciona para `dashboard.html`
-6. Carrega dados personalizados
-
-### Inscrição em Torneio
-
-1. Usuário navega até "Campeonatos"
-2. Filtra por jogo desejado
-3. Clica em "Inscrever-se"
-4. Sistema valida:
-   - Saldo suficiente
-   - Torneio não lotado
-   - Não está já inscrito
-5. Deduz taxa do saldo
-6. Adiciona usuário na lista de players
-7. Atualiza interface em tempo real
-
-### Admin Criando Torneio
-
-1. Admin acessa "Campeonatos"
-2. Clica em "⚙️ Painel Administrativo"
-3. Preenche formulário completo
-4. Clica em "✨ Criar Torneio"
-5. Firebase valida permissões
-6. Torneio aparece para todos os usuários
-7. Admin pode gerenciar/excluir
+1. Fork the project
+2. Create a branch (`git checkout -b feature/NewFeature`)
+3. Commit your changes (`git commit -m 'Add new feature'`)
+4. Push to the branch (`git push origin feature/NewFeature`)
+5. Open a Pull Request
 
 ---
 
-## 🐛 Solução de Problemas
+## 📄 License
 
-### Avatar não carrega
-
-**Problema**: Imagem muito grande ou formato inválido
-
-**Solução**:
-- Aceita apenas imagens (PNG, JPG, JPEG)
-- Limite de 5MB antes da compressão
-- Compressão automática para ~200KB
-
-### Torneios não aparecem
-
-**Problema**: Firebase Rules bloqueando leitura
-
-**Solução**:
-```json
-"tournaments": {
-  ".read": true  // Permite leitura pública
-}
-```
-
-### Não consegue criar torneio
-
-**Problema**: Usuário não é admin
-
-**Solução**:
-```
-Firebase Console > Database > users/{uid}/isAdmin = true
-```
-
-### Erro ao se inscrever
-
-**Problema**: Saldo insuficiente ou torneio lotado
-
-**Solução**:
-- Adicione saldo na seção "Saldo"
-- Verifique vagas disponíveis
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 ---
 
-## 🚧 Roadmap / Melhorias Futuras
+## 👨‍💻 Authors
 
-### Em Desenvolvimento
+**Raphael Sales // Rafael Sanguini**
 
-- [ ] Sistema de apostas completo
-- [ ] Chat em tempo real
-- [ ] Sistema de equipes
-- [ ] Matchmaking automático
-- [ ] Rankings globais
-
-### Planejado
-
-- [ ] Notificações push
-- [ ] Integração com Discord
-- [ ] Stream de partidas
-- [ ] Replays e highlights
-- [ ] Sistema de conquistas
-- [ ] Loja de itens virtuais
-- [ ] Torneios automáticos
-- [ ] API pública
-
-### Otimizações
-
-- [ ] Service Workers (PWA)
-- [ ] Lazy loading de imagens
-- [ ] Cache de dados
-- [ ] Compressão Gzip
-- [ ] CDN para assets
-
----
-
-## 🤝 Contribuindo
-
-Contribuições são bem-vindas! Para contribuir:
-
-1. Fork o projeto
-2. Crie uma branch (`git checkout -b feature/NovaFuncionalidade`)
-3. Commit suas mudanças (`git commit -m 'Adiciona nova funcionalidade'`)
-4. Push para a branch (`git push origin feature/NovaFuncionalidade`)
-5. Abra um Pull Request
-
-### Padrões de Código
-
-- Use nomes descritivos para variáveis e funções
-- Comente código complexo
-- Mantenha consistência com o estilo existente
-- Teste antes de commitar
-
----
-
-## 📄 Licença
-
-Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalhes.
-
----
-
-## 👨‍💻 Autor
-
-**Equipe Starz Up**
-
-- Discord: cottril.
 - Email: raphaelsales08@gmail.com
 
 ---
 
-## 🙏 Agradecimentos
+## 🙏 Acknowledgements
 
-- **Firebase** pela infraestrutura robusta
-- **Comunidade de Gamers** pelo feedback
-- **UI Avatars** pelo serviço de avatares padrão
-- **Google Fonts** pelas fontes utilizadas
+- **Firebase** for the robust infrastructure
+- **Vercel** for the seamless deployment platform
+- **UI Avatars** for the default avatar service
 
 ---
 
-## 📞 Suporte
+**⭐ If this project helped you, leave a star on GitHub!**
 
-Encontrou algum problema? Precisa de ajuda?
-
-- 📧 Email: raphaelsales08@gmail.com
-**⭐ Se este projeto te ajudou, deixe uma estrela no GitHub!**
-
-**🎮 Bons jogos e boa sorte nos torneios!**
