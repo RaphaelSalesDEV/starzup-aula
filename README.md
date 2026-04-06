@@ -306,7 +306,9 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 **Raphael Sales // Rafael Colagrossi**
 
-- Email: raphaelsales08@gmail.com
+[![Gmail](https://img.shields.io/badge/rafaelcolagrossi%40gmail.com-D14836?style=flat&logo=gmail&logoColor=white)](mailto:rafaelcolagrossi@gmail.com)
+[![Gmail](https://img.shields.io/badge/rafaelcolagrossi%40gmail.com-D14836?style=flat&logo=gmail&logoColor=white)](mailto:raphaelsales08@gmail.com)
+  
 
 ---
 
