@@ -304,7 +304,7 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ## 👨‍💻 Authors
 
-**Raphael Sales // Rafael Sanguini**
+**Raphael Sales // Rafael Colagrossi**
 
 - Email: raphaelsales08@gmail.com
 
