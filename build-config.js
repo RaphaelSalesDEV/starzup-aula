@@ -42,5 +42,5 @@ export const auth = getAuth(app);
 export const database = getDatabase(app);
 `;
 
-fs.writeFileSync('firebase-config.js', config);
-console.log('✅ firebase-config.js gerado com sucesso!');
+fs.writeFileSync('docs/firebase-config.js', config);
+console.log('✅ firebase-config.js gerado em docs/ com sucesso!');
